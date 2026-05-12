@@ -7,7 +7,7 @@ const Dashboard = () => {
     return (
        <div className="w-full min-h-screen flex">
           <Menu />
-          <div>
+          <div className="w-[82%] min-h-screen bg-secondaryy">
 
           </div>
        </div>

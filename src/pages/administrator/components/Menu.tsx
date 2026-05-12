@@ -1,4 +1,51 @@
+import { RxDashboard } from "react-icons/rx";
+import { NavLink } from "react-router-dom";
+import { FiUsers } from "react-icons/fi";
+import { PiGraduationCap } from "react-icons/pi";
+import { FaRegFileAlt } from "react-icons/fa";
+import { PiCertificateBold } from "react-icons/pi";
+import { FaClockRotateLeft } from "react-icons/fa6";
+import { IoNotificationsOutline } from "react-icons/io5";
 
+
+
+const menuItems = [
+   {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <RxDashboard />
+   },
+   {
+      name: "Employees",
+      path: "/employees",
+      icon: <FiUsers />
+   },
+   {
+      name: "Training Programs",
+      path: "/programs",
+      icon: <PiGraduationCap />
+   },
+   {
+      name: "Assign Training",
+      path: "/assign",
+      icon: <FaRegFileAlt />
+   },
+   {
+      name: "Certifications",
+      path: "/cerificates",
+      icon: <PiCertificateBold />
+   },
+   {
+      name: "Training History",
+      path: "/history",
+      icon: <FaClockRotateLeft />
+   },
+   {
+      name: "Notifications",
+      path: "/notifications",
+      icon: <IoNotificationsOutline />
+   },
+]
 
 
 
@@ -6,10 +53,32 @@ const Menu = () => {
    return (
       <div className="w-[18%] min-h-screen bg-white shadow-md shadow-black/40 flex flex-col py-3 px-5">
           {/* Top Part  */}
-          <div className="w-full py-6">
-             <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center">
-
+          <div className="w-full py-3 flex gap-4 text-secondary/80 justify-between border-b-2">
+             {/* <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center"></div> */}
+             <div className="flex flex-col">
+                <label className="font-bold">NCAA</label>
+                <label className="text-xs">Training Record</label>
+                <label className="text-xs">Management System</label>
              </div>
+             <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center"></div>
+          </div>
+
+          {/* Menu Part  */}
+          <div className="flex felx-col py-7 text-sm flex-col">
+             <label className="text-xs text-secondary/60 mb-4 mt-2 ml-2">ADMINISTRATOR</label>
+             {menuItems.map((item, index) => (
+             <NavLink key={index} to={item.path} className={({ isActive }) => 
+                `w-full py-2 px-2 font-bold cursor-pointer flex items-center gap-4
+                 ${isActive
+                    ? "bg-secondaryy"
+                    : "text-secondary/80 hover:bg-secondaryy"
+                 }
+                `
+                }>
+                {item.icon}
+                <label className="text-secondary/80">{item.name}</label>
+             </NavLink>
+             ))}
           </div>
       </div>
    );
