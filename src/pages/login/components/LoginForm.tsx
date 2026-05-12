@@ -4,8 +4,8 @@
 
 const LoginForm = () => {
      return (
-        <div className="w-full min-h-screen lg:w-2/8 flex flex-col gap-2 text-gray-700 px-5 xl:px-5 3xl:px-30 justify-center py-5">
-          <div className="flex flex-col gap-2 text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/30">
+        <div className=" min-h-screen flex flex-col gap-2 text-gray-700 px-5 xl:px-5 3xl:px-30 justify-center py-5">
+          <div className="flex flex-col gap-2 min-w-90 bg-white text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/30">
             <div className="w-full bg-primaryy flex pt-4 justify-center"><div className="w-50 ml-15 h-28 mb-5 bg-[url('images/ncaa-logo.png')] bg-center bg-cover"></div></div>
             {/* Form  */}
             <div className="flex flex-col gap-1 text-gray-700 px-5 xl:px-7 3xl:px-30 justify-center pb-9 py-5">
