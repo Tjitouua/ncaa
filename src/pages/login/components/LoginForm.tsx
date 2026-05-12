@@ -8,7 +8,7 @@ const LoginForm = () => {
           <div className="flex flex-col gap-2 min-w-90 bg-white text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/30">
             <div className="w-full bg-primaryy flex pt-4 justify-center"><div className="w-50 ml-15 h-28 mb-5 bg-[url('images/ncaa-logo.png')] bg-center bg-cover"></div></div>
             {/* Form  */}
-            <div className="flex flex-col gap-1 text-gray-700 px-5 xl:px-7 3xl:px-30 justify-center pb-9 py-5">
+            <div className="flex flex-col gap-1 text-gray-700 px-5 xl:px-8 justify-center pb-10 py-5">
             <label className="font-extrabold font-serif text-3xl">Sign In</label>
             <label className="mb-4 text-xs">Use your NCAA credentials to access the system.</label>
             {/* Username  */}

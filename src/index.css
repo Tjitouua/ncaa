@@ -5,7 +5,7 @@
 
 @theme {
    
-    --color-primaryy: #BDBEBF;
+    --color-primaryy: #B4B6B8;
     --color-primary: #0962AB; 
     --color-primary-dark: #0D2244;
     --color-primary-light: #E6F0FF;
@@ -37,7 +37,7 @@
 
   :root {
     /* Primary Colors */
-    --color-primaryy: #BDBEBF;
+    --color-primaryy: #B4B6B8;
     --color-primary: #0962AB; 
     --color-primary-dark: #0D2244;
     --color-primary-light: #E6F0FF;
@@ -63,3 +63,6 @@
     outline-offset: 2px;
   }
 }
+
+
+/* BDBEBF  */
