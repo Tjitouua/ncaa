@@ -4,7 +4,7 @@
 
 const LoginForm = () => {
      return (
-        <div className="w-full min-h-screen lg:w-2/8 flex flex-col gap-2 bg-primaryy text-gray-700 px-5 2xl:px-10 justify-center">
+        <div className="w-full min-h-screen lg:w-2/8 flex flex-col gap-2 bg-primaryy text-gray-700 px-5 xl:px-10 3xl:px-30 justify-center">
             <div className="w-full flex justify-center"><div className="w-50 ml-15 h-28 mb-7 bg-[url('images/ncaa-logo.png')] bg-center bg-cover"></div></div>
             <label className="font-extrabold font-serif text-3xl">Sign In</label>
             <label className="mb-4 text-sm">Use your NCAA credentials to access the system.</label>
