@@ -5,8 +5,8 @@
 
 @theme {
    
-    --color-primaryy: #AD2409;
-    --color-primary: #F57A38; 
+    --color-primaryy: #90E3F5;
+    --color-primary: #0962AB; 
     --color-primary-dark: #0D2244;
     --color-primary-light: #E6F0FF;
 
@@ -37,8 +37,8 @@
 
   :root {
     /* Primary Colors */
-    --color-primaryy: #AD2409;
-    --color-primary: #F57A38; 
+    --color-primaryy: #90E3F5;
+    --color-primary: #0962AB; 
     --color-primary-dark: #0D2244;
     --color-primary-light: #E6F0FF;
 
