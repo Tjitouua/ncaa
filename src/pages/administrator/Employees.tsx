@@ -5,7 +5,7 @@ import { useState } from "react";
 
 
 
-const Dashboard = () => {
+const Employees = () => {
 
    const [showMenu, setShowMenu] = useState(false);
 
@@ -14,10 +14,10 @@ const Dashboard = () => {
        <div className="w-full min-h-screen flex">
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
-             <TopMenu setShowMenu={setShowMenu} title="Dashboard" />
+             <TopMenu setShowMenu={setShowMenu} title="Employees" />
           </div>
        </div>
     );
 }
 
-export default Dashboard;
+export default Employees;

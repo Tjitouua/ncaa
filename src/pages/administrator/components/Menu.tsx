@@ -12,37 +12,37 @@ import { IoNotificationsOutline } from "react-icons/io5";
 const menuItems = [
    {
       name: "Dashboard",
-      path: "/dashboard",
+      path: "/admin/dashboard",
       icon: <RxDashboard />
    },
    {
       name: "Employees",
-      path: "/employees",
+      path: "/admin/employees",
       icon: <FiUsers />
    },
    {
       name: "Training Programs",
-      path: "/programs",
+      path: "/admin/training_programs",
       icon: <PiGraduationCap />
    },
    {
       name: "Assign Training",
-      path: "/assign",
+      path: "/admin/assign_training",
       icon: <FaRegFileAlt />
    },
    {
       name: "Certifications",
-      path: "/cerificates",
+      path: "/admin/certifications",
       icon: <PiCertificateBold />
    },
    {
       name: "Training History",
-      path: "/history",
+      path: "/admin/training_history",
       icon: <FaClockRotateLeft />
    },
    {
       name: "Notifications",
-      path: "/notifications",
+      path: "/admin/notifications",
       icon: <IoNotificationsOutline />
    },
 ]

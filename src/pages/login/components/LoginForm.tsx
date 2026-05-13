@@ -41,7 +41,7 @@ const LoginForm = () => {
             </div>
 
             <button 
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/admin/dashboard")}
             className="w-full py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
             </div>
           </div>

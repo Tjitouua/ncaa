@@ -2,15 +2,15 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 
-const TopMenu = ({ setShowMenu }) => {
+const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
     return (
-        <div className="w-full py-3 bg-white border-l border-l-secondaryy flex px-6 justify-between items-center">
+        <div className="w-full py-3 bg-white border-l border-l-secondaryy flex px-2 md:px-6 justify-between items-center">
             {/* Name  */}
             <div className="flex items-center gap-5">
                 <MdOutlineSpaceDashboard 
                  onClick={() => setShowMenu(true)}
                  className="font-bold text-xl flex xl:hidden" />
-                <label className="font-bold text-xl">Dashboard</label>
+                <label className="font-bold text-xl">{title}</label>
             </div>
 
             <div className="flex items-center gap-3">
