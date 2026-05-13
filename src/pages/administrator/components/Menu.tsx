@@ -49,9 +49,21 @@ const menuItems = [
 
 
 
-const Menu = () => {
+const Menu = ({ showMenu, setShowMenu }) => {
    return (
-      <div className="w-[18%] min-h-screen bg-white shadow-xl shadow-red-600 hidden xl:flex flex-col py-3 px-5">
+    <>
+     {showMenu && (
+        <div
+           onClick={() => setShowMenu(false)}
+           className="fixed inset-0 bg-black/30 z-40 xl:hidden"
+        />
+     )}
+
+      <div className={`fixed xl:static top-0 left-0 w-[75%] md:w-[45%] xl:w-[18%] min-h-screen
+       bg-white flex flex-col py-3 px-5 z-50 transition-all duration-1000
+         ${showMenu ? "translate-x-0": "-translate-x-full"}
+         xl:translate-x-0
+       `}>
           {/* Top Part  */}
           <div className="w-full py-3 flex gap-4 text-secondary/80 justify-between border-b-2">
              {/* <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center"></div> */}
@@ -67,7 +79,11 @@ const Menu = () => {
           <div className="flex felx-col py-7 text-sm flex-col">
              <label className="text-xs text-secondary/60 mb-4 mt-2 ml-2">ADMINISTRATOR</label>
              {menuItems.map((item, index) => (
-             <NavLink key={index} to={item.path} className={({ isActive }) => 
+             <NavLink 
+                 key={index} 
+                 to={item.path} 
+                 onClick={() => setShowMenu(false)}
+                 className={({ isActive }) => 
                 `w-full py-2 px-2 font-bold cursor-pointer flex items-center gap-4
                  ${isActive
                     ? "bg-secondaryy"
@@ -81,6 +97,7 @@ const Menu = () => {
              ))}
           </div>
       </div>
+    </>
    );
 }
 
