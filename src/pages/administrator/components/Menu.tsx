@@ -76,7 +76,7 @@ const Menu = ({ showMenu, setShowMenu }) => {
           </div>
 
           {/* Menu Part  */}
-          <div className="flex felx-col py-7 text-sm flex-col">
+          <div className="flex py-7 text-sm flex-col">
              <label className="text-xs text-secondary/60 mb-4 mt-2 ml-2">ADMINISTRATOR</label>
              {menuItems.map((item, index) => (
              <NavLink 
