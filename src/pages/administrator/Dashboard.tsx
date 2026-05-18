@@ -12,9 +12,9 @@ const Dashboard = () => {
 
 
     return (
-       <div className="w-full min-h-screen flex">
+       <div className="w-full h-screen flex">
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
-          <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
+          <div className="w-full xl:w-[82%] min-h-screen overflow-y-auto text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Dashboard" />
              <DashboardPart />
           </div>

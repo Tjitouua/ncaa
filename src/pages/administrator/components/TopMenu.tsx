@@ -60,7 +60,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
 
     return (
-        <div ref={popupRef} className="w-full py-3 bg-white border-l border-l-secondaryy flex px-2 md:px-6 justify-between items-center">
+        <div ref={popupRef} className="sticky top-0 w-full py-3 bg-white shadow-xs shadow-secondary/20 border-l border-l-secondaryy flex px-2 md:px-6 justify-between items-center">
             {/* Name  */}
             <div className="flex items-center gap-5">
                 <MdOutlineSpaceDashboard 

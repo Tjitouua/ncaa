@@ -59,8 +59,8 @@ const Menu = ({ showMenu, setShowMenu }) => {
         />
      )}
 
-      <div className={`fixed xl:static top-0 left-0 w-[75%] md:w-[45%] xl:w-[18%] min-h-screen
-       bg-white flex flex-col py-3 px-5 z-60 transition-all duration-1000
+      <div className={`fixed xl:sticky top-0 left-0 w-[75%] md:w-[45%] xl:w-[18%] h-screen
+       bg-white flex flex-col py-3 px-5 z-50 transition-all duration-1000
          ${showMenu ? "translate-x-0": "-translate-x-full"}
          xl:translate-x-0
        `}>
