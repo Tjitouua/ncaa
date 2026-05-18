@@ -59,8 +59,8 @@ const DashboardPart = () => {
         <div className="w-full min-h-screen text-secondary/90 px-2 md:px-6">
             {/* Welcome Div  */}
             <div className="flex flex-col mt-9 mb-3">
-               <label className="font-bold text-2xl">Welcome back, Administrator</label>
-               <label className="text-secondary/60">Overview of NCAA staff training & completion</label>
+               <label className="font-bold text-xl">Welcome back, Administrator</label>
+               <label className="text-secondary/60 text-sm">Overview of NCAA staff training & completion</label>
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
