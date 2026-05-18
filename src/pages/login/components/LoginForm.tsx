@@ -43,6 +43,10 @@ const LoginForm = () => {
             <button 
               onClick={() => navigate("/admin/dashboard")}
             className="w-full py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
+
+            <div className="w-full flex items-center justify-center text-xs mt-5">
+              <label>Forgot Password? <span className="font-bold cursor-pointer hover:underline">Click here</span></label>
+            </div>
             </div>
           </div>
         </div>
