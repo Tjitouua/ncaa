@@ -12,7 +12,7 @@ const LoginForm = () => {
      return (
         <div className=" min-h-screen flex flex-col gap-2 text-gray-600 px-5 xl:px-5 3xl:px-30 justify-center py-5">
           <div className="flex flex-col gap-2 min-w-90 bg-white text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/30">
-            <div className="w-full py-3 bg-primaryy flex pt-6 px-5 xl:px-6 justify-start"><div className="w-50 h-28 mb-5 bg-[url('images/ncaa-logo.png')] bg-center bg-cover"></div></div>
+            <div className="w-full py-3 bg-primaryy flex pt-6 px-5 xl:px-6 justify-center"><div className="w-50 h-28 mb-5 bg-[url('images/ncaa-logo.png')] bg-center bg-cover"></div></div>
             {/* Form  */}
             <div className="flex flex-col gap-1 text-gray-600 px-5 xl:px-8 justify-center pb-10 py-5">
             <label className="font-extrabold font-serif text-2xl">Sign In</label>
