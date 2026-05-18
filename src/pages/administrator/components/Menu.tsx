@@ -72,7 +72,7 @@ const Menu = ({ showMenu, setShowMenu }) => {
                 <label className="text-xs">Training Record</label>
                 <label className="text-xs">Management System</label>
              </div>
-             <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center"></div>
+             <div className="w-[40%] h-15 bg-[url('/images/ncaa_logo2.png')] bg-cover bg-center"></div>
           </div>
 
           {/* Menu Part  */}
