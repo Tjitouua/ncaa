@@ -6,6 +6,7 @@ import { TbFileCertificate } from "react-icons/tb";
 import { MdOutlineWarningAmber } from "react-icons/md";
 import ComplianceGraph from "../ui/ComplianceGraph";
 import MonthsGraph from "../ui/MonthsGraph";
+import CertificationGraph from "../ui/CertificationGraph";
 
 
 
@@ -80,6 +81,7 @@ const DashboardPart = () => {
             <div className="w-full py-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ComplianceGraph />
                 <MonthsGraph />
+                <CertificationGraph />
             </div>
         </div>
      );

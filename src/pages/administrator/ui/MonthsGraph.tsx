@@ -44,7 +44,7 @@ const MonthsGraph = () => {
                           <Line 
                              type="monotone"
                              dataKey="completed"
-                             stroke="#3b82f6"
+                             stroke="#0962AB"
                              strokeWidth={2}
                              dot={{ r: 3 }}
                              activeDot={{ r: 6 }}
