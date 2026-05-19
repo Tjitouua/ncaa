@@ -5,6 +5,7 @@ import { MdOutlinePendingActions } from "react-icons/md";
 import { TbFileCertificate } from "react-icons/tb";
 import { MdOutlineWarningAmber } from "react-icons/md";
 import ComplianceGraph from "../ui/ComplianceGraph";
+import MonthsGraph from "../ui/MonthsGraph";
 
 
 
@@ -61,7 +62,7 @@ const DashboardPart = () => {
             {/* Welcome Div  */}
             <div className="flex flex-col mt-9 mb-1">
                <label className="font-bold text-xl">Welcome back, Administrator</label>
-               <label className="text-secondary/60 text-sm">Overview of NCAA staff training & completion</label>
+               <label className="text-secondary/50 text-sm">Overview of NCAA staff training & completion</label>
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -76,8 +77,9 @@ const DashboardPart = () => {
                 ))}
             </div>
             {/* Graphs Div  */}
-            <div className="w-full py-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="w-full py-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ComplianceGraph />
+                <MonthsGraph />
             </div>
         </div>
      );
