@@ -1,3 +1,4 @@
+
 import {
     BarChart,
     Bar,
@@ -12,12 +13,12 @@ import {
 
   const data = [
     {
-       name: "Flight Operations",
-       percentage: 100
-    },
-    {
         name: "Engineering",
         percentage: 100
+     },
+     {
+      name: "Flight Operations",
+      percentage: 100
      },
      {
         name: "Administration",
@@ -41,18 +42,20 @@ import {
 
 const ComplianceGraph = () => {
      return (
-        <div className="p-5 flex flex-col bg-white shadow-xs shadow-secondary/20 h-[55vh]">
+        <div className="p-6 flex flex-col bg-white shadow-xs shadow-secondary/20 h-[55vh]">
            <label className="font-bold">Training Compliance by Department</label>
-           <label className="text-xs text-secondary/50">% of assignments completed per department</label>
+           <label className="text-xs text-secondary/50 mb-6">% of assignments completed per department</label>
 
-           <div className="flex-1 w-full">
+           <div className="flex-1 w-full text-xs">
            <ResponsiveContainer width="100%" height="100%">
-                   <BarChart data={data}>
+                   <BarChart 
+                   data={data}
+                   margin = {{top: 0, right: 0, left: -25, bottom: 10}}>
                        <CartesianGrid strokeDasharray="3 3" />
-                       <XAxis dataKey="name" />
+                       <XAxis dataKey="name" interval={0} angle={-15} textAnchor="end" />
                        <YAxis domain={[0, 100]} tickFormatter={(tick) => `${tick}%`} />
                        <Tooltip formatter={(value) => `${value}%`} />
-                       <Bar dataKey="percentage" radius={[6, 6, 0, 0]} />
+                       <Bar fill="#0962AB" dataKey="percentage" radius={[6, 6, 0, 0]} />
                    </BarChart>
            </ResponsiveContainer>
            </div>
