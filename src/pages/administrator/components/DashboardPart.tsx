@@ -4,6 +4,7 @@ import { PiGraduationCap } from "react-icons/pi";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { TbFileCertificate } from "react-icons/tb";
 import { MdOutlineWarningAmber } from "react-icons/md";
+import ComplianceGraph from "../ui/ComplianceGraph";
 
 
 
@@ -73,6 +74,10 @@ const DashboardPart = () => {
                    desc = {stat.desc}
                  />
                 ))}
+            </div>
+            {/* Graphs Div  */}
+            <div className="w-full py-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <ComplianceGraph />
             </div>
         </div>
      );
