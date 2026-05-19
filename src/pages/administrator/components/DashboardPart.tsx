@@ -7,6 +7,7 @@ import { MdOutlineWarningAmber } from "react-icons/md";
 import ComplianceGraph from "../ui/ComplianceGraph";
 import MonthsGraph from "../ui/MonthsGraph";
 import CertificationGraph from "../ui/CertificationGraph";
+import EmployeesGraph from "../ui/EmployeesGraph";
 
 
 
@@ -82,6 +83,7 @@ const DashboardPart = () => {
                 <ComplianceGraph />
                 <MonthsGraph />
                 <CertificationGraph />
+                <EmployeesGraph />
             </div>
         </div>
      );

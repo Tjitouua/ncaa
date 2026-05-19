@@ -12,11 +12,12 @@ import {
   const data = [
     {name: "Active", value: 230},
     {name: "Expiring Soon", value: 32},
-    {name: "Expired", value: 6}
+    {name: "Expired", value: 6},
+    // {name: "Expiring Soon", value: 32}
   ];
 
 
-  const COLORS = ["#0962AB", "#BD3217", "#217A1C"]
+  const COLORS = ["#0962AB", "#F2970C", "#BD3217"]
 
 
 
