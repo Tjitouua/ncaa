@@ -6,6 +6,7 @@ import SecondaryButt from "../../../ui/SecondaryButt";
 import { IoSearchSharp } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
 import { FiEye } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -72,13 +73,21 @@ const employees = [
 
 
 const EmployeesPart = () => {
+
+
+
+   const navigate = useNavigate();
+
+
+
+
     return (
        <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
           <div className="w-full h-screen  py-5">
 
              <div className="flex flex-col">
                {/* Top Part  */}
-               <div className="flex items-center justify-between border-b border-secondary/40 pb-5">
+               <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg">Staff Directory</label>
                     <label className="text-xs text-secondary/60">7 employees registered</label>
@@ -88,7 +97,7 @@ const EmployeesPart = () => {
                           <LuDownload />
                           Export
                       </SecondaryButt>
-                    <PrimaryButt>
+                    <PrimaryButt onClick={() => navigate("/admin/employees/employee_add")}>
                        <RiAddLargeLine /> Add Employee
                     </PrimaryButt>
                  </div>
@@ -96,7 +105,7 @@ const EmployeesPart = () => {
                {/* Names  */}
                 <div className="w-full py-5 flex flex-col gap-5">
                     <div className="w-full flex items-center justify-between">
-                      <div className="w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
+                      <div className="md:w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
                        <IoSearchSharp className="text-secondary/30" />
                        <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
                       </div>
@@ -105,7 +114,7 @@ const EmployeesPart = () => {
                       </SecondaryButt>
                     </div>
                     {/* Employees Table  */}
-                    <table className="w-full border text-xs border-secondary/40">
+                    <table className="w-full border text-xs border-secondary/30">
                        <thead>
                           <tr className="bg-secondary/10 border-b border-secondary/20">
                              <th className="text-left p-3">Employee ID</th>
