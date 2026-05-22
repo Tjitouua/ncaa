@@ -10,6 +10,7 @@ import Certifications from './pages/administrator/Certifications'
 import TrainingHistory from './pages/administrator/TrainingHistory'
 import Notifications from './pages/administrator/Notifications'
 import EmployeeAdd from './pages/administrator/EmployeeAdd'
+import EmployeeDetails from './pages/administrator/EmployeeDetails'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/employees" element={<Employees />} />
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
+          <Route path="/admin/employees/employee_details" element={<EmployeeDetails />} />
           <Route path="/admin/training_programs" element={<Programs />} />
           <Route path="/admin/assign_training" element={<Assign />} />
           <Route path="/admin/certifications" element={<Certifications />} />

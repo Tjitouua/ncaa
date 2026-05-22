@@ -134,7 +134,9 @@ const EmployeesPart = () => {
                              <td className="px-3 py-2">{employee.email}</td>
                              <td className="px-3 py-2">{employee.department}</td>
                              <td className="px-3 py-2">{employee.position}</td>
-                             <td className="px-3 py-2"><button className="flex items-center gap-2 font-bold 
+                             <td className="px-3 py-2"><button 
+                                                        onClick={() => navigate("/admin/employees/employee_details")}
+                                                        className="flex items-center gap-2 font-bold 
                                                         rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /> View</button></td>
                           </tr>
                          ))}
