@@ -29,18 +29,18 @@ const EmployeeAdd = () => {
 
 
              {/* Form  */}
-             <div className="w-full py-3 min-h-screen flex items-start justify-start">
-                <div className="w-full md:w-3/4 flex flex-col bg-white shadow-md shadow-black/30">
+             <div className="w-full py-3 min-h-screen flex items-start justify-center">
+                <div className="w-full md:w-2/4 flex flex-col bg-white shadow-md shadow-black/30">
                 {/* <div className="w-full bg-secondaryy"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
                   {/* Top Part  */}
                    <div className="w-full py-5 px-5 bg-primaryy">
                       <div className="w-35 h-20 bg-[url('/images/ncaa-logo.png')] bg-center bg-cover"></div>
                    </div>
                    {/* Form (WHite Part) */}
-                   <div className="bg-white flex flex-col py-5 pb-7 px-5">
+                   <div className="bg-white flex flex-col py-5 pb-10 px-5">
                       <label className="font-bold">Add New Employee</label>
                       <label className="text-xs mb-3 text-secondary/40">Register a new employee in the system.</label>
-                      <div className="w-full pb-5 py-2 gap-4 text-secondary/60 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="w-full pb-7 py-2 gap-4 text-secondary/60 grid grid-cols-1 sm:grid-cols-2">
                           <Inputs
                             label="Employee ID"
                             placeholder="Enter the employee ID"
