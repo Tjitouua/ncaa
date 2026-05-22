@@ -57,7 +57,7 @@ const EmployeeDetails = () => {
                 {/* <div className="w-full mb-2"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
 
                     {/* Top Part  */}
-                    <div className="w-full py-3 px-7 flex gap-8 bg-white shadow-xs shadow-black/30  items-center">
+                    <div className="w-full py-3 px-7 flex gap-8 bg-white shadow-xs shadow-black/10  items-center">
                          <div className="rounded-full w-25 h-25 bg-[url('/images/spillo.jpg')] bg-center bg-cover"><img src="/images/spillo.jpg" className="w-full rounded-full h-full" /></div>
                          <div className="p-2 flex flex-col gap-1">
                              <label className="font-bold">Tjitouua Mapoha</label>
@@ -68,7 +68,7 @@ const EmployeeDetails = () => {
 
                   {/* <div className="grid items-start grid-cols-1 md:grid-cols-2 gap-5"> */}
                     {/* Personal Information  */}
-                    <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/30 ">
+                    <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/10 ">
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
                            <label className="font-bold">Personal Information</label>
                            <PrimaryButt>Edit <GrEdit /></PrimaryButt>
@@ -89,7 +89,7 @@ const EmployeeDetails = () => {
 
                     <div className="flex flex-col gap-3">
                     {/* Address  */}
-                    <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/30 ">
+                    <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/10 ">
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
                            <label className="font-bold">Address</label>
                            <SecondaryButt className="!bg-secondary/30">Edit <GrEdit /></SecondaryButt>
@@ -103,7 +103,7 @@ const EmployeeDetails = () => {
                         </div>
                     </div>
                     {/* Training History  */}
-                    <div className="w-full py-3 pb-5 px-7 bg-white shadow-xs shadow-black/30 ">
+                    <div className="w-full py-3 pb-5 px-7 bg-white shadow-xs shadow-black/10 ">
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
                            <label className="font-bold">Training History</label>
                            {/* <SecondaryButt className="!bg-secondary/30">Edit <GrEdit /></SecondaryButt> */}
