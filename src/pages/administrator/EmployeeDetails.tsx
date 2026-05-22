@@ -50,11 +50,11 @@ const EmployeeDetails = () => {
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
  
-             <div className="w-full min-h-screen items-center flex flex-col gap-3 px-2 md:px-6 py-4">
-                {/* <div className="w-full"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
+             <div className="w-full min-h-screen items-center flex flex-col gap-3 px-2 md:px-6 py-6">
+                <div className="w-full"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
                 {/* Employee Profile Div  */}
                 <div className="w-3/4 min-h-screen flex flex-col gap-4 py-3">
-                <div className="w-full mb-2"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
+                {/* <div className="w-full mb-2"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
 
                     {/* Top Part  */}
                     <div className="w-full py-3 px-7 flex gap-8 bg-white shadow-xs shadow-black/30  items-center">

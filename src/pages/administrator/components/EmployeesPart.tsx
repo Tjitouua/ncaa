@@ -13,55 +13,62 @@ import { useNavigate } from "react-router-dom";
 const employees = [
    {
       id: "EMP-001",
+      name: "Titouua Mapoha",
+      email: "t.mapoha@ncaa.na",
+      department: "ICT",
+      position: "Software Developer"
+   },
+   {
+      id: "EMP-002",
       name: "Tangeni Shipanga",
       email: "t.shipanga@ncaa.na",
       department: "Air Navigation",
       position: "Senior Controller"
    },
    {
-      id: "EMP-002",
+      id: "EMP-003",
       name: "Nangula Iitula",
       email: "n.iitula@ncaa.na",
       department: "Safety & Security",
       position: "Safety Inspector"
    },
    {
-      id: "EMP-003",
+      id: "EMP-004",
       name: "Petrus Hamukwaya",
       email: "p.hamukwaya@ncaa.na",
       department: "Aerodromes",
       position: "Aerodrome Officer"
    },
    {
-      id: "EMP-004",
+      id: "EMP-005",
       name: "Selma Amukwaya",
       email: "s.amukwaya@ncaa.na",
       department: "Air Navigation",
       position: "ATC Trainee"
    },
    {
-      id: "EMP-005",
+      id: "EMP-006",
       name: "Johannes Kavela",
       email: "j.kavela@ncaa.na",
       department: "Flight Operations",
       position: "Operations Officer"
    },
    {
-      id: "EMP-006",
+      id: "EMP-007",
       name: "Maria Nghipundjwa",
       email: "m.nghipundjwa@ncaa.na",
       department: "Safety & Security",
       position: "Security Lead"
    },
    {
-      id: "EMP-007",
+      id: "EMP-008",
       name: "David Haufiku",
       email: "d.haufiku@ncaa.na",
       department: "Engineering",
       position: "Avionics Engineer"
    },
    {
-      id: "EMP-008",
+      id: "EMP-009",
       name: "Hilma Nambahu",
       email: "d.haufiku@ncaa.na",
       department: "Administration",
