@@ -1,0 +1,3 @@
+
+
+CREATE DATABASE IF NOT EXIST ncaa_trainings;

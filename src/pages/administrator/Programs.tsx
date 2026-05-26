@@ -4,6 +4,7 @@ import TopMenu from "./components/TopMenu";
 import { useState } from "react";
 import { RiAddLargeLine } from "react-icons/ri";
 import ProgramsCard from "./ui/ProgramsCard";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 
 
@@ -110,7 +111,10 @@ const Programs = () => {
          place: "Internal",
          program_id: "TRN-004"
       }
-   ]
+   ];
+
+
+   const navigate = useNavigate();
 
 
     return (
@@ -134,7 +138,7 @@ const Programs = () => {
                               <option>Optional</option>
                           </select>
                        </div>
-                       <PrimaryButt><RiAddLargeLine /> Add Training</PrimaryButt>
+                       <PrimaryButt onClick={() => navigate("/admin/training_programs/program_add")}><RiAddLargeLine /> Add Training</PrimaryButt>
                     </div>
                  </div>
                  {/* Programs  */}
