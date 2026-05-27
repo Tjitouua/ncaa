@@ -64,7 +64,7 @@ const assignment = [
 
 const RecentAssignments = () => {
     return (
-       <div className="w-[65%] py-6 flex flex-col h-[80vh] bg-white px-5 pb-8 shadow-sm shadow-secondary/30">
+       <div className="w-[65%] py-6 flex flex-col min-h-[86vh] bg-white px-5 pb-8 shadow-sm shadow-secondary/30">
           <label className="font-bold text-lg">Recent Assignments</label>
           <label className="text-xs text-secondary/60">Latest Training assignments accross the organisation</label>
 
@@ -83,11 +83,11 @@ const RecentAssignments = () => {
 
                         {assignment.map((assign, index) => (
                           <tr key={index} className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-2">{assign.employee}</td>
-                             <td className="px-3 py-2">{assign.training}</td>
-                             <td className="px-3 py-2">{assign.assigned}</td>
-                             <td className="px-3 py-2">{assign.deadline}</td>
-                             <td className="px-3 py-2">{assign.status}</td>
+                             <td className="px-3 py-3">{assign.employee}</td>
+                             <td className="px-3 py-3">{assign.training}</td>
+                             <td className="px-3 py-3">{assign.assigned}</td>
+                             <td className="px-3 py-3">{assign.deadline}</td>
+                             <td className="px-3 py-3">{assign.status}</td>
                           </tr>
                          ))}
                        </tbody>

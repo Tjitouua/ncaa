@@ -106,12 +106,12 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                       </div>
                    </div>
                    <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold">Certification expiring soon</label>
+                      <label className="font-bold text-sm">Certification expiring soon</label>
                       <label className="text-xs hover:underline">AVSEC-2024-042 expires in 20 days.</label>
                       <label className="text-[10px]">5/19/2026</label>
                    </div>
                    <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold">Certification expiring soon</label>
+                      <label className="font-bold text-sm">Certification expiring soon</label>
                       <label className="text-xs hover:underline">AVSEC-2024-042 expires in 10 days.</label>
                       <label className="text-[10px]">5/19/2026</label>
                    </div>
