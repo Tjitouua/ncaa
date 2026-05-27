@@ -4,6 +4,7 @@ import { GrEdit } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,7 +20,16 @@ interface Props {
 
 
 
+
 const ProgramsCard: React.FC<Props> = ( {name, desc, type, duration, place, program_id} ) => {
+
+
+
+   const navigate = useNavigate();
+
+
+
+
     return (
         <div className="px-5 py-7 bg-white shadow-xs shadow-secondary/30 flex flex-col">
             <div className="w-full flex items-center mb-5">
@@ -37,7 +47,7 @@ const ProgramsCard: React.FC<Props> = ( {name, desc, type, duration, place, prog
             <div className="mt-4 flex items-center justify-between">
                <label className="text-xs text-secondary/60">{program_id}</label>
                <div className="flex gap-5 items-center text-sm">
-                  <GrEdit className="cursor-pointer hover:text-primary" />
+                  <GrEdit onClick={() => navigate("/admin/training_programs/program_details")} className="cursor-pointer hover:text-primary" />
                   <RiDeleteBin6Line className="text-red-600 cursor-pointer hover:text-primary" />
                </div>
             </div>
