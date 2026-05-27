@@ -31,6 +31,11 @@ const NewAssignment = () => {
             position: "Senior Controller",
             department: "Air Navigation"
          },
+         {
+            name: "Tangeni Shipanga",
+            position: "Senior Controller",
+            department: "Air Navigation"
+         },
     ]
 
 
@@ -66,7 +71,7 @@ const NewAssignment = () => {
                       <IoSearchSharp />
                       <input className="py-3 w-full font-bold focus:outline-none placeholder:font-normal placeholder:text-xs" type="text" placeholder="Search staff by name..." />
                     </div>
-                    <div className="w-full flex flex-col mt-2 rounded-md border border-secondary/30 overflow-hidden">
+                    <div className="w-full flex flex-col scrollbar-thin scrollbar-secondaryy/10 mt-2 h-[26vh] overflow-y-scroll rounded-md border border-secondary/30 overflow-hidden">
                         {staff.map((staff, index) => (
                         <div className="w-full py-2 gap-5 flex px-3 items-center cursor-pointer hover:bg-secondaryy/60">
                             <input type="checkbox" />
