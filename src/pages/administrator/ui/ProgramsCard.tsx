@@ -9,19 +9,19 @@ import { useNavigate } from "react-router-dom";
 
 
 interface Props {
-    name: string;
-    desc: string;
-    type: string;
-    duration: string;
-    place: string;
-    program_id: string;
+   training_name: string;
+   description: string;
+   category: string;
+   duration: string;
+   provider: string;
+   training_code: string;
 }
 
 
 
 
 
-const ProgramsCard: React.FC<Props> = ( {name, desc, type, duration, place, program_id} ) => {
+const ProgramsCard: React.FC<Props> = ( {training_name, description, category, duration, provider, training_code} ) => {
 
 
 
@@ -37,15 +37,15 @@ const ProgramsCard: React.FC<Props> = ( {name, desc, type, duration, place, prog
                   <FaGraduationCap className="text-lg" />
                </div>
             </div>
-            <label className="text-sm font-bold whitespace-nowrap overflow-hidden text-ellipsis">{name}</label>
-            <label className="text-xs whitespace-nowrap overflow-hidden text-ellipsis">{desc}</label>
+            <label className="text-sm font-bold whitespace-nowrap overflow-hidden text-ellipsis">{training_name}</label>
+            <label className="text-xs whitespace-nowrap overflow-hidden text-ellipsis">{description}</label>
             <div className="flex gap-2 items-center text-xs w-full mt-4 text-secondary/60 pb-4 border-b border-secondary/20">
                <label className="flex items-center gap-1"><MdOutlineAccessTime />{duration}</label>
                <label className="font-bold">·</label>
-               <label>{place}</label>
+               <label>{provider}</label>
             </div>
             <div className="mt-4 flex items-center justify-between">
-               <label className="text-xs text-secondary/60">{program_id}</label>
+               <label className="text-xs text-secondary/60">{training_code}</label>
                <div className="flex gap-5 items-center text-sm">
                   <GrEdit onClick={() => navigate("/admin/training_programs/program_details")} className="cursor-pointer hover:text-primary" />
                   <RiDeleteBin6Line className="text-red-600 cursor-pointer hover:text-primary" />

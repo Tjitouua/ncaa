@@ -7,74 +7,75 @@ import { IoSearchSharp } from "react-icons/io5";
 import { LuDownload } from "react-icons/lu";
 import { FiEye } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 
-const employees = [
-   {
-      id: "EMP-001",
-      name: "Titouua Mapoha",
-      email: "t.mapoha@ncaa.na",
-      department: "ICT",
-      position: "Software Developer"
-   },
-   {
-      id: "EMP-002",
-      name: "Tangeni Shipanga",
-      email: "t.shipanga@ncaa.na",
-      department: "Air Navigation",
-      position: "Senior Controller"
-   },
-   {
-      id: "EMP-003",
-      name: "Nangula Iitula",
-      email: "n.iitula@ncaa.na",
-      department: "Safety & Security",
-      position: "Safety Inspector"
-   },
-   {
-      id: "EMP-004",
-      name: "Petrus Hamukwaya",
-      email: "p.hamukwaya@ncaa.na",
-      department: "Aerodromes",
-      position: "Aerodrome Officer"
-   },
-   {
-      id: "EMP-005",
-      name: "Selma Amukwaya",
-      email: "s.amukwaya@ncaa.na",
-      department: "Air Navigation",
-      position: "ATC Trainee"
-   },
-   {
-      id: "EMP-006",
-      name: "Johannes Kavela",
-      email: "j.kavela@ncaa.na",
-      department: "Flight Operations",
-      position: "Operations Officer"
-   },
-   {
-      id: "EMP-007",
-      name: "Maria Nghipundjwa",
-      email: "m.nghipundjwa@ncaa.na",
-      department: "Safety & Security",
-      position: "Security Lead"
-   },
-   {
-      id: "EMP-008",
-      name: "David Haufiku",
-      email: "d.haufiku@ncaa.na",
-      department: "Engineering",
-      position: "Avionics Engineer"
-   },
-   {
-      id: "EMP-009",
-      name: "Hilma Nambahu",
-      email: "d.haufiku@ncaa.na",
-      department: "Administration",
-      position: "HR Officer"
-   },
-]
+// const employees = [
+//    {
+//       id: "EMP-001",
+//       name: "Titouua Mapoha",
+//       email: "t.mapoha@ncaa.na",
+//       department: "ICT",
+//       position: "Software Developer"
+//    },
+//    {
+//       id: "EMP-002",
+//       name: "Tangeni Shipanga",
+//       email: "t.shipanga@ncaa.na",
+//       department: "Air Navigation",
+//       position: "Senior Controller"
+//    },
+//    {
+//       id: "EMP-003",
+//       name: "Nangula Iitula",
+//       email: "n.iitula@ncaa.na",
+//       department: "Safety & Security",
+//       position: "Safety Inspector"
+//    },
+//    {
+//       id: "EMP-004",
+//       name: "Petrus Hamukwaya",
+//       email: "p.hamukwaya@ncaa.na",
+//       department: "Aerodromes",
+//       position: "Aerodrome Officer"
+//    },
+//    {
+//       id: "EMP-005",
+//       name: "Selma Amukwaya",
+//       email: "s.amukwaya@ncaa.na",
+//       department: "Air Navigation",
+//       position: "ATC Trainee"
+//    },
+//    {
+//       id: "EMP-006",
+//       name: "Johannes Kavela",
+//       email: "j.kavela@ncaa.na",
+//       department: "Flight Operations",
+//       position: "Operations Officer"
+//    },
+//    {
+//       id: "EMP-007",
+//       name: "Maria Nghipundjwa",
+//       email: "m.nghipundjwa@ncaa.na",
+//       department: "Safety & Security",
+//       position: "Security Lead"
+//    },
+//    {
+//       id: "EMP-008",
+//       name: "David Haufiku",
+//       email: "d.haufiku@ncaa.na",
+//       department: "Engineering",
+//       position: "Avionics Engineer"
+//    },
+//    {
+//       id: "EMP-009",
+//       name: "Hilma Nambahu",
+//       email: "d.haufiku@ncaa.na",
+//       department: "Administration",
+//       position: "HR Officer"
+//    },
+// ]
 
 
 
@@ -84,6 +85,26 @@ const EmployeesPart = () => {
 
 
    const navigate = useNavigate();
+   
+   const [staff, setStaff] = useState([]);
+   const [loading, setLoading] = useState(true);
+
+
+   useEffect(() => {
+      fetch("http://localhost/ncaa/get_staff.php")
+      .then((response) => response.json())
+      .then((data) => {
+         if(data.success) {
+            setStaff(data.data);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching Staff: ", error);
+      })
+      .finally(() => {
+         setLoading(false);
+      });
+   }, []);
 
 
 
@@ -97,7 +118,7 @@ const EmployeesPart = () => {
                <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg">Staff Directory</label>
-                    <label className="text-xs text-secondary/60">7 employees registered</label>
+                    <label className="text-xs text-secondary/60">{staff.length} employees registered</label>
                  </div>
                  <div className="flex items-center gap-3">
                     <SecondaryButt>
@@ -133,20 +154,23 @@ const EmployeesPart = () => {
                           </tr>
                        </thead>
                        <tbody>
-
-                        {employees.map((employee, index) => (
-                          <tr key={index} className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-2">{employee.id}</td>
-                             <td className="px-3 py-2">{employee.name}</td>
+                       {loading ? (
+                           <p>Loading staff...</p>
+                       ) : (
+                        staff.map((employee, index) => (
+                          <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
+                             <td className="px-3 py-2">{employee.staff_id}</td>
+                             <td className="px-3 py-2">{employee.first_name}</td>
                              <td className="px-3 py-2">{employee.email}</td>
                              <td className="px-3 py-2">{employee.department}</td>
-                             <td className="px-3 py-2">{employee.position}</td>
+                             <td className="px-3 py-2">{employee.role}</td>
                              <td className="px-3 py-2"><button 
                                                         onClick={() => navigate("/admin/employees/employee_details")}
                                                         className="flex items-center gap-2 font-bold 
                                                         rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /> View</button></td>
                           </tr>
-                         ))}
+                         ))
+                        )}
                        </tbody>
                     </table>
                 </div>

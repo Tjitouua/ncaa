@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,6 +8,43 @@ const LoginForm = () => {
 
 
     const navigate = useNavigate();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const login = async () => {
+       if (!username || !password) {
+         alert("Please fill in all fields");
+         return;
+       }
+
+       try {
+         const response = await fetch("http://localhost/ncaa/login.php", {
+             method: "POST",
+             headers: {
+                "Content-Type": "application/json",
+             },
+             body: JSON.stringify({
+               username,
+               password,
+             }),
+         });
+
+         const data = await response.json();
+
+         if (data.success) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            navigate("/admin/dashboard");
+         } else {
+           alert(data.message);
+         }
+       } catch (error) {
+           console.log(error);
+           alert("Server error");
+       }
+
+      };
+
 
 
      return (
@@ -21,28 +59,30 @@ const LoginForm = () => {
             {/* Username  */}
             <div className="flex flex-col gap-1 mb-2">
                 <label className="font-bold text-sm">Username</label>
-                <input className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="e.g. hangula.e" />
+                <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="e.g. hangula.e" />
+                <label className="text-xs text-red-600 hidden">Please enter username</label>
             </div>
 
             {/* Password  */}
             <div className="flex flex-col gap-1 mb-2">
                 <label className="font-bold text-sm">Password</label>
-                <input className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
+                <label className="text-xs text-red-600 hidden">Please enter password</label>
             </div>
 
             {/* Sign in as  */}
-            <div className="flex flex-col gap-1 mb-5">
+            {/* <div className="flex flex-col gap-1 mb-5">
                 <label className="font-bold text-sm">Sign in as</label>
                 <select className="w-full cursor-pointer text-sm text-gray-500 border-black/50 py-2 border rounded-lg px-3 pr-20 outline-none">
                     <option>Employee</option>
                     <option>Training officer</option>
                     <option>Administrator</option>
                 </select>
-            </div>
+            </div> */}
 
             <button 
-              onClick={() => navigate("/admin/dashboard")}
-            className="w-full py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
+              onClick={login}
+            className="w-full mt-5 py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
 
             <div className="w-full flex items-center justify-center text-xs mt-5">
               <label>Forgot Password? <span className="font-bold cursor-pointer hover:underline">Click here</span></label>

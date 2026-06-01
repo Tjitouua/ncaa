@@ -1,7 +1,7 @@
 import PrimaryButt from "../../ui/PrimaryButt";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiAddLargeLine } from "react-icons/ri";
 import ProgramsCard from "./ui/ProgramsCard";
 import { useNavigate, useNavigation } from "react-router-dom";
@@ -12,109 +12,27 @@ import { useNavigate, useNavigation } from "react-router-dom";
 const Programs = () => {
 
    const [showMenu, setShowMenu] = useState(false);
-
-
-   const programsList = [
-      {
-         name: "ICAO Aviation English Proficiency",
-         desc: "Mandatory language proficiency for ATCs.",
-         type: "Mandatory",
-         duration: "4 weeks",
-         place: "Internal",
-         program_id: "TRN-001"
-      },
-      {
-         name: "Human Factors in Aviation",
-         desc: "CRM and safety culture.",
-         type: "Mandatory",
-         duration: "3 Months",
-         place: "Internal",
-         program_id: "TRN-002"
-      },
-      {
-         name: "Aerodrome Inspection Procedures",
-         desc: "Field inspection methodology.",
-         type: "Mandatory",
-         duration: "4 weeks",
-         place: "Internal",
-         program_id: "TRN-003"
-      },
-      {
-         name: "Dangerous Goods Handling",
-         desc: "IATA DGR compliance training.",
-         type: "Mandatory",
-         duration: "2 weeks",
-         place: "Internal",
-         program_id: "TRN-004"
-      },
-      {
-         name: "Air Traffic Safety Management",
-         desc: "Risk assessment and aviation safety oversight.",
-         type: "Mandatory",
-         duration: "6 weeks",
-         place: "Internal",
-         program_id: "TRN-005"
-      },
-      {
-         name: "Aviation Security Awareness",
-         desc: "Basic AVSEC principles and airport security compliance.",
-         type: "Mandatory",
-         duration: "2 weeks",
-         place: "Internal",
-         program_id: "TRN-006"
-      },
-      {
-         name: "Fire and Rescue Operations",
-         desc: "Aircraft emergency response and rescue coordination.",
-         type: "Mandatory",
-         duration: "1 Month",
-         place: "Internal",
-         program_id: "TRN-007"
-      },
-      {
-         name: "Search and Rescue Coordination",
-         desc: "Emergency coordination procedures for missing aircraft.",
-         type: "Mandatory",
-         duration: "3 weeks",
-         place: "External",
-         program_id: "TRN-008"
-      },
-      {
-         name: "ICAO Aviation English Proficiency",
-         desc: "Mandatory language proficiency for ATCs.",
-         type: "Mandatory",
-         duration: "4 weeks",
-         place: "Internal",
-         program_id: "TRN-001"
-      },
-      {
-         name: "Human Factors in Aviation",
-         desc: "CRM and safety culture.",
-         type: "Mandatory",
-         duration: "3 Months",
-         place: "Internal",
-         program_id: "TRN-002"
-      },
-      {
-         name: "Aerodrome Inspection Procedures",
-         desc: "Field inspection methodology.",
-         type: "Mandatory",
-         duration: "4 weeks",
-         place: "Internal",
-         program_id: "TRN-003"
-      },
-      {
-         name: "Dangerous Goods Handling",
-         desc: "IATA DGR compliance training.",
-         type: "Mandatory",
-         duration: "2 weeks",
-         place: "Internal",
-         program_id: "TRN-004"
-      }
-   ];
-
+   const [programs, setPrograms] = useState([]);
+   const [loading, setLoading] = useState(true);
 
    const navigate = useNavigate();
+
+
+   useEffect(() => {
+      fetch("http://localhost/ncaa/get_programs.php")
+      .then((response) => response.json())
+      .then((data) => {
+         if (data.success) {
+            setPrograms(data.data);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching programs: ", error);
+      })
+      .finally(() => {
+         setLoading(false);
+      });
+   }, []);
 
 
     return (
@@ -128,7 +46,7 @@ const Programs = () => {
                  <div className="w-full flex items-start justify-between">
                     <div className="flex flex-col">
                        <label className="text-lg">All Programs</label>
-                       <label className="text-xs text-secondary/60">6 programs</label>
+                       <label className="text-xs text-secondary/60">{programs.length} programs</label>
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="pr-3 border border-secondary/50 rounded-md">
@@ -143,17 +61,25 @@ const Programs = () => {
                  </div>
                  {/* Programs  */}
                  <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-3">
-                   {programsList.map((program, index) => (
+                  {loading ? (
+                     <p>Loading programs...</p>
+                  ) : programs.length === 0 ? (
+                       <div className="w-full items-center justify-center py-20">
+                           <p className="text-secondary/60">No training programs available.</p>
+                       </div>
+                  ) : (
+                   programs.map((program) => (
                     <ProgramsCard 
-                       key = {index}
-                       name = {program.name}
-                       desc = {program.desc}
-                       type = {program.type}
+                       key = {program.id}
+                       training_name = {program.training_name}
+                       description = {program.description}
+                       category = {program.category}
                        duration = {program.duration}
-                       place = {program.place}
-                       program_id = {program.program_id}
+                       provider = {program.provider}
+                       training_code = {program.training_code}
                     />
-                   ))}
+                   ))
+                  )}
                  </div>
              </div>
 
@@ -163,3 +89,4 @@ const Programs = () => {
 }
 
 export default Programs;
+
