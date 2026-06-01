@@ -34,7 +34,16 @@ const LoginForm = () => {
 
          if (data.success) {
             localStorage.setItem("user", JSON.stringify(data.user));
-            navigate("/admin/dashboard");
+
+            if (data.user.role === "admin") {
+              navigate("/admin/dashboard");
+            } else if (data.user.role === "staff") {
+              navigate("/staff/dashboard");
+            } else {
+              alert("Uknown user role")
+            }
+
+            // navigate("/admin/dashboard");
          } else {
            alert(data.message);
          }

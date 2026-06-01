@@ -13,12 +13,15 @@ import EmployeeAdd from './pages/administrator/EmployeeAdd'
 import EmployeeDetails from './pages/administrator/EmployeeDetails'
 import ProgramAdd from './pages/administrator/ProgramAdd'
 import ProgramDetails from './pages/administrator/ProgramDetails'
+import Dashboard2 from './pages/staff/Dashboard'
 
 
 function App() {
   return (
    <BrowserRouter>
       <Routes>
+
+        {/* Admin pages  */}
           <Route path="/" element={<Login />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/employees" element={<Employees />} />
@@ -31,6 +34,12 @@ function App() {
           <Route path="/admin/certifications" element={<Certifications />} />
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
+
+
+          {/* Staff pages  */}
+          <Route path="/staff/dashboard" element={<Dashboard2 />} />
+
+
       </Routes>
    </BrowserRouter>
   )

@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS training_programs
 
 
 -- Staff table 
-CREATE TABLE staff
+CREATE TABLE IF NOT EXISTS staff 
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_id VARCHAR (50) NOT NULL,
