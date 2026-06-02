@@ -17,7 +17,7 @@ const menuItems = [
    },
    {
       name: "My Certifications",
-      path: "/admin/dashboard12",
+      path: "/staff/my_certifications",
       icon: <GrCertificate />
    },
    {

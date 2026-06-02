@@ -14,6 +14,7 @@ import EmployeeDetails from './pages/administrator/EmployeeDetails'
 import ProgramAdd from './pages/administrator/ProgramAdd'
 import ProgramDetails from './pages/administrator/ProgramDetails'
 import Dashboard2 from './pages/staff/Dashboard'
+import MyCertifications from './pages/staff/MyCertifications'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 
           {/* Staff pages  */}
           <Route path="/staff/dashboard" element={<Dashboard2 />} />
+          <Route path="/staff/my_certifications" element={<MyCertifications />} />
 
 
       </Routes>

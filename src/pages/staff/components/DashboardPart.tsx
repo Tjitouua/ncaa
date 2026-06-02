@@ -12,6 +12,7 @@ import PrimaryButt from "../../../ui/PrimaryButt";
 import { IoSettingsOutline } from "react-icons/io5";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificationsCard from "../ui/CertificationsCard";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -48,6 +49,9 @@ const DashboardPart = () => {
     ];
 
 
+    const navigate = useNavigate();
+
+
 
 
     return (
@@ -73,7 +77,7 @@ const DashboardPart = () => {
             <div className="w-full py-5 px-4 flex flex-col bg-white mt-5 shadow-xs shadow-secondary/20">
                 <div className="w-full flex items-center mb-4 justify-between">
                    <label className="font-bold text-lg flex items-center gap-3"><GrCertificate /> My Certifications</label>
-                   <SecondaryButt className="shadow-xs shadow-secondary/40"><IoSettingsOutline /> Manage</SecondaryButt>
+                   <SecondaryButt onClick={() => navigate("/staff/my_certifications")} className="shadow-xs shadow-secondary/40"><IoSettingsOutline /> Manage</SecondaryButt>
                 </div>
                 {/* Certifications card  */}
                 <CertificationsCard />
