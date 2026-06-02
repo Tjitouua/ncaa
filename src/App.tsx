@@ -15,6 +15,7 @@ import ProgramAdd from './pages/administrator/ProgramAdd'
 import ProgramDetails from './pages/administrator/ProgramDetails'
 import Dashboard2 from './pages/staff/Dashboard'
 import MyCertifications from './pages/staff/MyCertifications'
+import MyTrainingHistory from './pages/staff/MyTrainingHistory'
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           {/* Staff pages  */}
           <Route path="/staff/dashboard" element={<Dashboard2 />} />
           <Route path="/staff/my_certifications" element={<MyCertifications />} />
+          <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />
 
 
       </Routes>

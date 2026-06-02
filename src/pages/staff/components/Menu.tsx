@@ -22,7 +22,7 @@ const menuItems = [
    },
    {
       name: "My Training History",
-      path: "/admin/dashboard3",
+      path: "/staff/my_training_history",
       icon: <FaClockRotateLeft />
    },
    {
