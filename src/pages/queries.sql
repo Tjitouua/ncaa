@@ -17,12 +17,22 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS training_programs
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    training_code VARCHAR (50) NOT NULL,
+    training_code VARCHAR (50) NOT NULL UNIQUE,
     training_name VARCHAR (250) NOT NULL,
     description VARCHAR (250) NOT NULL,
-    category VARCHAR (250) NOT NULL,
     duration VARCHAR (250) NOT NULL,
-    provider VARCHAR (250) NOT NULL
+    category VARCHAR (250) NOT NULL,
+    trainer VARCHAR (250) NOT NULL,
+    training_type VARCHAR (250) NOT NULL,
+    validity VARCHAR (250) NOT NULL,
+    status VARCHAR (250) NOT NULL,
+    target_roles VARCHAR (250) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    recurrence VARCHAR (250) NOT NULL,
+    location VARCHAR (250) NOT NULL,
+    contact_no VARCHAR (250) NOT NULL,
+    email VARCHAR (250) NOT NULL
 );
 
 -- INSERT INTO training_programs (training_code, training_name, description, category, duration, provider)
