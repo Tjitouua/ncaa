@@ -156,11 +156,17 @@ const EmployeesPart = () => {
                        <tbody>
                        {loading ? (
                            <p>Loading staff...</p>
+                       ) : staff.length === 0 ? (
+                             <tr>
+                                <td colSpan={6} className="text-center py-15 text-secondary/60">
+                                   No employees available.
+                                </td>
+                             </tr>
                        ) : (
                         staff.map((employee, index) => (
                           <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-2">{employee.staff_id}</td>
-                             <td className="px-3 py-2">{employee.first_name}</td>
+                             <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>
                              <td className="px-3 py-2">{employee.email}</td>
                              <td className="px-3 py-2">{employee.department}</td>
                              <td className="px-3 py-2">{employee.role}</td>

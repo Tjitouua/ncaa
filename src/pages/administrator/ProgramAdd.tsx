@@ -3,7 +3,7 @@ import TopMenu from "./components/TopMenu";
 import Menu from "./components/Menu";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
-import Inputs from "./ui/Inputs";
+import Inputs from "../../ui/Inputs";
 import PrimaryButt from "../../ui/PrimaryButt";
 import { RiAddLargeLine } from "react-icons/ri";
 

@@ -53,12 +53,12 @@ const EmployeeDetails = () => {
              <div className="w-full min-h-screen items-center flex flex-col gap-3 px-2 md:px-6 py-8">
                 <div className="w-full"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
                 {/* Employee Profile Div  */}
-                <div className="w-3/4 min-h-screen flex flex-col gap-4 py-3">
+                <div className="w-4/5 min-h-screen flex flex-col gap-4 py-3">
                 {/* <div className="w-full mb-2"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
 
                     {/* Top Part  */}
                     <div className="w-full py-3 px-7 flex gap-8 bg-white shadow-xs shadow-black/10  items-center">
-                         <div className="rounded-full w-25 h-25 bg-[url('/images/spillo.jpg')] bg-center bg-cover"><img src="/images/spillo.jpg" className="w-full rounded-full h-full" /></div>
+                         <div className="rounded-full w-25 h-25 bg-secondaryy flex items-center justify-center text-4xl font-bold"><label>TM</label></div>
                          <div className="p-2 flex flex-col gap-1">
                              <label className="font-bold">Tjitouua Mapoha</label>
                              <label className="text-secondary/50 -mt-1">Software Developer · ICT</label>
@@ -132,6 +132,9 @@ const EmployeeDetails = () => {
 }
 
 export default EmployeeDetails;
+
+
+// bg-[url('/images/spillo.jpg')] bg-center bg-cover 
 
 
 

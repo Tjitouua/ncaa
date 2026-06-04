@@ -42,10 +42,13 @@ CREATE TABLE IF NOT EXISTS training_programs
 CREATE TABLE IF NOT EXISTS staff 
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    staff_id VARCHAR (50) NOT NULL,
+    staff_id VARCHAR (50) NOT NULL UNIQUE,
     first_name VARCHAR (250) NOT NULL,
     last_name VARCHAR (250) NOT NULL,
-    email VARCHAR (250) NOT NULL,
+    gender VARCHAR (250) NOT NULL,
+    email VARCHAR (250) NOT NULL UNIQUE,
+    dob DATE NOT NULL,
+    national_id VARCHAR (250) NOT NULL UNIQUE,
     phone_no VARCHAR (250) NOT NULL,
     city VARCHAR (250) NOT NULL,
     address VARCHAR (250) NOT NULL,
@@ -53,8 +56,8 @@ CREATE TABLE IF NOT EXISTS staff
     department VARCHAR (50) NOT NULL,
     role VARCHAR (250) NOT NULL,
     employement_type VARCHAR (250) NOT NULL,
+    doj DATE,
     employement_status VARCHAR (250) NOT NULL,
-    profile_pic VARCHAR (250) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
