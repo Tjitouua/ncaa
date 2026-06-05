@@ -69,7 +69,7 @@ const EmployeeAdd = () => {
 
       try {
          const response = await fetch(
-            "http://localhost/ncaa/add_staff.php",
+            "http://localhost/ncaa/staff/add_staff.php",
             {
                method: "POST",
                headers: {

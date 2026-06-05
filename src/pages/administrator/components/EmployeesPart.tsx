@@ -8,6 +8,140 @@ import { LuDownload } from "react-icons/lu";
 import { FiEye } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+
+
+
+const EmployeesPart = () => {
+
+
+
+   const navigate = useNavigate();
+   
+   const [staff, setStaff] = useState([]);
+   const [loading, setLoading] = useState(true);
+
+
+   useEffect(() => {
+      fetch("http://localhost/ncaa/staff/get_staff.php")
+      .then((response) => response.json())
+      .then((data) => {
+         if(data.success) {
+            setStaff(data.data);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching Staff: ", error);
+      })
+      .finally(() => {
+         setLoading(false);
+      });
+   }, []);
+
+
+
+
+    return (
+       <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
+          <div className="w-full h-screen  py-5">
+
+             <div className="flex flex-col">
+               {/* Top Part  */}
+               <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
+                 <div className="flex flex-col">
+                    <label className="text-lg">Staff Directory</label>
+                    <label className="text-xs text-secondary/60">{staff.length} employee (s) registered</label>
+                 </div>
+                 <div className="flex items-center gap-3">
+                    <SecondaryButt>
+                          <LuDownload />
+                          Export
+                      </SecondaryButt>
+                    <PrimaryButt onClick={() => navigate("/admin/employees/employee_add")}>
+                       <RiAddLargeLine /> Add Employee
+                    </PrimaryButt>
+                 </div>
+               </div>
+               {/* Names  */}
+                <div className="w-full py-5 flex flex-col gap-5">
+                    <div className="w-full flex items-center justify-between">
+                      <div className="md:w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
+                       <IoSearchSharp className="text-secondary/30" />
+                       <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
+                      </div>
+                      <SecondaryButt>
+                        <LuUpload /> Import CSV
+                      </SecondaryButt>
+                    </div>
+                    {/* Employees Table  */}
+                    <table className="w-full border text-xs border-secondary/30">
+                       <thead>
+                          <tr className="bg-secondary/10 border-b border-secondary/20">
+                             <th className="text-left p-3">Employee ID</th>
+                             <th className="text-left p-3">Full Name</th>
+                             <th className="text-left p-3">Email</th>
+                             <th className="text-left p-3">Department</th>
+                             <th className="text-left p-3">Position</th>
+                             <th className="text-center p-3">Actions</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                       {loading ? (
+                           <p>Loading staff...</p>
+                       ) : staff.length === 0 ? (
+                             <tr>
+                                <td colSpan={6} className="text-center py-15 text-secondary/60">
+                                   No employees available.
+                                </td>
+                             </tr>
+                       ) : (
+                        staff.map((employee, index) => (
+                          <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
+                             <td className="px-3 py-2">{employee.staff_id}</td>
+                             <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>
+                             <td className="px-3 py-2">{employee.email}</td>
+                             <td className="px-3 py-2">{employee.department}</td>
+                             <td className="px-3 py-2">{employee.role}</td>
+                             <td className="px-3 py-2 text-center">
+                                 <div className="flex items-center justify-center">
+                                    <button 
+                                     onClick={() => navigate(`/admin/employees/employee_details/${employee.id}`)}
+                                     className="flex items-center gap-2 font-bold 
+                                     rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /></button>
+                                     <button 
+                                     className="flex items-center gap-2 font-bold 
+                                     rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><RiDeleteBin6Line /></button>
+                                 </div>
+                             </td>
+                          </tr>
+                         ))
+                        )}
+                       </tbody>
+                    </table>
+                </div>
+             </div>
+
+          </div>
+       </div>
+    )
+}
+
+
+export default EmployeesPart;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,116 +210,3 @@ import { useEffect, useState } from "react";
 //       position: "HR Officer"
 //    },
 // ]
-
-
-
-
-const EmployeesPart = () => {
-
-
-
-   const navigate = useNavigate();
-   
-   const [staff, setStaff] = useState([]);
-   const [loading, setLoading] = useState(true);
-
-
-   useEffect(() => {
-      fetch("http://localhost/ncaa/get_staff.php")
-      .then((response) => response.json())
-      .then((data) => {
-         if(data.success) {
-            setStaff(data.data);
-         }
-      })
-      .catch((error) => {
-         console.error("Error fetching Staff: ", error);
-      })
-      .finally(() => {
-         setLoading(false);
-      });
-   }, []);
-
-
-
-
-    return (
-       <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
-          <div className="w-full h-screen  py-5">
-
-             <div className="flex flex-col">
-               {/* Top Part  */}
-               <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
-                 <div className="flex flex-col">
-                    <label className="text-lg">Staff Directory</label>
-                    <label className="text-xs text-secondary/60">{staff.length} employees registered</label>
-                 </div>
-                 <div className="flex items-center gap-3">
-                    <SecondaryButt>
-                          <LuDownload />
-                          Export
-                      </SecondaryButt>
-                    <PrimaryButt onClick={() => navigate("/admin/employees/employee_add")}>
-                       <RiAddLargeLine /> Add Employee
-                    </PrimaryButt>
-                 </div>
-               </div>
-               {/* Names  */}
-                <div className="w-full py-5 flex flex-col gap-5">
-                    <div className="w-full flex items-center justify-between">
-                      <div className="md:w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
-                       <IoSearchSharp className="text-secondary/30" />
-                       <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
-                      </div>
-                      <SecondaryButt>
-                        <LuUpload /> Import CSV
-                      </SecondaryButt>
-                    </div>
-                    {/* Employees Table  */}
-                    <table className="w-full border text-xs border-secondary/30">
-                       <thead>
-                          <tr className="bg-secondary/10 border-b border-secondary/20">
-                             <th className="text-left p-3">Employee ID</th>
-                             <th className="text-left p-3">Full Name</th>
-                             <th className="text-left p-3">Email</th>
-                             <th className="text-left p-3">Department</th>
-                             <th className="text-left p-3">Position</th>
-                             <th className="text-left p-3">Actions</th>
-                          </tr>
-                       </thead>
-                       <tbody>
-                       {loading ? (
-                           <p>Loading staff...</p>
-                       ) : staff.length === 0 ? (
-                             <tr>
-                                <td colSpan={6} className="text-center py-15 text-secondary/60">
-                                   No employees available.
-                                </td>
-                             </tr>
-                       ) : (
-                        staff.map((employee, index) => (
-                          <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-2">{employee.staff_id}</td>
-                             <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>
-                             <td className="px-3 py-2">{employee.email}</td>
-                             <td className="px-3 py-2">{employee.department}</td>
-                             <td className="px-3 py-2">{employee.role}</td>
-                             <td className="px-3 py-2"><button 
-                                                        onClick={() => navigate("/admin/employees/employee_details")}
-                                                        className="flex items-center gap-2 font-bold 
-                                                        rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /> View</button></td>
-                          </tr>
-                         ))
-                        )}
-                       </tbody>
-                    </table>
-                </div>
-             </div>
-
-          </div>
-       </div>
-    )
-}
-
-
-export default EmployeesPart;

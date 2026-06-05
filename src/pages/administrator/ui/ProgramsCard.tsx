@@ -5,6 +5,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type React from "react";
 import { useNavigate } from "react-router-dom";
+import { PiGraduationCap } from "react-icons/pi";
 
 
 
@@ -39,10 +40,10 @@ const ProgramsCard: React.FC<Props> = ( {training_name, description, category, d
             </div>
             <label className="text-sm font-bold whitespace-nowrap overflow-hidden text-ellipsis">{training_name}</label>
             <label className="text-xs whitespace-nowrap overflow-hidden text-ellipsis">{description}</label>
-            <div className="flex gap-2 items-center text-xs w-full mt-4 text-secondary/60 pb-4 border-b border-secondary/20">
-               <label className="flex items-center gap-1"><MdOutlineAccessTime />{duration}</label>
+            <div className="flex gap-2 items-center justify-between text-xs w-full mt-4 text-secondary/60 pb-4 border-b border-secondary/20">
+               <label className="flex items-center gap-2"><MdOutlineAccessTime />{duration}</label>
                <label className="font-bold">·</label>
-               <label>{provider}</label>
+               <label className="flex items-center gap-2"><PiGraduationCap />{provider}</label>
             </div>
             <div className="mt-4 flex items-center justify-between">
                <label className="text-xs text-secondary/60">{training_code}</label>

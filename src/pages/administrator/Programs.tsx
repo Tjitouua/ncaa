@@ -19,7 +19,7 @@ const Programs = () => {
 
 
    useEffect(() => {
-      fetch("http://localhost/ncaa/get_programs.php")
+      fetch("http://localhost/ncaa/program/get_programs.php")
       .then((response) => response.json())
       .then((data) => {
          if (data.success) {
@@ -46,7 +46,7 @@ const Programs = () => {
                  <div className="w-full flex items-start justify-between">
                     <div className="flex flex-col">
                        <label className="text-lg">All Programs</label>
-                       <label className="text-xs text-secondary/60">{programs.length} programs</label>
+                       <label className="text-xs text-secondary/60">{programs.length} program (s)</label>
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="pr-3 border border-secondary/50 rounded-md">
@@ -75,7 +75,7 @@ const Programs = () => {
                        description = {program.description}
                        category = {program.category}
                        duration = {program.duration}
-                       provider = {program.provider}
+                       provider = {program.trainer}
                        training_code = {program.training_code}
                     />
                    ))

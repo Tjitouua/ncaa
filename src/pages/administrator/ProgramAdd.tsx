@@ -64,6 +64,32 @@ const ProgramAdd = () => {
 
    const handleSubmit = async () => {
       if (!validate()) return;
+
+      try {
+        const response = await fetch(
+           "http://localhost/ncaa/program/add_program.php",
+           {
+             method: "POST",
+             headers: {
+                "Content-Type": "application/json",
+             },
+             body: JSON.stringify(form),
+           }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+           alert("Training added successfully");
+           navigate("/admin/training_programs");
+        } else {
+           alert(data.message);
+        }
+      } catch (error) {
+          console.error(error);
+          alert("Failed to connect to server");
+      }
+
    }
 
 
@@ -135,12 +161,12 @@ const ProgramAdd = () => {
                             onChange = {handleChange}
                             error = {errors.category}
                           >
-                            <option>Select category</option>
-                            <option>Language</option>
-                            <option>Operations</option>
-                            <option>Safety</option>
-                            <option>Security</option>
-                            <option>Human Factors</option>
+                            <option value="">Select category</option>
+                            <option value="Language">Language</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Safety">Safety</option>
+                            <option value="Security">Security</option>
+                            <option value="Human Factors">Human Factors</option>
                           </SelectInputs>
 
                           <SelectInputs
@@ -150,9 +176,9 @@ const ProgramAdd = () => {
                             onChange = {handleChange}
                             error = {errors.trainer_provider}
                           >
-                            <option>Select trainer</option>
-                            <option>Internal Trainer</option>
-                            <option>External Provider</option>
+                            <option value="">Select trainer</option>
+                            <option value="Internal">Internal</option>
+                            <option value="External">External</option>
                           </SelectInputs>
 
                           <SelectInputs
@@ -162,10 +188,10 @@ const ProgramAdd = () => {
                             onChange = {handleChange}
                             error = {errors.trainingType}
                           >
-                            <option>All types</option>
-                            <option>Mandatory</option>
-                            <option>Recommended</option>
-                            <option>Optional</option>
+                            <option value="">Select training type</option>
+                            <option value="Mandatory">Mandatory</option>
+                            <option value="Recommended">Recommended</option>
+                            <option value="Optional">Optional</option>
                           </SelectInputs>
 
                           <Inputs
@@ -184,9 +210,9 @@ const ProgramAdd = () => {
                             onChange = {handleChange}
                             error = {errors.status}
                           >
-                            <option>Select status</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
                           </SelectInputs>
 
                           <Inputs
@@ -204,21 +230,21 @@ const ProgramAdd = () => {
 
                           <SelectInputs
                             label = "Recurrence"
-                            name = "trainingType"
+                            name = "recurrence"
                             value = {form.recurrence}
                             onChange = {handleChange}
                             error = {errors.recurrence}
                           >
-                            <option>Select recurrence</option>
-                            <option>One Time</option>
-                            <option>Monthly</option>
-                            <option>Quartely</option>
-                            <option>Semi-Annual</option>
-                            <option>Annual</option>
-                            <option>Every 2 years</option>
-                            <option>Every 3 years</option>
-                            <option>Every 5 years</option>
-                            <option>Every 10 years</option>
+                            <option value="">Select recurrence</option>
+                            <option value="One Time">One Time</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Semi-Annual">Semi-Annual</option>
+                            <option value="Annual">Annual</option>
+                            <option value="Every 2 years">Every 2 years</option>
+                            <option value="Every 3 years">Every 3 years</option>
+                            <option value="Every 5 years">Every 5 years</option>
+                            <option value="Every 10 years">Every 10 years</option>
                           </SelectInputs>
 
                           <Inputs
@@ -248,7 +274,7 @@ const ProgramAdd = () => {
                           />
 
                       </div>
-                      <PrimaryButt onClick={handleSubmit} className="w-full"><RiAddLargeLine /> Add Employee</PrimaryButt>
+                      <PrimaryButt onClick={handleSubmit} className="w-full"><RiAddLargeLine /> Add Training Program</PrimaryButt>
                    </div>
                 </div>
              </div>
