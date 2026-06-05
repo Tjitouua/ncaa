@@ -16,11 +16,13 @@ import ProgramDetails from './pages/administrator/ProgramDetails'
 import Dashboard2 from './pages/staff/Dashboard'
 import MyCertifications from './pages/staff/MyCertifications'
 import MyTrainingHistory from './pages/staff/MyTrainingHistory'
+import ScrollToTop from './ui/ScrollToTop'
 
 
 function App() {
   return (
    <BrowserRouter>
+     <ScrollToTop />
       <Routes>
 
         {/* Admin pages  */}

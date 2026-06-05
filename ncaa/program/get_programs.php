@@ -4,20 +4,20 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json");
 
-include "database.php";
+include "../database.php";
 
-$sql = "SELECT * FROM staff ORDER BY id DESC";
+$sql = "SELECT * FROM training_programs ORDER BY id ASC";
 $result = mysqli_query($conn, $sql);
 
-$staff = [];
+$trainingPrograms = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $staff[] = $row;
+    $trainingPrograms[] = $row;
 }
 
 echo json_encode([
     "success" => true,
-    "data" => $staff
-])
+    "data" => $trainingPrograms
+]);
 
 ?>
