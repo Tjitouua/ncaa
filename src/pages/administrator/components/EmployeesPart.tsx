@@ -42,6 +42,44 @@ const EmployeesPart = () => {
 
 
 
+   // Delete 
+   const handleDelete = (id) => {
+       if (!window.confirm("Are you sure you want to delete this staff?")) return;
+
+       fetch("http://localhost/ncaa/staff/delete_staff.php", {
+          method: "POST",
+          headers: {
+             "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ id }),
+       })
+        .then((res) => res.json())
+        .then((data) => {
+           if (data.success) {
+             setStaff((prev) => prev.filter((emp) => emp.id !== id));
+           } else {
+              alert(data.message || "Failed to delete");
+           }
+        })
+        .catch((err) => {
+            console.error("Delete error", err);
+        }); 
+   };
+
+
+
+
+   // Exporting 
+   const handleExport = () => {
+       window.open(
+          "http://localhost/ncaa/staff/export_staff.php",
+          "_blank"
+       );
+   };
+
+
+
+
     return (
        <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
           <div className="w-full h-screen  py-5">
@@ -54,7 +92,7 @@ const EmployeesPart = () => {
                     <label className="text-xs text-secondary/60">{staff.length} employee (s) registered</label>
                  </div>
                  <div className="flex items-center gap-3">
-                    <SecondaryButt>
+                    <SecondaryButt onClick={handleExport}>
                           <LuDownload />
                           Export
                       </SecondaryButt>
@@ -110,6 +148,7 @@ const EmployeesPart = () => {
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /></button>
                                      <button 
+                                     onClick={() => handleDelete(employee.id)}
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><RiDeleteBin6Line /></button>
                                  </div>

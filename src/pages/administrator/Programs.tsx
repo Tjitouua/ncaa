@@ -35,6 +35,33 @@ const Programs = () => {
    }, []);
 
 
+
+   // Deleting 
+   const handleDelete = (id) => {
+       if (!window.confirm("Are you sure you want to delete this program?")) return;
+       
+       fetch("http://localhost/ncaa/program/delete_program.php", {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json"
+           },
+           body: JSON.stringify({ id }),
+       })
+       .then((res) => res.json())
+       .then((data) => {
+          if (data.success) {
+             setPrograms((prev) => prev.filter((pro) => pro.id !== id));
+          } else {
+             alert(data.message || "Failed to delete");
+          }
+       })
+       .catch ((err) => {
+          console.error("Delete error", err);
+       });
+   };
+
+
+
     return (
        <div className="w-full min-h-screen flex">
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -71,12 +98,14 @@ const Programs = () => {
                    programs.map((program) => (
                     <ProgramsCard 
                        key = {program.id}
+                       id = {program.id}
                        training_name = {program.training_name}
                        description = {program.description}
                        category = {program.category}
                        duration = {program.duration}
                        provider = {program.trainer}
                        training_code = {program.training_code}
+                       onDelete = {handleDelete}
                     />
                    ))
                   )}

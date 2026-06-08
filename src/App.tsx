@@ -31,9 +31,9 @@ function App() {
           <Route path="/admin/employees" element={<Employees />} />
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
           <Route path="/admin/employees/employee_details/:id" element={<EmployeeDetails />} />
-          <Route path="/admin/training_programs" element={<Programs />} />
+          <Route path="/admin/training_programs/" element={<Programs />} />
           <Route path="/admin/training_programs/program_add" element={<ProgramAdd />} />
-          <Route path="/admin/training_programs/program_details" element={<ProgramDetails />} />
+          <Route path="/admin/training_programs/program_details/:id" element={<ProgramDetails />} />
           <Route path="/admin/assign_training" element={<Assign />} />
           <Route path="/admin/certifications" element={<Certifications />} />
           <Route path="/admin/training_history" element={<TrainingHistory />} />

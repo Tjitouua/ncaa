@@ -10,19 +10,21 @@ import { PiGraduationCap } from "react-icons/pi";
 
 
 interface Props {
+   id: number,
    training_name: string;
    description: string;
    category: string;
    duration: string;
    provider: string;
    training_code: string;
+   onDelete: (id: number) => void;
 }
 
 
 
 
 
-const ProgramsCard: React.FC<Props> = ( {training_name, description, category, duration, provider, training_code} ) => {
+const ProgramsCard: React.FC<Props> = ( {id, training_name, description, category, duration, provider, training_code, onDelete} ) => {
 
 
 
@@ -48,8 +50,8 @@ const ProgramsCard: React.FC<Props> = ( {training_name, description, category, d
             <div className="mt-4 flex items-center justify-between">
                <label className="text-xs text-secondary/60">{training_code}</label>
                <div className="flex gap-5 items-center text-sm">
-                  <GrEdit onClick={() => navigate("/admin/training_programs/program_details")} className="cursor-pointer hover:text-primary" />
-                  <RiDeleteBin6Line className="text-red-600 cursor-pointer hover:text-primary" />
+                  <GrEdit onClick={() => navigate(`/admin/training_programs/program_details/${id}`)} className="cursor-pointer hover:text-primary" />
+                  <RiDeleteBin6Line onClick={() => onDelete(id)} className="text-red-600 cursor-pointer hover:text-primary" />
                </div>
             </div>
         </div>

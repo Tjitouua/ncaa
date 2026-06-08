@@ -3,7 +3,7 @@ import type React from "react";
 
 interface Props {
     label: string;
-    name: string;
+    name?: string;
     value?: string;
     className?: string;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
