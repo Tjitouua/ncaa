@@ -158,9 +158,9 @@ const EmployeeAdd = () => {
                             onChange = {handleChange}
                             error = {errors.gender}
                           >
-                            <option>Select gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                           </SelectInputs>
 
                           <Inputs
@@ -235,14 +235,15 @@ const EmployeeAdd = () => {
                             onChange = {handleChange}
                             error = {errors.department}
                           >
-                             <option>Select employee department</option>
-                             <option>Aerodrome Oversight</option>
-                             <option>Air Navigation Services (ANS)</option>
-                             <option>Airworthiness</option>
-                             <option>Aviation Security</option>
-                             <option>ICT</option>
-                             <option>Personnel Licensing (PEL)</option>
-                             <option>Safety Oversight / Flight Safety & Security</option>
+                             <option value="">Select employee department</option>
+                             <option value="Administration">Administration</option>
+                             <option value="Aerodromes">Aerodromes</option>
+                             <option value="Air Navigation">Air Navigation</option>
+                             <option value="Airworthiness">Airworthiness</option>
+                             <option value="Engineering">Engineering</option>
+                             <option value="Flight Operations">Flight Operations</option>
+                             <option value="Safety $ Security">Safety $ Security</option>
+                             <option value="ICT">ICT</option>
                           </SelectInputs>
 
                           <SelectInputs
@@ -252,9 +253,9 @@ const EmployeeAdd = () => {
                              onChange = {handleChange}
                              error = {errors.employmentType}
                           >
-                             <option>Select employment type</option>
-                             <option>Permanent</option>
-                             <option>Temporary</option>
+                             <option value="">Select employment type</option>
+                             <option value="Permanent">Permanent</option>
+                             <option value="Temporary">Temporary</option>
                           </SelectInputs>
 
                           <DateInputs name="doj" value={form.doj} onChange={handleChange} error={errors.doj} label="Date of joining" />
@@ -266,10 +267,10 @@ const EmployeeAdd = () => {
                              onChange = {handleChange}
                              error = {errors.employmentStatus}
                           >
-                             <option>Select employment status</option>
-                             <option>Active</option>
-                             <option>Inactive</option>
-                             <option>Suspended</option>
+                             <option value="">Select employment status</option>
+                             <option value="Active">Active</option>
+                             <option value="Inactive">Inactive</option>
+                             <option value="Suspended">Suspended</option>
                           </SelectInputs>
 
                       </div>

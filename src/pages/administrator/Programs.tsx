@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { RiAddLargeLine } from "react-icons/ri";
 import ProgramsCard from "./ui/ProgramsCard";
 import { useNavigate, useNavigation } from "react-router-dom";
+import { IoSearchSharp } from "react-icons/io5";
 
 
 
@@ -14,6 +15,7 @@ const Programs = () => {
    const [showMenu, setShowMenu] = useState(false);
    const [programs, setPrograms] = useState([]);
    const [loading, setLoading] = useState(true);
+   const [searchProgram, setSearchProgram] = useState("");
 
    const navigate = useNavigate();
 
@@ -62,6 +64,38 @@ const Programs = () => {
 
 
 
+
+
+
+   // Search Function 
+   const filteredPrograms = programs.filter((training) => {
+       const search = searchProgram.toLowerCase().trim();
+
+       return (
+          training.training_code?.toLowerCase().includes(search) ||
+          training.training_name?.toLowerCase().includes(search) ||
+          training.description?.toLowerCase().includes(search) ||
+          training.duration?.toLowerCase().includes(search) ||
+          training.trainer?.toLowerCase().includes(search) ||
+          training.training_type?.toLowerCase().includes(search) ||
+          training.validity?.toLowerCase().includes(search) ||
+          training.status?.toLowerCase().includes(search) ||
+          training.target_roles?.toLowerCase().includes(search) ||
+          training.start_date?.toLowerCase().includes(search) ||
+          training.end_date?.toLowerCase().includes(search) ||
+          training.recurrence?.toLowerCase().includes(search) ||
+          training.location?.toLowerCase().includes(search) ||
+          training.contact_no?.toLowerCase().includes(search) ||
+          training.email?.toLowerCase().includes(search)
+       );
+   });
+
+
+
+
+
+
+
     return (
        <div className="w-full min-h-screen flex">
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -73,16 +107,20 @@ const Programs = () => {
                  <div className="w-full flex items-start justify-between">
                     <div className="flex flex-col">
                        <label className="text-lg">All Programs</label>
-                       <label className="text-xs text-secondary/60">{programs.length} program (s)</label>
+                       <label className="text-xs text-secondary/60">{filteredPrograms.length} program (s)</label>
                     </div>
                     <div className="flex items-center gap-3">
-                       <div className="pr-3 border border-secondary/50 rounded-md">
+                       {/* <div className="pr-3 border border-secondary/50 rounded-md">
                           <select className="py-2 text-sm flex px-3 focus:outline-none cursor-pointer">
                               <option>All categories</option>
                               <option>Mandatory</option>
                               <option>Optional</option>
                           </select>
-                       </div>
+                       </div> */}
+                       <div className="md:w-[30vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
+                          <IoSearchSharp className="text-secondary/30" />
+                          <input value={searchProgram} onChange={(e) => setSearchProgram(e.target.value)} type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search program..." />
+                      </div>
                        <PrimaryButt onClick={() => navigate("/admin/training_programs/program_add")}><RiAddLargeLine /> Add Training</PrimaryButt>
                     </div>
                  </div>
@@ -90,12 +128,12 @@ const Programs = () => {
                  <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-3">
                   {loading ? (
                      <p>Loading programs...</p>
-                  ) : programs.length === 0 ? (
+                  ) : filteredPrograms.length === 0 ? (
                        <div className="w-full items-center justify-center py-20">
                            <p className="text-secondary/60">No training programs available.</p>
                        </div>
                   ) : (
-                   programs.map((program) => (
+                   filteredPrograms.map((program) => (
                     <ProgramsCard 
                        key = {program.id}
                        id = {program.id}

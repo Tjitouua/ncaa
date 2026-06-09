@@ -22,6 +22,8 @@ const EmployeesPart = () => {
    const [staff, setStaff] = useState([]);
    const [loading, setLoading] = useState(true);
 
+   const [searchStaff, setSearchStaff] = useState("");
+
 
    useEffect(() => {
       fetch("http://localhost/ncaa/staff/get_staff.php")
@@ -80,6 +82,35 @@ const EmployeesPart = () => {
 
 
 
+
+   // Filtering (Searching) 
+   const filteredStaff = staff.filter((employee) => {
+       const search = searchStaff.toLowerCase().trim();
+
+       return (
+          employee.staff_id?.toLowerCase().includes(search) ||
+          employee.first_name?.toLowerCase().includes(search) ||
+          employee.last_name?.toLowerCase().includes(search) ||
+          employee.gender?.toLowerCase().includes(search) ||
+          employee.email?.toLowerCase().includes(search) ||
+          employee.dob?.toLowerCase().includes(search) ||
+          employee.national_id?.toLowerCase().includes(search) ||
+          employee.phone_no?.toLowerCase().includes(search) ||
+          employee.city?.toLowerCase().includes(search) ||
+          employee.address?.toLowerCase().includes(search) ||
+          employee.postal_address?.toLowerCase().includes(search) ||
+          employee.department?.toLowerCase().includes(search) ||
+          employee.role?.toLowerCase().includes(search) ||
+          employee.employment_type?.toLowerCase().includes(search) ||
+          employee.doj?.toLowerCase().includes(search) ||
+          employee.employment_status?.toLowerCase().includes(search) ||
+          `${employee.first_name} ${employee.last_name}`.toLowerCase().includes(search)
+       );
+   });
+
+
+
+
     return (
        <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
           <div className="w-full h-screen  py-5">
@@ -89,7 +120,7 @@ const EmployeesPart = () => {
                <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg">Staff Directory</label>
-                    <label className="text-xs text-secondary/60">{staff.length} employee (s) registered</label>
+                    <label className="text-xs text-secondary/60">{filteredStaff.length} employee (s) registered</label>
                  </div>
                  <div className="flex items-center gap-3">
                     <SecondaryButt onClick={handleExport}>
@@ -106,7 +137,7 @@ const EmployeesPart = () => {
                     <div className="w-full flex items-center justify-between">
                       <div className="md:w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
                        <IoSearchSharp className="text-secondary/30" />
-                       <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
+                       <input value={searchStaff} onChange={(e) => setSearchStaff(e.target.value)} type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
                       </div>
                       <SecondaryButt>
                         <LuUpload /> Import CSV
@@ -127,14 +158,14 @@ const EmployeesPart = () => {
                        <tbody>
                        {loading ? (
                            <p>Loading staff...</p>
-                       ) : staff.length === 0 ? (
+                       ) : filteredStaff.length === 0 ? (
                              <tr>
                                 <td colSpan={6} className="text-center py-15 text-secondary/60">
                                    No employees available.
                                 </td>
                              </tr>
                        ) : (
-                        staff.map((employee, index) => (
+                        filteredStaff.map((employee, index) => (
                           <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-2">{employee.staff_id}</td>
                              <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>
