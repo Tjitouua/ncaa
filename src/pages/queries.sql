@@ -74,6 +74,24 @@ CREATE TABLE IF NOT EXISTS staff
 
 
 
+
+
+-- Assignments table 
+CREATE TABLE training_assignments
+( 
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT NOT NULL,
+    program_id INT NOT NULL,
+    date_assigned DATE,
+    deadline DATE,
+    status VARCHAR (250),
+    
+    FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE CASCADE,
+    FOREIGN KEY (program_id) REFERENCES training_programs (id) ON DELETE CASCADE
+);
+
+
+
 -- INSERT INTO staff (staff_id, first_name, last_name, email, department, role)
 -- VALUES
 -- (
