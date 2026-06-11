@@ -6,6 +6,7 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { PiCertificateBold } from "react-icons/pi";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { MdOutlinePersonAddAlt } from "react-icons/md";
 
 
 
@@ -31,19 +32,24 @@ const menuItems = [
       icon: <FaRegFileAlt />
    },
    {
-      name: "Certifications",
-      path: "/admin/certifications",
-      icon: <PiCertificateBold />
-   },
-   {
       name: "Training History",
       path: "/admin/training_history",
       icon: <FaClockRotateLeft />
    },
    {
+      name: "Certifications",
+      path: "/admin/certifications",
+      icon: <PiCertificateBold />
+   },
+   {
       name: "Notifications",
       path: "/admin/notifications",
       icon: <IoNotificationsOutline />
+   },
+   {
+      name: "Trainers & Providers",
+      path: "/admin/notifications",
+      icon: <MdOutlinePersonAddAlt />
    },
 ]
 
