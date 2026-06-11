@@ -101,6 +101,17 @@ const NewAssignment = () => {
             return;
         }
 
+        const today = new Date();
+        const selectedDeadline = new Date(deadline);
+
+        today.setHours(0,0,0,0);
+        selectedDeadline.setHours(0,0,0,0);
+
+        if (selectedDeadline < today) {
+            alert("❌ Deadline cannot be in the past!");
+            return;
+        }
+
         const payload = {
             staff_ids: selectedStaff,
             program_id: selectedProgram,

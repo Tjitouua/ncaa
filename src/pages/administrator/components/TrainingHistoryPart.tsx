@@ -30,6 +30,7 @@ const TrainingHistoryPart = () => {
       if (status === "Overdue") return "bg-red-200";
       return "bg-grey-200";
    }
+
    
    
 
@@ -84,6 +85,9 @@ const TrainingHistoryPart = () => {
             console.error("Error updating status: ", error);
          }
    }
+
+
+
 
 
 
@@ -153,6 +157,7 @@ const TrainingHistoryPart = () => {
                           </tr>
                        ) : (     
                         assignments.map((assign, index) => (
+                           // const effectiveStatus = getEffectiveStatus(assign);
                           <tr key = {index} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
