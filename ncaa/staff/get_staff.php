@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 include "../database.php";
 
-$sql = "SELECT * FROM staff ORDER BY id DESC";
+$sql = "SELECT * FROM staff ORDER BY first_name ASC";
 $result = mysqli_query($conn, $sql);
 
 $staff = [];
