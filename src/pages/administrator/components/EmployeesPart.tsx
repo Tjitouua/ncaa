@@ -76,8 +76,7 @@ const EmployeesPart = () => {
    // Exporting 
    const handleExport = () => {
        window.open(
-          "http://localhost/ncaa/staff/export_staff.php",
-          "_blank"
+          "http://localhost/ncaa/staff/export_staff.php"
        );
    };
 

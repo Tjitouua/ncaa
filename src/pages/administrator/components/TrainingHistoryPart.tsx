@@ -15,6 +15,8 @@ const TrainingHistoryPart = () => {
   
    const [assignments, setAssignments] = useState([]);
    const [loading, setLoading] = useState(true);
+   const [selectedStatus, setSelectedStatus] = useState("All status");
+   const [searchTraining, setSearchTraining] = useState("");
    
    const getNextStatus = (current) => {
       if (current === "Pending") return "Completed";
@@ -53,7 +55,7 @@ const TrainingHistoryPart = () => {
 
 
 
-   // Button 
+   // Changing the status of a record
    const cycleStatus = async (assign) => {
       
          const next = getNextStatus(assign.status);
@@ -90,6 +92,42 @@ const TrainingHistoryPart = () => {
 
 
 
+   // Searching 
+   const filteredTraining = assignments.filter((training) => {
+       const search = searchTraining.toLowerCase().trim();
+
+       const matchesSearch =
+           training.first_name?.toLowerCase().includes(search) ||
+           training.last_name?.toLowerCase().includes(search) ||
+           training.training_name?.toLowerCase().includes(search) ||
+           training.duration?.toLowerCase().includes(search) ||
+           training.date_assigned?.toLowerCase().includes(search) ||
+           training.deadline?.toLowerCase().includes(search) ||
+           training.status?.toLowerCase().includes(search) ||
+           `${training.first_name} ${training.last_name}`.toLowerCase().includes(search);
+
+           const matchesStatus = 
+               selectedStatus === "All status" ||
+               training.status === selectedStatus;
+
+           return matchesSearch && matchesStatus;
+   })
+
+
+
+
+
+   // Exporting 
+   const handleExport = () => {
+      window.open(
+         "http://localhost/ncaa/assign/export_assignments.php"
+      );
+   };
+
+
+
+
+
 
 
 
@@ -107,7 +145,7 @@ const TrainingHistoryPart = () => {
                  </div>
                  <div className="flex items-center gap-3">
                     <div className="w-[20vh] rounded-md bg-white border border-secondary/30 px-3">
-                      <select className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                      <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                         <option>All status</option>
                         <option>Completed</option>
                         <option>Pending</option>
@@ -121,9 +159,9 @@ const TrainingHistoryPart = () => {
                     <div className="w-full flex items-center justify-between">
                       <div className="md:w-[40vh] border border-secondary/40 rounded-sm px-3 flex items-center bg-white/80">
                        <IoSearchSharp className="text-secondary/30" />
-                       <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search training..." />
+                       <input value={searchTraining} onChange={(e) => setSearchTraining(e.target.value)} type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search training..." />
                       </div>
-                      <PrimaryButt>
+                      <PrimaryButt onClick={handleExport}>
                           <LuDownload />
                           Export CSV
                       </PrimaryButt>
@@ -149,14 +187,14 @@ const TrainingHistoryPart = () => {
                                 Loading assignments...
                              </td>
                           </tr>
-                       ) : assignments.length === 0 ? (
+                       ) : filteredTraining.length === 0 ? (
                           <tr>
                              <td colSpan={5} className="text-center py-5 text-secondary/60">
                                 No assignments available.
                              </td>
                           </tr>
                        ) : (     
-                        assignments.map((assign, index) => (
+                        filteredTraining.map((assign, index) => (
                            // const effectiveStatus = getEffectiveStatus(assign);
                           <tr key = {index} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
