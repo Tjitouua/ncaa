@@ -79,16 +79,6 @@ const LoginForm = () => {
                 <label className="text-xs text-red-600 hidden">Please enter password</label>
             </div>
 
-            {/* Sign in as  */}
-            {/* <div className="flex flex-col gap-1 mb-5">
-                <label className="font-bold text-sm">Sign in as</label>
-                <select className="w-full cursor-pointer text-sm text-gray-500 border-black/50 py-2 border rounded-lg px-3 pr-20 outline-none">
-                    <option>Employee</option>
-                    <option>Training officer</option>
-                    <option>Administrator</option>
-                </select>
-            </div> */}
-
             <button 
               onClick={login}
             className="w-full mt-5 py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
@@ -103,3 +93,23 @@ const LoginForm = () => {
 }
 
 export default LoginForm;
+
+
+
+
+
+
+
+
+
+
+
+{/* Sign in as  */}
+            {/* <div className="flex flex-col gap-1 mb-5">
+                <label className="font-bold text-sm">Sign in as</label>
+                <select className="w-full cursor-pointer text-sm text-gray-500 border-black/50 py-2 border rounded-lg px-3 pr-20 outline-none">
+                    <option>Employee</option>
+                    <option>Training officer</option>
+                    <option>Administrator</option>
+                </select>
+            </div> */}

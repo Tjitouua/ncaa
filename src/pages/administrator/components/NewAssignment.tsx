@@ -25,6 +25,7 @@ const NewAssignment = () => {
     const [selectedProgram, setSelectedProgram] = useState("");
     const [dateAssigned, setDateAssigned] = useState("");
     const [deadline, setDeadline] = useState("");
+    const [loading2, setLoading2] = useState(false);
 
 
     // Staff 
@@ -119,6 +120,8 @@ const NewAssignment = () => {
             deadline: deadline,
         };
 
+        setLoading2(true);
+
         try {
             const res = await fetch("http://localhost/ncaa/assign/create_assignment.php", {
                 method: "POST",
@@ -144,6 +147,8 @@ const NewAssignment = () => {
             }
         } catch (err) {
             console.error(err);
+        } finally {
+            setLoading2(false);
         }
     }
 
@@ -251,7 +256,14 @@ const NewAssignment = () => {
                     </div>
                 </div>
 
-                <PrimaryButt onClick={handleAssign} className="mt-2">Assign to Employee (s)</PrimaryButt>
+                <PrimaryButt 
+                disabled={loading2}
+                onClick={handleAssign} 
+                className="mt-2">
+                    {loading2 ? "Assigning training ..." : (
+                       <>Assign to Employee (s)</>
+                    )}
+                </PrimaryButt>
 
             </div>
         </div>

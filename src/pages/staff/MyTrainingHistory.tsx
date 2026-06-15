@@ -2,30 +2,11 @@ import { RiAddLargeLine } from "react-icons/ri";
 import PrimaryButt from "../../ui/PrimaryButt";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 
 
 
-
-const assignment = [
-    {
-       employee: "Petrus Hamukwaya",
-       department: "Air Navigation",
-       training: "Dangerous Goods Handling",
-       assigned: "2026-05-22",
-       deadline: "2026-07-21",
-       status: "Pending"
-    },
-    {
-        employee: "Petrus Hamukwaya",
-        department: "Air Navigation",
-        training: "ICAO Aviation English Proficiency",
-        assigned: "2026-05-22",
-        deadline: "2026-07-21",
-        status: "Completed"
-     },
- ];
 
 
 
@@ -33,6 +14,58 @@ const assignment = [
 const MyTrainingHistory = () => {
 
    const [showMenu, setShowMenu] = useState(false);
+   const [assignments, setAssignments] = useState<any[]>([]);
+   const [loading, setLoading] = useState(true);
+
+
+   useEffect(() => {
+      const fetchAssignments = async () => {
+         try {
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+            console.log(user);
+
+            const response = await fetch(
+               "http://localhost/ncaa/staff/my_assignments.php",
+               {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     email: user.email,
+                  }),
+               }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+               setAssignments(data.data);
+            }
+
+         } catch (error) {
+            console.error(error);
+         } finally {
+            setLoading(false);
+         }
+      };
+
+      fetchAssignments();
+        
+   }, []);
+
+
+
+   const getStatusColor = (status) => {
+       if (status === "Pending") return "bg-orange-300";
+       if (status === "Completed") return "bg-green-300";
+       if (status === "Overdue") return "bg-red-200";
+       return "bg-grey-200";
+   }
+
+
+
+
 
 
     return (
@@ -45,7 +78,7 @@ const MyTrainingHistory = () => {
                  <div className="w-full flex items-start justify-between">
                     <div className="flex flex-col">
                        <label className="text-lg">All Training Records</label>
-                       <label className="text-xs text-secondary/60">2 records found</label>
+                       <label className="text-xs text-secondary/60">{assignments.length} records found</label>
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="pr-3 border border-secondary/50 rounded-md">
@@ -68,21 +101,36 @@ const MyTrainingHistory = () => {
                              <th className="text-left p-3">Training</th>
                              <th className="text-left p-3">Assigned</th>
                              <th className="text-left p-3">Deadline</th>
-                             <th className="text-left p-3">Status</th>
+                             <th className="text-right p-3">Status</th>
                           </tr>
                        </thead>
                        <tbody>
 
-                        {assignment.map((assign, index) => (
-                          <tr key={index} className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-3">{assign.employee}</td>
+                        {loading ? (
+                           <tr>
+                              <td colSpan={6} className="py-5 text-center">Loading assignments...</td>
+                           </tr>
+                        ) : assignments.length === 0 ? (
+                           <tr>
+                              <td colSpan={6} className="text-center py-5">No training assignments found</td>
+                           </tr>
+                        ) : (
+
+                        assignments.map((assign) => (
+                          <tr key={assign.id} className="border-t cursor-pointer hover:bg-white/20 border-secondary/20 bg-white/60">
+                             <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.department}</td>
-                             <td className="px-3 py-3">{assign.training}</td>
-                             <td className="px-3 py-3">{assign.assigned}</td>
+                             <td className="px-3 py-3">{assign.training_name}</td>
+                             <td className="px-3 py-3">{assign.date_assigned}</td>
                              <td className="px-3 py-3">{assign.deadline}</td>
-                             <td className="px-3 py-3">{assign.status}</td>
+                             <td className="px-3 text-right py-3">
+                                <div className={`w-fit px-3 py-1 ${getStatusColor(assign.status)} rounded-xs font-bold inline-flex items-center justify-center`}>
+                                   {assign.status}
+                                </div>
+                              </td>
                           </tr>
-                         ))}
+                         ))
+                         )}
                        </tbody>
                  </table>
              </div>
@@ -92,3 +140,25 @@ const MyTrainingHistory = () => {
 }
 
 export default MyTrainingHistory;
+
+
+
+
+// const assignment = [
+//    {
+//       employee: "Petrus Hamukwaya",
+//       department: "Air Navigation",
+//       training: "Dangerous Goods Handling",
+//       assigned: "2026-05-22",
+//       deadline: "2026-07-21",
+//       status: "Pending"
+//    },
+//    {
+//        employee: "Petrus Hamukwaya",
+//        department: "Air Navigation",
+//        training: "ICAO Aviation English Proficiency",
+//        assigned: "2026-05-22",
+//        deadline: "2026-07-21",
+//        status: "Completed"
+//     },
+// ];
