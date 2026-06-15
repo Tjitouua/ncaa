@@ -17,6 +17,7 @@ import Dashboard2 from './pages/staff/Dashboard'
 import MyCertifications from './pages/staff/MyCertifications'
 import MyTrainingHistory from './pages/staff/MyTrainingHistory'
 import ScrollToTop from './ui/ScrollToTop'
+import Password from './pages/login/Password'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 
         {/* Admin pages  */}
           <Route path="/" element={<Login />} />
+          <Route path="/password" element={<Password />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/employees" element={<Employees />} />
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />

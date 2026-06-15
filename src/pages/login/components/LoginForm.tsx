@@ -9,11 +9,11 @@ const LoginForm = () => {
 
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const login = async () => {
-       if (!username || !password) {
+       if (!email || !password) {
          alert("Please fill in all fields");
          return;
        }
@@ -25,7 +25,7 @@ const LoginForm = () => {
                 "Content-Type": "application/json",
              },
              body: JSON.stringify({
-               username,
+               email,
                password,
              }),
          });
@@ -67,9 +67,9 @@ const LoginForm = () => {
 
             {/* Username  */}
             <div className="flex flex-col gap-1 mb-2">
-                <label className="font-bold text-sm">Username</label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="e.g. hangula.e" />
-                <label className="text-xs text-red-600 hidden">Please enter username</label>
+                <label className="font-bold text-sm">Email</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="doeJ@ncaa.na" />
+                <label className="text-xs text-red-600 hidden">Please enter email</label>
             </div>
 
             {/* Password  */}

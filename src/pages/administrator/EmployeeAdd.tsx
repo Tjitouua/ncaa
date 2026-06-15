@@ -15,6 +15,7 @@ import DateInputs from "../../ui/DateInputs";
 const EmployeeAdd = () => {
 
    const [showMenu, setShowMenu] = useState(false);
+   const [loading, setLoading] = useState(false);
 
    const navigate = useNavigate();
 
@@ -67,6 +68,8 @@ const EmployeeAdd = () => {
    const handleSubmit = async () => {
       if (!validate()) return;
 
+      setLoading(true);
+
       try {
          const response = await fetch(
             "http://localhost/ncaa/staff/add_staff.php",
@@ -91,6 +94,8 @@ const EmployeeAdd = () => {
       } catch (error) {
         console.error(error);
         alert("Failed to connect to server")
+      } finally {
+         setLoading(false);
       }
 
 
@@ -274,7 +279,14 @@ const EmployeeAdd = () => {
                           </SelectInputs>
 
                       </div>
-                      <PrimaryButt onClick={handleSubmit} className="w-full"><RiAddLargeLine /> Add Employee</PrimaryButt>
+                      <PrimaryButt 
+                      disabled={loading} 
+                      onClick={handleSubmit} 
+                      className="w-full">
+                        {loading ? "Adding Staff ..." : (
+                          <><RiAddLargeLine /> Add Employee</>
+                        )}
+                      </PrimaryButt>
                    </div>
                 </div>
              </div>
