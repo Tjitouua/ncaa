@@ -28,21 +28,6 @@
         exit;
     }
 
-
-
-
-
-    $query = "SELECT training_name from training_programs WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $program_id);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    $program = $result->fetch_assoc();
-
-    $trainingName = $program["training_name"];
-
-
     $sql = "
          INSERT INTO training_assignments (staff_id, program_id, date_assigned, deadline, status)
            VALUES (
@@ -54,39 +39,11 @@
            );
     ";
 
-
     $stmt = $conn->prepare($sql);
     
     foreach ($staff_ids as $staff_id) {
-
-
-        
-        $query2 = "SELECT first_name, email FROM staff WHERE id = ?;";
-        $stmt2 = $conn->prepare($query2);
-        $stmt2->bind_param("i", $staff_id);
-        $stmt2->execute();
-
-        $result2 = $stmt2->get_result();
-        $staff = $result2->fetch_assoc();
-
-        if (!$staff) continue;
-
-
-
-
         $stmt->bind_param("iiss", $staff_id, $program_id, $date_assigned, $deadline);
         $stmt->execute();
-
-
-        sendAssignmentEmail(
-            $staff["email"],
-            $staff["first_name"],
-            $trainingName,
-            $deadline
-        );
-
-
-
     };
 
     $response["success"] = true;

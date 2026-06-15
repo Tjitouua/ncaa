@@ -20,6 +20,7 @@
                a.id,
                s.first_name,
                s.last_name,
+               s.email,
                t.training_name,
                t.duration,
                a.date_assigned,
