@@ -19,8 +19,9 @@ const LoginForm = () => {
        }
 
        try {
-         const response = await fetch("http://localhost/ncaa/login.php", {
+         const response = await fetch("http://localhost/ncaa/login/login.php", {
              method: "POST",
+             credentials: "include",
              headers: {
                 "Content-Type": "application/json",
              },
@@ -33,7 +34,6 @@ const LoginForm = () => {
          const data = await response.json();
 
          if (data.success) {
-            localStorage.setItem("user", JSON.stringify(data.user));
 
             if (data.user.role === "admin") {
               navigate("/admin/dashboard");
@@ -93,6 +93,16 @@ const LoginForm = () => {
 }
 
 export default LoginForm;
+
+
+
+
+
+
+
+
+
+// localStorage.setItem("user", JSON.stringify(data.user)); 
 
 
 

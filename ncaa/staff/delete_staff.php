@@ -22,33 +22,53 @@
 
      $id = $data["id"];
 
+     $conn->begin_transaction();
+
      try {
 
-        $sql = "DELETE FROM staff WHERE id = ?;";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id);
+        $mailSql = "SELECT email FROM staff WHERE id = ?;";
+        $mailStmt = $conn->prepare($mailSql);
+        $mailStmt->bind_param("i", $id);
+        $mailStmt->execute();
+        $result = $mailStmt->get_result();
+        $staff = $result->fetch_assoc();
 
-        if ($stmt->execute()) {
-            echo json_encode([
-               "success" => true,
-               "message" => "Staff deleted successfully"
-            ]);
-        } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "Failed to delete staff"
-            ]);
+        if (!$staff) {
+            throw new Exception("Staff not found");
         }
 
-        $stmt->close();
-        $conn->close();
+        $email = $staff["email"];
+
+        $sql2 = "DELETE FROM users WHERE email = ?";
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bind_param("s", $email);
+        $stmt2->execute();
+
+
+        $sql = "DELETE FROM staff WHERE id = ? OR email = ?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $id, $email);
+        $stmt->execute();
+
+        $conn->commit();
+
+        echo json_encode([
+          "success" => true,
+          "message" => "Staff deleted successfully"
+        ]);
+       
 
      } catch (Exception $e) {
+
+        $conn->rollback();
+
         echo json_encode([
             "success" => false,
             "message" => $e->getMessage()
         ]);
      }
+
+     $conn->close();
 
 
 

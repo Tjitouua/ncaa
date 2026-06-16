@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS users
     id INT PRIMARY KEY AUTO_INCREMENT,
     role VARCHAR (250) NOT NULL,
     email VARCHAR(250) NOT NULL,
+    first_name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(250) NOT NULL,
     password VARCHAR(250) NOT NULL
 );
 

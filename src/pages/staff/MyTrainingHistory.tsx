@@ -4,6 +4,7 @@ import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
 import { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,14 +17,36 @@ const MyTrainingHistory = () => {
    const [showMenu, setShowMenu] = useState(false);
    const [assignments, setAssignments] = useState<any[]>([]);
    const [loading, setLoading] = useState(true);
+   const navigate = useNavigate();
+
+
+   
 
 
    useEffect(() => {
-      const fetchAssignments = async () => {
-         try {
-            const user = JSON.parse(localStorage.getItem("user") || "{}");
-            console.log(user);
 
+      const checkSession = async () => {
+         const res = await fetch("http://localhost/ncaa/login/session.php", {
+            method: "GET",
+            credentials: "include"
+         });
+   
+         const data = await res.json();
+   
+         if (!data.success) {
+            navigate("/");
+            return;
+         }
+   
+         fetchAssignments(data.user.email);
+      };
+
+
+
+
+
+      const fetchAssignments = async (email) => {
+            try {
             const response = await fetch(
                "http://localhost/ncaa/staff/my_assignments.php",
                {
@@ -31,9 +54,7 @@ const MyTrainingHistory = () => {
                   headers: {
                      "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({
-                     email: user.email,
-                  }),
+                  body: JSON.stringify({ email }),
                }
             );
 
@@ -43,14 +64,15 @@ const MyTrainingHistory = () => {
                setAssignments(data.data);
             }
 
-         } catch (error) {
-            console.error(error);
+         } catch (err) {
+            console.error(err);
          } finally {
             setLoading(false);
          }
       };
+      
 
-      fetchAssignments();
+      checkSession();
         
    }, []);
 

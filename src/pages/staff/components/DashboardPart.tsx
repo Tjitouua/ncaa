@@ -13,6 +13,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificationsCard from "../ui/CertificationsCard";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 
@@ -51,6 +52,32 @@ const DashboardPart = () => {
 
     const navigate = useNavigate();
 
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const res = await fetch("http://localhost/ncaa/login/session.php", {
+                method: "GET",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if(!data.success) {
+                navigate("/");
+            } else {
+                setUser(data.user);
+            }
+        };
+
+        checkSession();
+    }, []);
+
+
+    if (!user) return <div>Loading...</div>
+
+    
+
 
 
 
@@ -58,8 +85,8 @@ const DashboardPart = () => {
         <div className="w-full min-h-screen text-secondary/90 px-2 md:px-6">
             {/* Welcome Div  */}
             <div className="flex flex-col mt-9 mb-1">
-               <label className="font-bold text-xl">Welcome, Tjitouua Mapoha</label>
-               <label className="text-secondary/50 text-sm">Software Developer · ICT</label>
+               <label className="font-bold text-xl">Welcome, {user.first_name} {user.last_name}</label>
+               <label className="text-secondary/50 text-sm">{user.position} · {user.department}</label>
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -88,3 +115,8 @@ const DashboardPart = () => {
 }
 
 export default DashboardPart;
+
+
+
+
+// const user = JSON.parse(localStorage.getItem("user") || "{}"); 

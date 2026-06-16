@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 
 
@@ -8,6 +8,56 @@ const PasswordForm = () => {
 
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const email = searchParams.get("email") || "";
+
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleSubmit = async () => {
+       if (!password || !confirmPassword) {
+          alert("Please fill in all fields");
+          return;
+       }
+
+       if (password != confirmPassword) {
+         alert("Passwords do not match");
+         return;
+       }
+
+
+       try {
+          const response = await fetch(
+            "http://localhost/ncaa/login/set_password.php",
+            {
+              method: "POST",
+              headers: {
+                 "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                 email,
+                 password
+              }),
+            }
+          );
+
+          const data = await response.json();
+
+          if (data.success) {
+             alert("Password updated successfully");
+             navigate("/");
+          } else {
+             alert(data.message);
+          }
+       } catch (error) {
+          console.error(error);
+          alert("Server error");
+       }
+
+    };
+
+
 
 
 
@@ -23,30 +73,33 @@ const PasswordForm = () => {
             {/* Username  */}
             <div className="flex flex-col gap-1 mb-2">
                 <label className="font-bold text-sm">Email</label>
-                <input value="doeJ@ncaa.na" readOnly className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="doeJ@ncaa.na" />
+                <input value={email} readOnly className="w-full py-2 border rounded-lg px-3 border-black/50 placeholder:text-sm outline-none " type="text" placeholder="doeJ@ncaa.na" />
                 <label className="text-xs text-red-600 hidden">Please enter email</label>
             </div>
 
             {/* Password  */}
             <div className="flex flex-col gap-1 mb-2">
                 <label className="font-bold text-sm">Password</label>
-                <input className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
                 <label className="text-xs text-red-600 hidden">Please enter password</label>
             </div>
 
             {/* Password  */}
             <div className="flex flex-col gap-1 mb-2">
                 <label className="font-bold text-sm">Confirm Password</label>
-                <input className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
+                <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full py-2 border rounded-lg px-3 border-black/50 outline-none" type="password" placeholder="••••••••" />
                 <label className="text-xs text-red-600 hidden">Please re-enter password</label>
             </div>
 
 
             <button 
-            className="w-full mt-5 py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Confirm</button>
+            onClick={handleSubmit}
+            className="w-full mt-5 py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">
+              Confirm
+            </button>
 
             <div className="w-full flex items-center justify-center text-xs mt-5">
-              {/* <label>Forgot Password? <span className="font-bold cursor-pointer hover:underline">Click here</span></label> */}
+              <label>Want to return?  <span onClick={() => navigate("/")} className="font-bold cursor-pointer hover:underline">Go to login</span></label>
             </div>
             </div>
           </div>

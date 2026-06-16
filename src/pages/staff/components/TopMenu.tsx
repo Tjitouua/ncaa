@@ -8,12 +8,35 @@ import { Link, useNavigate } from "react-router-dom";
 const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const res = await fetch("http://localhost/ncaa/login/session.php", {
+                method: "GET",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if(!data.success) {
+                navigate("/");
+            } else {
+                setUser(data.user);
+            }
+        };
+
+        checkSession();
+    }, []);
 
 
     // Logout 
     const [showPopup, setShowPop] = useState(false);
-
     const popupRef = useRef(null);
+
+
+
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -83,10 +106,10 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                 {/* User  */}
                 <div onClick={() => setShowPop(!showPopup)} className="flex items-center gap-3 cursor-pointer hover:bg-secondary/20 px-1 py-[2px] pr-2 rounded-full">
                     <div className="bg-secondaryy p-2 rounded-full">
-                       <label className="text-md font-bold">TM</label>
+                       <label className="text-md font-bold">{user?.first_name?.charAt(0)}{user?.last_name?.charAt(0)}</label>
                     </div>
                     <div className="text-xs flex flex-col">
-                        <label className="font-bold">Tjitouua Mapoha</label>
+                        <label className="font-bold">{user?.first_name} {user?.last_name}</label>
                         <label className="-mt-[2px]">Employee</label>
                     </div>
                 </div>
@@ -122,11 +145,24 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                {showPopup && (
                <div className="flex flex-col min-w-50 bg-white shadow-sm shadow-black/30 rounded-lg">
                   <div className="flex py-3 px-3 flex-col border-b border-secondaryy">
-                    <label className="font-bold text-sm">Tjitouua Mapoha</label>
+                    <label className="font-bold text-sm">{user?.first_name} {user?.last_name}</label>
                     <label className="text-xs">employee • Employee</label>
                   </div>
                   <div className="flex px-2 py-1 gap-3">
-                     <button onClick={() => navigate("/")} className="w-full py-2 px-2 justify-start flex gap-3 rounded-sm items-center hover:bg-secondaryy cursor-pointer hover:text-red-600"><MdOutlineLogout /> Sign out</button>
+                     <button 
+                     onClick={async () => {
+                        try {
+                            await fetch("http://localhost/ncaa/login/logout.php", {
+                                method: "POST",
+                                credentials: "include"
+                            });
+
+                            navigate("/");
+                        } catch (err) {
+                            console.error("Logout failed: ", err);
+                        }
+                     }} 
+                     className="w-full py-2 px-2 justify-start flex gap-3 rounded-sm items-center hover:bg-secondaryy cursor-pointer hover:text-red-600"><MdOutlineLogout /> Sign out</button>
                   </div>
                </div>
                )}

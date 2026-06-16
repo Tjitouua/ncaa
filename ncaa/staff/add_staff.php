@@ -7,6 +7,7 @@
    header("Access-Control-Allow-Headers: Content-Type");
 
    include "../database.php";
+   require "../mail/newUser.php";
 
    $data = json_decode(file_get_contents("php://input"), true);
 
@@ -17,6 +18,10 @@
       ]);
       exit;
    }
+
+   $conn->begin_transaction();
+
+   try {
 
    $staff_id = trim($data["employeeId"]);
    $first_name = trim($data["firstName"]);
@@ -36,6 +41,7 @@
    $employment_status = trim($data["employmentStatus"]);
 
 
+   // Employees table 
    $sql = "
        INSERT INTO staff (
            staff_id,
@@ -82,19 +88,53 @@
         $employment_status
    );
 
-   if ($stmt->execute()) {
+   $stmt->execute();
+
+
+   // Users table 
+   $sql2 = "
+       INSERT INTO users (
+         role, 
+         email,
+         first_name,
+         last_name,
+         password
+       ) 
+       VALUES (?, ?, ?, ?, ?);
+   ";
+
+   $stmt2 = $conn->prepare($sql2);
+
+   $defaultPassPlain = "12345";
+   $defaultPass = password_hash($defaultPassPlain, PASSWORD_DEFAULT);
+   $role = "staff";
+   $stmt2->bind_param("sssss", $role, $email, $first_name, $last_name, $defaultPass);
+   $stmt2->execute();
+
+
+   $conn->commit();
+
+   sendWelcomeEmail($email, $first_name, $defaultPassPlain);
+
+
+
       echo json_encode([
          "success" => true,
          "message" => "Staff added successfully"
       ]);
-   } else {
-      echo json_encode([
-         "success" => false,
-         "message" => $stmt->error
-      ]);
-   }
+   
 
-   $stmt->close();
+ } catch (Exception $e) {
+
+   $conn->rollback();
+
+   echo json_encode([
+      "success" => false,
+      "message" => $stmt->error
+   ]);
+
+ }
+
    $conn->close();
 
 ?>

@@ -39,6 +39,7 @@
               <p><strong>Deadline:</strong> $deadline</p>
               <br>
               <p>Please log into the system for more details.</p>
+              <p>http://localhost:5173/</p>
         ";
         $mail->send();
         return true;
