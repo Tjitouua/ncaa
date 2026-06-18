@@ -8,12 +8,39 @@ import { Link, useNavigate } from "react-router-dom";
 const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const res = await fetch("http://localhost/ncaa/login/session.php", {
+                method: "GET",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if(!data.success) {
+                navigate("/");
+            } else {
+                setUser(data.user);
+            }
+        };
+
+        checkSession();
+    }, []);
 
 
     // Logout 
     const [showPopup, setShowPop] = useState(false);
-
     const popupRef = useRef(null);
+
+
+
+
+    // Logout 
+    // const [showPopup, setShowPop] = useState(false);
+
+    // const popupRef = useRef(null);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -126,7 +153,19 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                     <label className="text-xs">admin • Admin</label>
                   </div>
                   <div className="flex px-2 py-1 gap-3">
-                     <button onClick={() => navigate("/")} className="w-full py-2 px-2 justify-start flex gap-3 rounded-sm items-center hover:bg-secondaryy cursor-pointer hover:text-red-600"><MdOutlineLogout /> Sign out</button>
+                     <button onClick={async () => {
+                        try {
+                            await fetch("http://localhost/ncaa/login/logout.php", {
+                                method: "POST",
+                                credentials: "include"
+                            });
+
+                            navigate("/");
+                        } catch (err) {
+                            console.error("Logout failed: ", err);
+                        }
+                     }} 
+                     className="w-full py-2 px-2 justify-start flex gap-3 rounded-sm items-center hover:bg-secondaryy cursor-pointer hover:text-red-600"><MdOutlineLogout /> Sign out</button>
                   </div>
                </div>
                )}
