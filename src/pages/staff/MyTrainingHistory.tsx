@@ -139,7 +139,7 @@ const MyTrainingHistory = () => {
                         ) : (
 
                         assignments.map((assign) => (
-                          <tr key={assign.id} onClick={() => navigate("/staff/assignment_details")} className="border-t cursor-pointer hover:bg-white/20 border-secondary/20 bg-white/60">
+                          <tr key={assign.id} onClick={() => navigate(`/staff/assignment_details/${assign.id}`)} className="border-t cursor-pointer hover:bg-white/20 border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.department}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>

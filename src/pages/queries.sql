@@ -94,6 +94,23 @@ CREATE TABLE training_assignments
 
 
 
+
+
+-- Certficates table 
+CREATE TABLE certificates
+( 
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    training_id INT NOT NULL,
+    certificate_no VARCHAR (250) NOT NULL,
+    issued_date DATE NOT NULL,
+    expiry_date DATE NOT NULL,
+    file VARCHAR(250) NOT NULL,
+    
+    FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
+);
+
+
+
 -- INSERT INTO staff (staff_id, first_name, last_name, email, department, role)
 -- VALUES
 -- (

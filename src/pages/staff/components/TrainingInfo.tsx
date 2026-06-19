@@ -9,10 +9,53 @@ import { PiGraduationCap } from "react-icons/pi";
 import { BiCategory } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { MdOutlineContactMail } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 
 const TrainingInfo = () => {
+
+
+
+      const { id } = useParams();
+      const [trainingInfoList2, setTrainingInfoList2] = useState<any>(null);
+
+
+      useEffect(() => {
+         fetch(`http://localhost/ncaa/staff/get_assignment_by_id.php?id=${id}`)
+         .then(res => res.json())
+         .then(data => {
+            if (data.success) {
+                setTrainingInfoList2(data.data);
+            }
+         });
+      }, [id]);
+
+      const handleChange = (e: any) => {
+         setTrainingInfoList2({
+            ...trainingInfoList2,
+            [e.target.name]: e.target.value
+         });
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     const trainingInfoList = [
@@ -29,7 +72,7 @@ const TrainingInfo = () => {
         {
             icon: IoLocationOutline,
             label: "Venue/Location",
-            value: "NCAA HQ Training Center, Windhoek - Room A"
+            value: trainingInfoList2?.location
         },
         {
               icon: MdDateRange,
@@ -59,26 +102,31 @@ const TrainingInfo = () => {
         {
             icon: MdOutlineContactMail,
             label: "Contact",
-            value: "training@icao.int"
+            value: trainingInfoList2?.email
         }
     ];
 
 
 
+
+
+
+
+
     return (
         <div className="w-7/10 bg-white text-secondary/70 py-6 px-6 flex flex-col shadow-sm shadow-secondary/30">
-            <label className="text-xs text-secondary/50">CSA-746</label>
-            <label className="font-bold text-lg">Cyber Security in Aviation</label>
-            <label className="text-xs text-secondary/50">Protection of aviation information systems and data</label>
+            <label className="text-xs text-secondary/50">{trainingInfoList2?.training_code}</label>
+            <label className="font-bold text-lg">{trainingInfoList2?.training_name}</label>
+            <label className="text-xs text-secondary/50">{trainingInfoList2?.description}</label>
             <div className="flex items-center gap-3 mt-3">
                 <div className="py-1 px-3 bg-secondary/20 text-xs font-bold rounded-md">
-                    <label>Security</label>
+                    <label>{trainingInfoList2?.category}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
-                    <label>Mandatory</label>
+                    <label>{trainingInfoList2?.training_type}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
-                    <label>2 weeks</label>
+                    <label>{trainingInfoList2?.duration}</label>
                 </div>
             </div>
             {/* Session Schedule  */}

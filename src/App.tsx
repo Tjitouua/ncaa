@@ -47,7 +47,7 @@ function App() {
           <Route path="/staff/dashboard" element={<Dashboard2 />} />
           <Route path="/staff/my_certifications" element={<MyCertifications />} />
           <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />
-          <Route path="/staff/assignment_details" element={<AssignmentDetails />} />
+          <Route path="/staff/assignment_details/:id" element={<AssignmentDetails />} />
 
 
       </Routes>
