@@ -82,6 +82,7 @@ const LoginForm = () => {
             <button 
               onClick={login}
             className="w-full mt-5 py-2 cursor-pointer rounded-lg bg-primary text-white font-bold hover:bg-primary/70">Sign In</button>
+            
 
             <div className="w-full flex items-center justify-center text-xs mt-5">
               <label>Forgot Password? <span className="font-bold cursor-pointer hover:underline">Click here</span></label>

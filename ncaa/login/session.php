@@ -9,7 +9,7 @@
     header("Access-Control-Allow-Headers: Content-Type");
 
 
-    $timeout = 60 * 30;
+    $timeout = 20000;
 
     if (!isset($_SESSION["user"])) {
         echo json_encode([
