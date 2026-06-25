@@ -196,7 +196,7 @@ const TrainingHistoryPart = () => {
                        ) : (     
                         filteredTraining.map((assign, index) => (
                            // const effectiveStatus = getEffectiveStatus(assign);
-                          <tr key = {index} className="border-t border-secondary/20 bg-white/60">
+                          <tr key = {index} onClick={() => navigate(`/admin/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
@@ -207,10 +207,14 @@ const TrainingHistoryPart = () => {
                                     {assign.status}
                                   </div></td>
                              <td className="px-3 text-right py-3">
+                               <div className="w-full flex justify-end items-center gap-3">
                                 <button 
-                                onClick={() => cycleStatus(assign)}
+                                onClick={(e) => {e.stopPropagation(); cycleStatus(assign);}}
                                 className="px-3 py-2 cursor-pointer border border-secondary/30 bg-white hover:bg-secondaryy 
-                                text-xs font-bold rounded-md">Mark {getNextStatus(assign.status)}</button>
+                                    text-xs font-bold rounded-md">Mark {getNextStatus(assign.status)}
+                                </button>
+                                {/* <div className="p-1 h-1 bg-green-600 rounded-full"></div> */}
+                               </div>
                              </td>
                           </tr>
                         ))

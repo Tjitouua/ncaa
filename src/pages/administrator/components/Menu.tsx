@@ -36,11 +36,11 @@ const menuItems = [
       path: "/admin/training_history",
       icon: <FaClockRotateLeft />
    },
-   {
-      name: "Certifications",
-      path: "/admin/certifications",
-      icon: <PiCertificateBold />
-   },
+   // {
+   //    name: "Certifications",
+   //    path: "/admin/certifications",
+   //    icon: <PiCertificateBold />
+   // },
    {
       name: "Notifications",
       path: "/admin/notifications",

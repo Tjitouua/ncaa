@@ -6,7 +6,7 @@ import Dashboard from './pages/administrator/Dashboard'
 import Employees from './pages/administrator/Employees'
 import Programs from './pages/administrator/Programs'
 import Assign from './pages/administrator/Assign'
-import Certifications from './pages/administrator/Certifications'
+// import Certifications from './pages/administrator/Certifications'
 import TrainingHistory from './pages/administrator/TrainingHistory'
 import Notifications from './pages/administrator/Notifications'
 import EmployeeAdd from './pages/administrator/EmployeeAdd'
@@ -19,6 +19,7 @@ import MyTrainingHistory from './pages/staff/MyTrainingHistory'
 import ScrollToTop from './ui/ScrollToTop'
 import Password from './pages/login/Password'
 import AssignmentDetails from './pages/staff/AssignmentDetails'
+import TrainingDetails from './pages/administrator/TrainingDetails'
 
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
           <Route path="/admin/training_programs/program_add" element={<ProgramAdd />} />
           <Route path="/admin/training_programs/program_details/:id" element={<ProgramDetails />} />
           <Route path="/admin/assign_training" element={<Assign />} />
-          <Route path="/admin/certifications" element={<Certifications />} />
+          <Route path="/admin/training_details/:id" element={<TrainingDetails />} />
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
 

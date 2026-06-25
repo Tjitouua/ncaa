@@ -13,6 +13,7 @@ import { MdOutlineFindReplace } from "react-icons/md";
 import { TbZoomReplace } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { HiOutlineDocumentText } from "react-icons/hi2";
 
 
 
@@ -35,6 +36,61 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    const [loading, setLoading] = useState(false);
 
    const hasCertificate = trainingInfoList2?.certificate_no && trainingInfoList2?.file;
+
+
+
+  
+//    Updating the status of the training 
+   const getNextStatus = (current: string) => {
+    if (current === "Pending") return "Completed";
+    if (current === "Completed") return "Overdue";
+    if (current === "Overdue") return "Pending";
+    return "Pending";
+   }
+
+
+
+   const cycleStatus = async (assign) => {
+       if (!trainingInfoList2?.id) return;
+
+       const next = getNextStatus(trainingInfoList2.status);
+
+       try {
+          const res = await fetch("http://localhost/ncaa/assign/update_assignment_status.php", {
+             method: "POST",
+             headers: {
+                "Content-Type": "application/json"
+             },
+             body: JSON.stringify({
+                id: trainingInfoList2.id,
+                status: next
+             })
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+             setTrainingInfoList2((prev: any) => ({
+                ...prev,
+                status: next
+             }));
+             window.location.reload();
+          } else {
+             alert(data.message || "Failed to update status");
+          } 
+       } catch (error) {
+          console.error("Error updating status: ", error);
+       }
+   };
+
+
+
+
+
+
+
+ 
+
 
 
    // Adding certficate to database 
@@ -186,71 +242,17 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
 
-
-           {/* Certificate  */}
+           {/* Certificate not there message  */}
            {!hasCertificate && (
-           <div className="w-full py-6 pb-6 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
-              <label className="font-bold text-sm mb-2">Certificate</label>
-              <label className="text-xs text-secondary/50 mb-3">Once you complete this training, upload your certificate here. An admin will review it and mark the training as completed.</label>
-              {/* Certificate No  */}
-              <div className="w-full flex flex-col gap-2 mb-3">
-                 <label className="text-xs font-bold text-secondary/80">Certificate No</label>
-                 <input value={certificateNo} onChange={(e) => setCertificateNo(e.target.value)} type="text" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" placeholder="Auto-generated if empty" />
-              </div>
-              {/* Dates  */}
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
-                 <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Issued</label>
-                   <input value={issuedDate} onChange={(e) => setIssuedDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-                 </div>
-                 <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Expiry *</label>
-                   <input value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-                 </div>
-              </div>
-              {/* Certificate File  */}
-              <div className="w-full flex flex-col gap-2 mb-1">
-                 <label className="text-xs font-bold text-secondary/80">Certificate File *</label>
-                 <input onChange={(e) => setCertificateFile(e.target.files ? e.target.files[0] : null)} type="file" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-              </div>
-              <label className="text-[11px] text-secondary/50 mb-5">No file selected - max 5 MB</label>
-              <PrimaryButt className="mb-3" onClick={handleSubmitCertificate}>{loading ? "Submitting..." : "Submit Replacement"}</PrimaryButt>
-              {/* <SecondaryButt>Cancel</SecondaryButt> */}
+           <div className="w-full py-6 pb-6 px-5 flex flex-col gap-3 bg-white shadow-sm shadow-secondary/30">
+               <label className="font-bold text-sm mb-2">Certificate</label>
+               <div className="w-full py-10 flex flex-col text-sm items-center justify-center text-center px-6 gap-2 rounded-md border border-dotted border-secondary/50 bg-secondaryy">
+                   <HiOutlineDocumentText className="text-4xl font-bold" />
+                   <label className="font-bold">Awaiting employee upload</label>
+                   <label className="text-xs">The employee hasn't submitted proof of completion yet.</label>
+               </div>
            </div>
            )}
-
-
-
-
-           {/* Update Certificate  */}
-           <div className="w-full hidden py-6 pb-6 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
-              <label className="font-bold text-sm mb-2">Certificate</label>
-              <label className="text-xs text-secondary/50 mb-3">Need to update your certificate? Upload a new one here to replace the existing certificate. An admin will review it and update your training status.</label>
-              {/* Certificate No  */}
-              <div className="w-full flex flex-col gap-2 mb-3">
-                 <label className="text-xs font-bold text-secondary/80">Certificate No</label>
-                 <input type="text" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" placeholder="Auto-generated if empty" />
-              </div>
-              {/* Dates  */}
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
-                 <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Issued</label>
-                   <input type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-                 </div>
-                 <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Expiry *</label>
-                   <input type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-                 </div>
-              </div>
-              {/* Certificate File  */}
-              <div className="w-full flex flex-col gap-2 mb-1">
-                 <label className="text-xs font-bold text-secondary/80">Certificate File *</label>
-                 <input type="file" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
-              </div>
-              <label className="text-[11px] text-secondary/50 mb-5">No file selected - max 5 MB</label>
-              <PrimaryButt className="mb-3">Submit Replacement</PrimaryButt>
-              <SecondaryButt>Cancel</SecondaryButt>
-           </div>
 
 
 
@@ -273,11 +275,9 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                   <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
                   <SecondaryButt className="!border !border-secondary/30"><LuDownload /> Download</SecondaryButt>
               </div>
-              <SecondaryButt className="!bg-secondaryy"><TbZoomReplace /> Replace Certificate</SecondaryButt>
+              <SecondaryButt onClick={cycleStatus}  className="!bg-secondaryy">Mark {getNextStatus(trainingInfoList2?.status)}</SecondaryButt>
            </div>
            )} 
-
-
 
 
 
