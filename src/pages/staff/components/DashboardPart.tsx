@@ -50,9 +50,115 @@ const DashboardPart = () => {
     ];
 
 
-    const navigate = useNavigate();
+
+
+
 
     const [user, setUser] = useState(null);
+    const [certificates, setCertificates] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+ 
+ 
+ 
+ 
+    useEffect(() => {
+ 
+    const checkSession = async () => {
+        const res = await fetch("http://localhost/ncaa/login/session.php", {
+           method: "GET",
+           credentials: "include"
+        });
+ 
+        const data = await res.json();
+ 
+        if (!data.success) {
+           navigate("/");
+           return;
+        }
+ 
+        fetchCertificates(data.user.email);
+    }
+ 
+ 
+ 
+    const fetchCertificates = async (email) => {
+        try {
+           const response = await fetch(
+             "http://localhost/ncaa/staff/my_certificates.php",
+             {
+                method: "POST",
+                headers: {
+                   "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+             }
+           );
+ 
+           const data = await response.json();
+ 
+           if (data.success) {
+              setCertificates(data.data);
+           }
+        } catch (err) {
+           console.error(err);
+        } finally {
+           setLoading(false);
+        }
+    };
+ 
+ 
+    checkSession();
+ 
+ 
+ 
+   }, []);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   const getCertificateStatus = (expiryDate: string) => {
+       const today = new Date();
+       const expiry = new Date(expiryDate);
+ 
+       today.setHours(0, 0, 0, 0);
+       expiry.setHours(0, 0, 0, 0);
+ 
+       const diffTime = expiry.getTime() - today.getTime();
+       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+ 
+       console.log("Expiry:", expiryDate, "Days left:", diffDays);
+ 
+       if (diffDays < 0) {
+          return {
+             text: "Expired",
+             className: "border-red-600 bg-red-600/30"
+          };
+       };
+       
+       if (diffDays <= 60) {
+           return {
+             text: "Expiring soon",
+             className: "border-yellow-600 bg-yellow-600/30"
+           };
+       }
+ 
+       return {
+          text: "Valid",
+          className: "border-green-600 bg-green-600/30"
+       };
+   };
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         const checkSession = async () => {
@@ -90,6 +196,7 @@ const DashboardPart = () => {
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              
               {Stats.map((stat, index) => (
                <StatCard
                   key = {index}
@@ -99,6 +206,7 @@ const DashboardPart = () => {
                   desc = {stat.desc}
                 />
               ))}
+              
             </div>
             {/* My Certifications  */}
             <div className="w-full py-5 px-4 flex flex-col bg-white mt-5 shadow-xs shadow-secondary/20">
@@ -107,8 +215,28 @@ const DashboardPart = () => {
                    <SecondaryButt onClick={() => navigate("/staff/my_certifications")} className="shadow-xs shadow-secondary/40"><IoSettingsOutline /> Manage</SecondaryButt>
                 </div>
                 {/* Certifications card  */}
-                <CertificationsCard />
-                <CertificationsCard />
+                {loading ? (
+                    <div className="py-15 w-full flex items-center justify-center">
+                        <label>Loading Certificates...</label>
+                    </div>
+                ): certificates.length === 0 ? (
+                    <div className="py-15 w-full flex items-center justify-center">
+                       <label>No certificates found</label>
+                    </div>
+                ): (
+                    certificates.map((cert) => {
+                        const status = getCertificateStatus(cert.expiry_date);
+                          return (
+                           <CertificationsCard
+                                key = {cert.id}
+                                training_name = {cert.training_name}
+                                expiry_date = {cert.expiry_date}
+                                certificate_no = {cert.certificate_no}
+                                status = {status}
+                           />
+                        );
+                    })
+                )}
             </div>
         </div>
     );

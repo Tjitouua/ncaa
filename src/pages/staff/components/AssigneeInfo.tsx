@@ -56,6 +56,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
          const res = await fetch("http://localhost/ncaa/staff/insert_certificate.php", {
             method: "POST",
+            credentials: "include",
             body: formData,
          });
 

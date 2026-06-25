@@ -101,6 +101,7 @@ CREATE TABLE certificates
 ( 
     id INT PRIMARY KEY AUTO_INCREMENT,
     training_id INT NOT NULL,
+    staff_email VARCHAR (250) NOT NULL,
     certificate_no VARCHAR (250) NOT NULL,
     issued_date DATE NOT NULL,
     expiry_date DATE NOT NULL,
