@@ -172,11 +172,12 @@ const TrainingHistoryPart = () => {
                           <tr className="bg-secondary/10 border-b border-secondary/20">
                              <th className="text-left p-3">Employee</th>
                              <th className="text-left p-3">Training</th>
+                             <th className="text-left p-3">Type</th>
                              <th className="text-left p-3">Duration</th>
                              <th className="text-left p-3">Assigned</th>
                              <th className="text-left p-3">Deadline</th>
                              <th className="text-left p-3">Status</th>
-                             <th className="text-right p-3">Action</th>
+                             {/* <th className="text-right p-3">Action</th> */}
                           </tr>
                        </thead>
                        <tbody>
@@ -199,23 +200,16 @@ const TrainingHistoryPart = () => {
                           <tr key = {index} onClick={() => navigate(`/admin/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
+                             <td className="px-3 py-3">{assign.training_type}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
                              <td className="px-3 py-3">{assign.date_assigned}</td>
                              <td className="px-3 py-3">{assign.deadline}</td>
                              <td className="px-3 py-3">
                                   <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-20`}>
                                     {assign.status}
-                                  </div></td>
-                             <td className="px-3 text-right py-3">
-                               <div className="w-full flex justify-end items-center gap-3">
-                                <button 
-                                onClick={(e) => {e.stopPropagation(); cycleStatus(assign);}}
-                                className="px-3 py-2 cursor-pointer border border-secondary/30 bg-white hover:bg-secondaryy 
-                                    text-xs font-bold rounded-md">Mark {getNextStatus(assign.status)}
-                                </button>
-                                {/* <div className="p-1 h-1 bg-green-600 rounded-full"></div> */}
-                               </div>
+                                  </div>
                              </td>
+                             
                           </tr>
                         ))
                         )}
@@ -233,6 +227,22 @@ const TrainingHistoryPart = () => {
 
 
 export default TrainingHistoryPart;
+
+
+
+
+
+
+// {/* <td className="px-3 text-right py-3">
+//                                <div className="w-full flex justify-end items-center gap-3">
+//                                 <button 
+//                                 onClick={(e) => {e.stopPropagation(); cycleStatus(assign);}}
+//                                 className="px-3 py-2 cursor-pointer border border-secondary/30 bg-white hover:bg-secondaryy 
+//                                     text-xs font-bold rounded-md">Mark {getNextStatus(assign.status)}
+//                                 </button>
+//                                 {/* <div className="p-1 h-1 bg-green-600 rounded-full"></div> */}
+//                                </div>
+//                              </td> */}
 
 
 

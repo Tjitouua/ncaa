@@ -9,6 +9,7 @@ import { LuEye } from "react-icons/lu";
 import { FiDownload } from "react-icons/fi";
 import { GrCertificate } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { ImCross } from "react-icons/im";
 
 
 
@@ -41,6 +42,10 @@ const MyCertifications = () => {
    const [certificates, setCertificates] = useState<any[]>([]);
    const [loading, setLoading] = useState(true);
    const navigate = useNavigate();
+   const [showCertificate, setShowCertificate] = useState(false);
+   const [selectedCertificate, setSelectedCertificate] = useState<any>(null);
+
+
 
 
 
@@ -113,7 +118,7 @@ const MyCertifications = () => {
       const diffTime = expiry.getTime() - today.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      console.log("Expiry:", expiryDate, "Days left:", diffDays);
+      // console.log("Expiry:", expiryDate, "Days left:", diffDays);
 
       if (diffDays < 0) {
          return {
@@ -185,7 +190,10 @@ const MyCertifications = () => {
                              <td className="px-3 py-4 text-xs">{certificate.expiry_date}</td>
                              <td className="px-3 py-4"><div className={`py-1 px-2 rounded-sm font-bold inline-flex items-center justify-center gap-2 border ${status.className}`}>● {status.text}</div></td>
                              <td className="text-left px-3 py-4"><div className="flex items-center gap-2"><GrCertificate />{certificate.file?.split("_").pop()}</div></td>
-                             <td className="px-3 py-4"><div className="font-bold text-lg flex items-center justify-center gap-6"><FiEye className="hover:text-primary cursor-pointer" /> <FiDownload className="hover:text-primary cursor-pointer" /></div></td>
+                             <td className="px-3 py-4"><div className="font-bold text-lg flex items-center justify-center gap-6">
+                                 <FiEye onClick={() => {setShowCertificate(true); setSelectedCertificate(certificate);}} className="hover:text-primary cursor-pointer" /> 
+                                 </div>
+                             </td>
                           </tr>
                           );
                           })
@@ -195,9 +203,56 @@ const MyCertifications = () => {
 
 
              </div>
+
+
+
+
+
+
+             {/* Certificate Div  */}
+             {showCertificate && selectedCertificate && (
+             <div onClick={() => setShowCertificate(false)} className="w-full h-screen px-15 overflow-y-auto pb-30 backdrop-blur-xs bg-black/40 flex flex-col items-end z-20 gap-5 fixed py-7 top-15 left-7">
+              <div onClick={() => setShowCertificate(false)} className="w-full font-extrabold text-white flex justify-end"><ImCross className="cursor-pointer hover:text-secondaryy" /></div>
+              <div className="w-6/7 flex justify-center py-5">
+                  {/* Certificate  */}
+                  <div className="h-250 bg-white w-4/5">
+                     <iframe className="w-full bg-white h-full" src={selectedCertificate ? `http://localhost/ncaa/staff/${encodeURI(selectedCertificate.file)}` : ""} />
+                  </div>
+              </div>
+             </div>
+             )}
+
+
+
+
+
+
+
+
+
+
           </div>
        </div>
     );
 }
 
 export default MyCertifications;
+
+
+
+
+
+
+
+
+// <FiDownload onClick={() => {
+//                                              const url = `http://localhost/ncaa/staff/${certificate.file}`;
+//                                              const a = document.createElement("a");
+//                                              a.href = url;
+
+//                                              a.download = certificate.file;
+//                                              document.body.appendChild(a);
+//                                              a.click();
+//                                              document.body.removeChild(a);
+//                                              }}
+// className="hover:text-primary cursor-pointer" /> 
