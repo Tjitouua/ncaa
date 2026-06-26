@@ -114,7 +114,7 @@ const TrainingInfo = () => {
 
 
     return (
-        <div className="w-7/10 bg-white text-secondary/70 py-6 px-6 flex flex-col shadow-sm shadow-secondary/30">
+        <div className="w-full md:w-7/10 bg-white text-secondary/70 py-6 px-6 flex flex-col shadow-sm shadow-secondary/30">
             <label className="text-xs text-secondary/50">{trainingInfoList2?.training_code}</label>
             <label className="font-bold text-lg">{trainingInfoList2?.training_name}</label>
             <label className="text-xs text-secondary/50">{trainingInfoList2?.description}</label>

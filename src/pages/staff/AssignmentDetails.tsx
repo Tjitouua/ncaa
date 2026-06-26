@@ -61,18 +61,18 @@ const AssignmentDetails = () => {
            </div>
 
            {/* <Middle Div  */}
-           <div className="w-full flex items-start gap-5 justify-between mb-6 ">
+           <div className="w-full flex flex-col md:flex-row items-start gap-5 justify-between mb-6 ">
               <TrainingInfo />
               <AssigneeInfo setShowCertificate={setShowCertificate} />
            </div>
 
            {/* Certificate Div  */}
            {showCertificate && (
-           <div onClick={() => setShowCertificate(false)} className="w-full h-screen px-15 overflow-y-auto pb-30 backdrop-blur-xs bg-black/40 flex flex-col items-end z-20 gap-5 fixed py-5 left-7">
+           <div onClick={() => setShowCertificate(false)} className="w-full h-screen px-15 overflow-y-auto pb-30 backdrop-blur-xs bg-black/40 flex flex-col items-end z-20 gap-5 fixed py-5 left-1 md:left-7">
               <div onClick={() => setShowCertificate(false)} className="w-full font-extrabold text-white flex justify-end"><ImCross className="cursor-pointer hover:text-secondaryy" /></div>
-              <div className="w-6/7 flex justify-center py-5">
+              <div className="w-full lg:w-6/7 flex justify-center py-5">
                   {/* Certificate  */}
-                  <div className="h-250 bg-white w-4/5">
+                  <div className="h-250 bg-white w-full lg:w-4/5">
                      <iframe className="w-full bg-white h-full" src={`http://localhost/ncaa/staff/${encodeURI(trainingInfoList?.file || "")}`} />
                   </div>
               </div>

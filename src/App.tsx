@@ -20,6 +20,8 @@ import ScrollToTop from './ui/ScrollToTop'
 import Password from './pages/login/Password'
 import AssignmentDetails from './pages/staff/AssignmentDetails'
 import TrainingDetails from './pages/administrator/TrainingDetails'
+import NotificationsStaff from './pages/staff/NotificationsStaff'
+
 
 
 function App() {
@@ -49,6 +51,7 @@ function App() {
           <Route path="/staff/my_certifications" element={<MyCertifications />} />
           <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />
           <Route path="/staff/assignment_details/:id" element={<AssignmentDetails />} />
+          <Route path="/staff/notifications" element={<NotificationsStaff />} />
 
 
       </Routes>

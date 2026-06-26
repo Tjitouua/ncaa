@@ -27,7 +27,7 @@ const menuItems = [
    },
    {
       name: "Notifications",
-      path: "/admin/dashboard4",
+      path: "/staff/notifications",
       icon: <GrNotification />
    },
 ]
