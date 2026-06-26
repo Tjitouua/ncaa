@@ -1,13 +1,29 @@
 <?php
 
 
+     session_start();
+
 
      header("Content-Type: application/json");
-     header("Access-Control-Allow-Origin: *");
+     header("Access-Control-Allow-Origin: http://localhost:5173");
+     header("Access-Control-Allow-Credentials: true");
      header("Access-Control-Allow-Methods: POST");
      header("Access-Control-Allow-Headers: Content-Type");
 
      include "../database.php";
+
+
+     if (!isset($_SESSION["user"])) {
+        echo json_encode([
+           "success" => false,
+           "message" => "User is not looged in"
+        ]);
+        exit;
+     }
+
+     $staff_email = $_SESSION["user"]["email"];
+
+
 
      if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         echo json_encode([
@@ -81,13 +97,13 @@
      }
 
      $sql = "INSERT INTO certificates
-            (training_id, certificate_no, issued_date, expiry_date, file)
+            (training_id, staff_email, certificate_no, issued_date, expiry_date, file)
              VALUES
-             (?, ?, ?, ?, ?);
+             (?, ?, ?, ?, ?, ?);
      ";
 
      $stmt = $conn->prepare($sql);
-     $stmt->bind_param("issss", $training_id, $certificate_no, $issued_date, $expiry_date, $filePath);
+     $stmt->bind_param("isssss", $training_id, $staff_email, $certificate_no, $issued_date, $expiry_date, $filePath);
 
      if ($stmt->execute()) {
         echo json_encode([
