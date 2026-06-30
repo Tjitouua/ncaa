@@ -225,7 +225,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
     return (
-        <div className="w-3/10 flex flex-col gap-5">
+        <div className="w-full lg:w-3/10 flex flex-col gap-5">
 
             {/* Assignee  */}
            <div className="w-full py-6 pb-8 px-5 flex flex-col gap-4 bg-white shadow-sm shadow-secondary/30">

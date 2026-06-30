@@ -46,11 +46,11 @@ const menuItems = [
       path: "/admin/notifications",
       icon: <IoNotificationsOutline />
    },
-   {
-      name: "Trainers & Providers",
-      path: "/admin/notifications",
-      icon: <MdOutlinePersonAddAlt />
-   },
+   // {
+   //    name: "Trainers & Providers",
+   //    path: "/admin/notifications",
+   //    icon: <MdOutlinePersonAddAlt />
+   // },
 ]
 
 

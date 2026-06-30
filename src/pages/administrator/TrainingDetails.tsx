@@ -61,7 +61,7 @@ const TrainingDetails = () => {
            </div>
 
            {/* <Middle Div  */}
-           <div className="w-full flex items-start gap-5 justify-between mb-6 ">
+           <div className="w-full flex flex-col lg:flex-row items-start gap-5 justify-between mb-6 ">
               <TrainingInfo />
               <AssigneeInfo setShowCertificate={setShowCertificate} />
            </div>

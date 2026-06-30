@@ -56,6 +56,12 @@
 
 
     $stmt = $conn->prepare($sql);
+
+    $notifSql = "INSERT INTO notifications (staff_email, training_id, title, message, status, sent_date)
+                 VALUES (?, ?, ?, ?, ?, NOW());
+    ";
+
+    $NotifStmt = $conn->prepare($notifSql);
     
     foreach ($staff_ids as $staff_id) {
 
@@ -76,6 +82,15 @@
 
         $stmt->bind_param("iiss", $staff_id, $program_id, $date_assigned, $deadline);
         $stmt->execute();
+
+
+        $title = "New training assigned";
+        $formatted_date = date("d F Y", strtotime($deadline));
+        $message = "You have been assigned $trainingName. Complete it before $formatted_date";
+        $status = "Unread";
+
+        $NotifStmt->bind_param("sisss", $staff["email"], $program_id, $title, $message, $status);
+        $NotifStmt->execute();
 
 
         sendAssignmentEmail(

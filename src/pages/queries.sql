@@ -122,3 +122,20 @@ CREATE TABLE certificates
 --     "ICT",
 --     "Software Developer"
 -- );
+
+
+
+
+
+
+-- Notifications table 
+CREATE TABLE notifications
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_email VARCHAR (250) NOT NULL,
+    training_id INT NOT NULL,
+    title VARCHAR (250) NOT NULL,
+    message VARCHAR (250) NOT NULL,
+    status VARCHAR (250) NOT NULL,
+    sent_date DATE
+);

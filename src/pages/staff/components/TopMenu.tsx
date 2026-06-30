@@ -9,6 +9,72 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [notifications, setNotifications] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [notifCount, setNotifCount] = useState(0);
+
+
+
+
+
+    // Notifications 
+    useEffect(() => {
+
+        const checkSession = async () => {
+            const res = await fetch("http://localhost/ncaa/login/session.php", {
+                method: "GET",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if (!data.success) {
+               navigate("/");
+               return;
+            }
+
+            fetchNotifications(data.user.email);
+        }
+
+        const fetchNotifications = async (email) => {
+            try {
+                const response = await fetch(
+                    "http://localhost/ncaa/staff/unread_notifications.php",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ email }),
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+                    setNotifications(data.data);
+                    setNotifCount(data.data.length)
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkSession();
+
+    }, []);
+
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         const checkSession = async () => {
@@ -98,7 +164,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                    <IoNotificationsOutline className="font-bold text-xl" />
                    <div className="h-8">
                      <div className="text-white flex items-center -ml-1 justify-center w-4 p-1 h-4 rounded-full bg-red-600 hover:bg-secondary/30">
-                       <label className="text-[10px] font-bold">1</label>
+                       <label className="text-[10px] font-bold">{notifCount}</label>
                      </div>
                    </div>
                 </div>
@@ -125,19 +191,26 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                    <div className="w-full py-3 px-3 flex items-center justify-between border-b border-secondaryy">
                       <label className="font-bold">Notifications</label>
                       <div className="">
-                        <label className="text-xs hover:underline cursor-pointer">View all</label>
+                        <label onClick={() => navigate("/staff/notifications")} className="text-xs hover:underline cursor-pointer">View all</label>
                       </div>
                    </div>
-                   <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold text-sm">Certification expiring soon</label>
-                      <label className="text-xs hover:underline">AVSEC-2024-042 expires in 20 days.</label>
-                      <label className="text-[10px]">5/19/2026</label>
+                   {loading ? (
+                       <div className="w-full py-5 px-3 flex flex-col items-center justify-center text-xs border-t border-secondaryy">
+                           <label>Loading notifications...</label>
+                       </div>
+                   ) : notifications.length === 0 ? (
+                       <div className="w-full py-5 px-3 flex flex-col items-center justify-center text-xs border-t border-secondaryy">
+                          <label>No notifications</label>
+                       </div>
+                   ) : (
+                   notifications.slice(0,2).map((notification) => (
+                   <div key = {notification.id} className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
+                      <label className="font-bold text-sm">{notification.title}</label>
+                      <label className="text-xs hover:underline">{notification.message.split(".")[0]}.</label>
+                      <label className="text-[10px]">{notification.sent_date}</label>
                    </div>
-                   <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold text-sm">Certification expiring soon</label>
-                      <label className="text-xs hover:underline">AVSEC-2024-042 expires in 10 days.</label>
-                      <label className="text-[10px]">5/19/2026</label>
-                   </div>
+                   ))
+                   )}
                </div>
                )}
 

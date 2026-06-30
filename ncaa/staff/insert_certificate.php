@@ -102,6 +102,7 @@
              (?, ?, ?, ?, ?, ?);
      ";
 
+
      $stmt = $conn->prepare($sql);
      $stmt->bind_param("isssss", $training_id, $staff_email, $certificate_no, $issued_date, $expiry_date, $filePath);
 
