@@ -24,7 +24,7 @@
      $status = "Unread";
 
      $sql = "UPDATE 
-             notifications
+             staff_notifications
              SET status = 'Read'
              WHERE staff_email = ?
              AND status = ?;

@@ -10,6 +10,10 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
+    const [all, setAll] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [notifCount, setNotifCount] = useState(0);
+
     useEffect(() => {
         const checkSession = async () => {
             const res = await fetch("http://localhost/ncaa/login/session.php", {
@@ -86,6 +90,27 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
 
 
+
+    // Notifications 
+    useEffect(() => {
+        fetch("http://localhost/ncaa/notifications/admin/all_unread.php")
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.success) {
+                setAll(data.data);
+                setNotifCount(data.data.length);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching new upload notifications: ", error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }, []);
+
+
+
     return (
         <div ref={popupRef} className="sticky top-0 z-80 w-full py-3 bg-white shadow-xs shadow-secondary/20 border-l border-l-secondaryy flex px-2 md:px-6 justify-between items-center">
             {/* Name  */}
@@ -102,7 +127,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                    <IoNotificationsOutline className="font-bold text-xl" />
                    <div className="h-8">
                      <div className="text-white flex items-center -ml-1 justify-center w-4 p-1 h-4 rounded-full bg-red-600 hover:bg-secondary/30">
-                       <label className="text-[10px] font-bold">1</label>
+                       <label className="text-[10px] font-bold">{notifCount}</label>
                      </div>
                    </div>
                 </div>
@@ -129,19 +154,26 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                    <div className="w-full py-3 px-3 flex items-center justify-between border-b border-secondaryy">
                       <label className="font-bold">Notifications</label>
                       <div className="">
-                        <label className="text-xs hover:underline cursor-pointer">View all</label>
+                        <label onClick={() => navigate("/admin/notifications")} className="text-xs hover:underline cursor-pointer">View all</label>
                       </div>
                    </div>
+                   {loading ? (
+                       <div className="w-full py-5 px-3 flex flex-col items-center justify-center border-t border-secondaryy">
+                           <label>Loading notification...</label>
+                       </div>
+                   ) : all.length === 0 ? (
+                       <div className="w-full py-5 px-3 flex flex-col items-center justify-center border-t border-secondaryy">
+                           <label className="text-sm">No notifications available</label>
+                       </div>
+                   ) : (
+                   all.slice(0,2).map((all) => (
                    <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold text-sm">Certification expiring soon</label>
-                      <label className="text-xs hover:underline">AVSEC-2024-042 expires in 20 days.</label>
-                      <label className="text-[10px]">5/19/2026</label>
+                      <label className="font-bold text-sm">{all.title}</label>
+                      <label className="text-xs hover:underline">{all.message.split(".")[0]}</label>
+                      <label className="text-[10px]">{all.sent_date}</label>
                    </div>
-                   <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
-                      <label className="font-bold text-sm">Certification expiring soon</label>
-                      <label className="text-xs hover:underline">AVSEC-2024-042 expires in 10 days.</label>
-                      <label className="text-[10px]">5/19/2026</label>
-                   </div>
+                   ))
+                   )}
                </div>
                )}
 

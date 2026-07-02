@@ -30,6 +30,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
    const [certificateNo, setCertificateNo] = useState("");
    const [issuedDate, setIssuedDate] = useState("");
+   const [trainingName, setTrainingName] = useState("");
    const [expiryDate, setExpiryDate] = useState("");
    const [certificateFile, setCertificateFile] = useState<File | null>(null);
    const [loading, setLoading] = useState(false);
@@ -46,6 +47,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
       const formData = new FormData();
       formData.append("training_id", trainingInfoList2.id);
+      formData.append("training_name", trainingInfoList2.training_name);
       formData.append("certificate_no", certificateNo);
       formData.append("issued_date", issuedDate);
       formData.append("expiry_date", expiryDate);

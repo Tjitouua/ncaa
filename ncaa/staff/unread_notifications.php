@@ -28,7 +28,7 @@
              n.message,
              n.status,
              n.sent_date
-          FROM notifications n
+          FROM staff_notifications n
           WHERE n.staff_email = ? 
           AND n.status = ?
           ORDER BY id DESC;

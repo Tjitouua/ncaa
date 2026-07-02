@@ -22,6 +22,8 @@
      }
 
      $staff_email = $_SESSION["user"]["email"];
+     $staff_first_name = $_SESSION["user"]["first_name"];
+     $staff_last_name = $_SESSION["user"]["last_name"];
 
 
 
@@ -37,6 +39,8 @@
      $certificate_no = $_POST["certificate_no"] ?? null;
      $issued_date = $_POST["issued_date"] ?? null;
      $expiry_date = $_POST["expiry_date"] ?? null;
+
+     $training_name = $_POST["training_name"] ?? null;
 
      if (!$training_id || !$issued_date || !$expiry_date) {
         echo json_encode([
@@ -107,6 +111,22 @@
      $stmt->bind_param("isssss", $training_id, $staff_email, $certificate_no, $issued_date, $expiry_date, $filePath);
 
      if ($stmt->execute()) {
+
+       $title = "New certificate upload";
+       $message = "$staff_first_name $staff_last_name has uploaded a certificate for $training_name. Please review and verify the document.";
+       $status = "Unread";
+       $sent_date = date("Y-m-d H:i:s");
+
+       $notifSql = "INSERT INTO admin_notifications (staff_email, training_id, title, message, status, sent_date)
+                    VALUES (?, ?, ?, ?, ?, ?);
+       ";
+
+       $notifStmt = $conn->prepare($notifSql);
+       $notifStmt->bind_param("sissss", $staff_email, $training_id, $title, $message, $status, $sent_date);
+       $notifStmt->execute();
+       $notifStmt->close();
+
+
         echo json_encode([
             "success" => true,
             "message" => "Certificate uploaded successfully"

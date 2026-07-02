@@ -128,8 +128,8 @@ CREATE TABLE certificates
 
 
 
--- Notifications table 
-CREATE TABLE notifications
+--Staff Notifications table 
+CREATE TABLE staff_notifications
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_email VARCHAR (250) NOT NULL,
@@ -138,4 +138,22 @@ CREATE TABLE notifications
     message VARCHAR (250) NOT NULL,
     status VARCHAR (250) NOT NULL,
     sent_date DATE
+);
+
+
+
+
+
+
+
+-- Admin Notifications table 
+CREATE TABLE admin_notifications
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_email VARCHAR (250) NOT NULL,
+    training_id INT NOT NULL,
+    title VARCHAR (25) NOT NULL,
+    message VARCHAR (250) NOT NULL,
+    status VARCHAR (250) NOT NULL,
+    sent_date DATETIME
 );

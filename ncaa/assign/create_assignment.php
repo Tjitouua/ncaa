@@ -57,7 +57,7 @@
 
     $stmt = $conn->prepare($sql);
 
-    $notifSql = "INSERT INTO notifications (staff_email, training_id, title, message, status, sent_date)
+    $notifSql = "INSERT INTO staff_notifications (staff_email, training_id, title, message, status, sent_date)
                  VALUES (?, ?, ?, ?, ?, NOW());
     ";
 

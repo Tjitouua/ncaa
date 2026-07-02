@@ -4,16 +4,17 @@ interface Props {
     title: string;
     desc: string;
     date: string;
+    onClick?: () => void;
 }
 
 
 
-const NotificationUI: React.FC<Props> = ({ title, desc, date }) => {
+const NotificationUI: React.FC<Props> = ({ title, desc, date, onClick }) => {
     return (
-        <div className="flex flex-col gap-1 bg-secondary/5 text-secondary/70 py-3 px-4">
+        <div onClick={onClick} className="group flex flex-col gap-1 bg-secondary/5 text-secondary/70 py-3 px-4 cursor-pointer hover:bg-primary/70 hover:text-white">
             <label className="font-bold">{title}</label>
             <label>{desc}</label>
-            <label className="text-secondary/50">{date}</label>
+            <label className="text-secondary/50 group-hover:text-white">{date}</label>
         </div>
     )
 }
