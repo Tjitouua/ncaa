@@ -134,10 +134,17 @@ CREATE TABLE staff_notifications
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_email VARCHAR (250) NOT NULL,
     training_id INT NOT NULL,
+    notification_type VARCHAR (250) NOT NULL,
     title VARCHAR (250) NOT NULL,
     message VARCHAR (250) NOT NULL,
     status VARCHAR (250) NOT NULL,
-    sent_date DATE
+    sent_date DATETIME NOT NULL,
+    
+    UNIQUE KEY unique_staff_notification (
+        staff_email,
+        training_id,
+        notification_type
+    )
 );
 
 
@@ -152,8 +159,15 @@ CREATE TABLE admin_notifications
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_email VARCHAR (250) NOT NULL,
     training_id INT NOT NULL,
+    notification_type VARCHAR (250) NOT NULL,
     title VARCHAR (25) NOT NULL,
     message VARCHAR (250) NOT NULL,
     status VARCHAR (250) NOT NULL,
-    sent_date DATETIME
+    sent_date DATETIME NOT NULL,
+    
+    UNIQUE KEY unique_admin_notification (
+        staff_email,
+        training_id,
+        notification_type
+    )
 );

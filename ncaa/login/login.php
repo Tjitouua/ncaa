@@ -1,6 +1,11 @@
 <?php
 
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+
   session_start();
+
   
   header("Content-Type: application/json");
   header("Access-Control-Allow-Origin: http://localhost:5173");
@@ -8,6 +13,7 @@
   header("Access-Control-Allow-Headers: Content-Type");
 
   include "../database.php";
+  require_once "../scripts/certificateChecker.php";
 
   $data = json_decode(file_get_contents("php://input"));
 
@@ -50,6 +56,10 @@
       ];
 
       $_SESSION["last_activity"] = time();
+
+      if ($user["role"] === "admin") {
+         runCertificateCheck($conn);
+      }
 
        echo json_encode([
          "success" => true,
