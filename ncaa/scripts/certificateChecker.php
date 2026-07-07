@@ -78,7 +78,7 @@
 
                 // Staff 
                 $titleStaff = "Upcoming expiring";
-                $messageStaff = "Your $training will expire in 30 days ($formattedExpiry). Please schedule a renewal.";
+                $messageStaff = "Your $training certificate will expire in 30 days ($formattedExpiry). Please schedule a renewal.";
 
                 $expiryStaffSql = "INSERT INTO staff_notifications (staff_email, training_id, notification_type, title, message, status, sent_date)
                                      VALUES (?, ?, ?, ?, ?, ?, ?);
