@@ -7,6 +7,7 @@ import { PiCertificateBold } from "react-icons/pi";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
+import { MdGridOn } from "react-icons/md";
 
 
 
@@ -25,6 +26,11 @@ const menuItems = [
       name: "Training Programs",
       path: "/admin/training_programs",
       icon: <PiGraduationCap />
+   },
+   {
+      name: "Training Matrix",
+      path: "/admin/notifications",
+      icon: <MdGridOn />
    },
    {
       name: "Assign Training",
@@ -46,11 +52,7 @@ const menuItems = [
       path: "/admin/notifications",
       icon: <IoNotificationsOutline />
    },
-   // {
-   //    name: "Trainers & Providers",
-   //    path: "/admin/notifications",
-   //    icon: <MdOutlinePersonAddAlt />
-   // },
+   
 ]
 
 

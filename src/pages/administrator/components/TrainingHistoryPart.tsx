@@ -141,7 +141,7 @@ const TrainingHistoryPart = () => {
                <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg">Training Records</label>
-                    <label className="text-xs text-secondary/60">12 records found</label>
+                    <label className="text-xs text-secondary/60">{filteredTraining.length} records found</label>
                  </div>
                  <div className="flex items-center gap-3">
                     <div className="w-[20vh] rounded-md bg-white border border-secondary/30 px-3">

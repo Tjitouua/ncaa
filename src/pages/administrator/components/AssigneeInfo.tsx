@@ -89,73 +89,6 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
 
- 
-
-
-
-   // Adding certficate to database 
-   const handleSubmitCertificate = async () => {
-      if (!id) return alert("Missing training ID");
-      if (!issuedDate || !expiryDate || !certificateFile) {
-         return alert("Please fill all required fields");
-      }
-
-      const formData = new FormData();
-      formData.append("training_id", trainingInfoList2.id);
-      formData.append("certificate_no", certificateNo);
-      formData.append("issued_date", issuedDate);
-      formData.append("expiry_date", expiryDate);
-      formData.append("file", certificateFile);
-
-      try {
-         setLoading(true);
-
-         const res = await fetch("http://localhost/ncaa/staff/insert_certificate.php", {
-            method: "POST",
-            body: formData,
-         });
-
-         const data = await res.json();
-
-         if (data.success) {
-            alert("Certificate uploaded successfully");
-            setCertificateNo("");
-            setIssuedDate("");
-            setExpiryDate("");
-            setCertificateFile(null);
-
-            // const response = await fetch(`http://localhost/ncaa/staff/get_assignment_by_id.php?id=${id}`);
-            // const assignment = await response.json();
-
-            // if (assignment.success) {
-               // setTrainingInfoList2(assignment.data);
-            // }
-            window.location.reload();
-
-         } else {
-            alert(data.message || "Upload failed");
-         }
-      } catch (error) {
-         console.error(error);
-         alert("Server error");
-      } finally {
-         setLoading(false);
-      }
-
-
-   };
-
-
-
-
-
-
-
-
-
-
-
-
 
    //   Fetching training data 
       useEffect(() => {
@@ -286,3 +219,70 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 }
 
 export default AssigneeInfo;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   // // Adding certficate to database 
+   // const handleSubmitCertificate = async () => {
+   //    if (!id) return alert("Missing training ID");
+   //    if (!issuedDate || !expiryDate || !certificateFile) {
+   //       return alert("Please fill all required fields");
+   //    }
+
+   //    const formData = new FormData();
+   //    formData.append("training_id", trainingInfoList2.id);
+   //    formData.append("certificate_no", certificateNo);
+   //    formData.append("issued_date", issuedDate);
+   //    formData.append("expiry_date", expiryDate);
+   //    formData.append("file", certificateFile);
+
+   //    try {
+   //       setLoading(true);
+
+   //       const res = await fetch("http://localhost/ncaa/staff/insert_certificate.php", {
+   //          method: "POST",
+   //          body: formData,
+   //       });
+
+   //       const data = await res.json();
+
+   //       if (data.success) {
+   //          alert("Certificate uploaded successfully");
+   //          setCertificateNo("");
+   //          setIssuedDate("");
+   //          setExpiryDate("");
+   //          setCertificateFile(null);
+
+   //          // const response = await fetch(`http://localhost/ncaa/staff/get_assignment_by_id.php?id=${id}`);
+   //          // const assignment = await response.json();
+
+   //          // if (assignment.success) {
+   //             // setTrainingInfoList2(assignment.data);
+   //          // }
+   //          window.location.reload();
+
+   //       } else {
+   //          alert(data.message || "Upload failed");
+   //       }
+   //    } catch (error) {
+   //       console.error(error);
+   //       alert("Server error");
+   //    } finally {
+   //       setLoading(false);
+   //    }
+
+
+   // };

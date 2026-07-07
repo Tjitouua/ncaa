@@ -21,6 +21,7 @@ import Password from './pages/login/Password'
 import AssignmentDetails from './pages/staff/AssignmentDetails'
 import TrainingDetails from './pages/administrator/TrainingDetails'
 import NotificationsStaff from './pages/staff/NotificationsStaff'
+import Home from './pages/Home'
 
 
 
@@ -32,7 +33,8 @@ function App() {
       <Routes>
 
         {/* Admin pages  */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/password" element={<Password />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/employees" element={<Employees />} />

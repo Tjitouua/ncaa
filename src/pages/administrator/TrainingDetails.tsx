@@ -72,7 +72,7 @@ const TrainingDetails = () => {
               <div onClick={() => setShowCertificate(false)} className="w-full font-extrabold text-white flex justify-end"><ImCross className="cursor-pointer hover:text-secondaryy" /></div>
               <div className="w-6/7 flex justify-center py-5">
                   {/* Certificate  */}
-                  <div className="h-250 bg-white w-4/5">
+                  <div className="h-270 bg-white w-4/5">
                      <iframe className="w-full bg-white h-full" src={`http://localhost/ncaa/staff/${encodeURI(trainingInfoList?.file || "")}`} />
                   </div>
               </div>

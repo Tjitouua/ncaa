@@ -22,6 +22,8 @@ const EmployeeDetails = () => {
 
 
    const [employee, setEmployee] = useState<any>(null);
+   const [trainings, setTrainings] = useState<any[]>([]);
+   const [loading, setLoading] = useState(true);
 
 
    useEffect(() => {
@@ -33,6 +35,28 @@ const EmployeeDetails = () => {
          }
       });
    }, [id]);
+
+
+
+   useEffect(() => {
+      fetch(`http://localhost/ncaa/staff/get_trainings_by_staff_id.php?id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+         if (data.success) {
+            setTrainings(data.data);
+         } else {
+            setTrainings([]);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching trainings: ", error);
+         setTrainings([]);
+      })
+      .finally(() => {
+         setLoading(false);
+      });
+   }, [id]);
+
 
 
    const handleChange = (e: any) => {
@@ -73,16 +97,21 @@ const EmployeeDetails = () => {
 
 
 
-   const training = [
-     {
-       name: "ICAO Aviation English Proficiency",
-       state: "Completed"
-     },
-     {
-        name: "Human Factors in Aviation",
-        state: "Completed"
-      },
-   ];
+   const getStatusColor = (status) => {
+      if (status === "Pending") return "bg-orange-300";
+      if (status === "Completed") return "bg-green-200";
+      if (status === "Overdue") return "bg-red-200";
+      return "bg-grey-200";
+   }
+
+
+
+
+
+
+
+
+  
 
 
 
@@ -178,14 +207,24 @@ const EmployeeDetails = () => {
                            {/* <SecondaryButt className="!bg-secondary/30">Edit <GrEdit /></SecondaryButt> */}
                         </div>
                         <div className="w-full flex flex-col gap-2 py-1">
-                            {training.map((training, index) => (
-                            <div key={index} className="w-full text-secondary/60 py-2 flex items-center justify-between">
-                                <label className="text-xs font-bold">{training.name}</label>
-                                <div className="py-2 flex items-center justify-center px-3 bg-green-500 text-white font-bold rounded-md">
-                                    <label className="text-xs">{training.state}</label>
+                           {loading ? (
+                              <div className="w-full flex items-center justify-center py-7 text-secondary/60">
+                                  <label>Loading trainings...</label>
+                              </div>
+                           ) : trainings.length === 0 ? (
+                              <div className="w-full flex items-center justify-center py-7 text-secondary/60">
+                                 <label>No trainings found</label>
+                              </div>
+                           ) : (
+                            trainings.map((training) => (
+                            <div key={training.id} onClick={() => navigate(`/admin/training_details/${training.id}`)} className="w-full text-secondary/60 py-2 flex items-center justify-between cursor-pointer hover:bg-secondaryy">
+                                <label className="text-xs font-bold">{training.training_name}</label>
+                                <div className={`py-2 flex items-center justify-center px-3 ${getStatusColor(training.status)} text-secondary font-bold rounded-md`}>
+                                    <label className="text-xs">{training.status}</label>
                                 </div>
                             </div>
-                            ))}
+                            ))
+                            )}
                         </div>
                     </div>
                    {/* </div> */}

@@ -10,6 +10,7 @@ import { FiDownload } from "react-icons/fi";
 import { GrCertificate } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { ImCross } from "react-icons/im";
+// import { Certificate } from "crypto";
 
 
 
@@ -108,6 +109,9 @@ const MyCertifications = () => {
 
 
 
+
+
+
   const getCertificateStatus = (expiryDate: string) => {
       const today = new Date();
       const expiry = new Date(expiryDate);
@@ -144,6 +148,29 @@ const MyCertifications = () => {
 
 
 
+   
+
+
+
+
+  const activeCertificates = certificates.filter(
+     (certificate) => getCertificateStatus(certificate.expiry_date).text === "Valid"
+  ).length;
+
+  const expiringCertificates = certificates.filter(
+      (certificate) => getCertificateStatus(certificate.expiry_date).text === "Expiring soon"
+  ).length;
+
+  const expiredCertificates = certificates.filter(
+      (certificate) => getCertificateStatus(certificate.expiry_date).text === "Expired"
+  ).length;
+
+
+
+
+
+
+
 
     return (
        <div className="w-full min-h-screen flex">
@@ -152,7 +179,7 @@ const MyCertifications = () => {
              <TopMenu setShowMenu={setShowMenu} title="My Certifications" />
              <div className="w-full min-h-screen py-7 px-2 md:px-6 flex flex-col">
                  <label className="text-lg">Certificate Records</label>
-                 <label className="text-xs text-secondary/40">2 active ● 0 expiring soon ● 0 expired</label>
+                 <label className="text-xs text-secondary/40">{activeCertificates} active ● {expiringCertificates} expiring soon ● {expiredCertificates} expired</label>
 
 
                  {/* Certificates Table  */}
@@ -221,10 +248,6 @@ const MyCertifications = () => {
               </div>
              </div>
              )}
-
-
-
-
 
 
 
