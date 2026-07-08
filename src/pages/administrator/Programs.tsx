@@ -127,9 +127,11 @@ const Programs = () => {
                  {/* Programs  */}
                  <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-3">
                   {loading ? (
-                     <p>Loading programs...</p>
+                       <div className="w-full py-20 flex items-center justify-center">
+                          <p>Loading programs...</p>
+                       </div>
                   ) : filteredPrograms.length === 0 ? (
-                       <div className="w-full items-center justify-center py-20">
+                       <div className="w-full flex items-center justify-center py-20">
                            <p className="text-secondary/60">No training programs available.</p>
                        </div>
                   ) : (

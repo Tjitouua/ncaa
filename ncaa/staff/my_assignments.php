@@ -28,8 +28,8 @@
                s.last_name,
                s.department,
                t.training_name,
-               a.date_assigned,
-               a.deadline,
+               a.assigned_date,
+               a.scheduled_date,
                a.status
                FROM training_assignments a
                LEFT JOIN staff s ON a.staff_id = s.id

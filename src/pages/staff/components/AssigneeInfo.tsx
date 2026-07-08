@@ -143,7 +143,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         {
               icon: MdDateRange,
               label: "Assigned on",
-              value: trainingInfoList2?.date_assigned
+              value: trainingInfoList2?.assigned_date
         }
     ];
 

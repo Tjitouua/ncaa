@@ -12,7 +12,7 @@
      $conn->query("
           UPDATE training_assignments
           SET status = 'Overdue'
-          WHERE deadline < '$today'
+          WHERE end_date < '$today'
           AND status != 'Completed';
      ");
 
@@ -22,10 +22,11 @@
                s.last_name,
                s.email,
                t.training_name,
-               t.training_type,
+               a.type,
                t.duration,
-               a.date_assigned,
-               a.deadline, 
+               a.assigned_date,
+               a.scheduled_date,
+               a.end_date, 
                a.status
                FROM training_assignments a 
                LEFT JOIN staff s ON a.staff_id = s.id

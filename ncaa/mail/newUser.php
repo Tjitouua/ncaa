@@ -32,8 +32,8 @@
                <p>Hello $name</p>
                <br>
                <p>Your account has been created successfully</p>
-               <p><strong>Login Email:</strong> $toEmail</p>
-               <p><strong>Temporary Password:</strong> $password</p>
+               <p><strong>Login Email: </strong> $toEmail</p>
+               <p><strong>Temporary Password: </strong> $password</p>
                <br>
                <p>Click the link to change your password</p>
                <p><a href='http://localhost:5173/password?email=$toEmail'>Set Password</a></p>

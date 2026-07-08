@@ -122,7 +122,7 @@ const MyTrainingHistory = () => {
                              <th className="text-left p-3">Department</th>
                              <th className="text-left p-3">Training</th>
                              <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Deadline</th>
+                             <th className="text-left p-3">Scheduled</th>
                              <th className="text-right p-3">Status</th>
                           </tr>
                        </thead>
@@ -143,8 +143,8 @@ const MyTrainingHistory = () => {
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.department}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.date_assigned}</td>
-                             <td className="px-3 py-3">{assign.deadline}</td>
+                             <td className="px-3 py-3">{assign.assigned_date}</td>
+                             <td className="px-3 py-3">{assign.scheduled_date}</td>
                              <td className="px-3 text-right py-3">
                                 <div className={`w-fit px-3 py-1 ${getStatusColor(assign.status)} rounded-xs font-bold inline-flex items-center justify-center`}>
                                    {assign.status}

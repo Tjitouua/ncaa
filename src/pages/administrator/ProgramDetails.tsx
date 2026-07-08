@@ -103,34 +103,18 @@ const ProgramDetails = () => {
                                     <option>Security</option>
                                     <option>Human Factors</option>
                               </DetailsSelect>
-                              <DetailsSelect label="Trainer" onChange={handleChange} name="trainer" value={program.trainer}>
+                              <DetailsSelect label="Type" onChange={handleChange} name="type" value={program.type}>
                                     <option>Internal</option>
                                     <option>External</option>
-                              </DetailsSelect>
-                              <DetailsSelect label="Training Type" onChange={handleChange} name="training_type" value={program.training_type}>
-                                    <option>Mandatory</option>
-                                    <option>Recommended</option>
-                                    <option>Optional</option>
                               </DetailsSelect>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="Validity" label="Validity" value={program.validity}/>
                               <DetailsSelect label="Status" onChange={handleChange} name="status" value={program.status}>
                                     <option>Active</option>
                                     <option>Inactive</option>
                               </DetailsSelect>
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="target_roles" label="Target roles" value={program.target_roles}/>
-                              <DetailsDate className="text-secondary/50" onChange={handleChange} name="start_date" label="Start Date" value={program.start_date}/>
-                              <DetailsDate className="text-secondary/50" onChange={handleChange} name="end_date" label="End Date" value={program.end_date}/>
-                              <DetailsSelect label="Recurrence" onChange={handleChange} name="recurrence" value={program.recurrence}>
-                                   <option value="One Time">One Time</option>
-                                   <option value="Monthly">Monthly</option>
-                                   <option value="Quarterly">Quarterly</option>
-                                   <option value="Semi-Annual">Semi-Annual</option>
-                                   <option value="Annual">Annual</option>
-                                   <option value="Every 2 years">Every 2 years</option>
-                                   <option value="Every 3 years">Every 3 years</option>
-                                   <option value="Every 5 years">Every 5 years</option>
-                                   <option value="Every 10 years">Every 10 years</option>
-                              </DetailsSelect>
+
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="trainer" label="Trainer" value={program.trainer}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="provider" label="Provider" value={program.provider}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="location" label="Location" value={program.location}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="contact_no" label="Contact Number" value={program.contact_no}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="email" label="Email" value={program.email}/>
@@ -149,6 +133,24 @@ const ProgramDetails = () => {
 }
 
 export default ProgramDetails;
+
+
+
+
+{/* <DetailsInput className="text-secondary/50" onChange={handleChange} name="target_roles" label="Target roles" value={program.target_roles}/>
+<DetailsDate className="text-secondary/50" onChange={handleChange} name="start_date" label="Start Date" value={program.start_date}/>
+// <DetailsDate className="text-secondary/50" onChange={handleChange} name="end_date" label="End Date" value={program.end_date}/>
+// <DetailsSelect label="Recurrence" onChange={handleChange} name="recurrence" value={program.recurrence}> */}
+// <option value="One Time">One Time</option>
+//                                    <option value="Monthly">Monthly</option>
+//                                    <option value="Quarterly">Quarterly</option>
+//                                    <option value="Semi-Annual">Semi-Annual</option>
+//                                    <option value="Annual">Annual</option>
+//                                    <option value="Every 2 years">Every 2 years</option>
+//                                    <option value="Every 3 years">Every 3 years</option>
+//                                    <option value="Every 5 years">Every 5 years</option>
+//                                    <option value="Every 10 years">Every 10 years</option>
+//                               {/* </DetailsSelect> */}
 
 
 // border border-secondary/30 py-2 px-3 mt-2

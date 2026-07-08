@@ -109,7 +109,7 @@
 
                 // Admin 
                 $title = "Expired certification";
-                $message = "$name's $training certificate expired on $formattedExpiry. The staff member is now non-compliant until the certification s renewed.";
+                $message = "$name's $training certificate expired on $formattedExpiry. The staff member is now non-compliant until the certification is renewed.";
                 $status = "Unread";
                 $sent = date("Y-m-d H:i:s");
                 $expired_type = "EXPIRED";

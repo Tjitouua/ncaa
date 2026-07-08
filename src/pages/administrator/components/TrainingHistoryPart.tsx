@@ -184,13 +184,13 @@ const TrainingHistoryPart = () => {
 
                        {loading ? (
                           <tr>
-                             <td colSpan={5} className="text-center py-5 text-secondary/60">
+                             <td colSpan={6} className="text-center py-5 text-secondary/60">
                                 Loading assignments...
                              </td>
                           </tr>
                        ) : filteredTraining.length === 0 ? (
                           <tr>
-                             <td colSpan={5} className="text-center py-5 text-secondary/60">
+                             <td colSpan={6} className="text-center py-5 text-secondary/60">
                                 No assignments available.
                              </td>
                           </tr>
@@ -200,10 +200,10 @@ const TrainingHistoryPart = () => {
                           <tr key = {index} onClick={() => navigate(`/admin/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.training_type}</td>
+                             <td className="px-3 py-3">{assign.type}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
-                             <td className="px-3 py-3">{assign.date_assigned}</td>
-                             <td className="px-3 py-3">{assign.deadline}</td>
+                             <td className="px-3 py-3">{assign.assigned_date}</td>
+                             <td className="px-3 py-3">{assign.scheduled_date}</td>
                              <td className="px-3 py-3">
                                   <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-20`}>
                                     {assign.status}

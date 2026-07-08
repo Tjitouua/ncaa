@@ -118,18 +118,18 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         },
         {
             icon: LiaBuildingSolid,
-            label: "Department",
-            value: trainingInfoList2?.department
+            label: "Departmentsss",
+            value: trainingInfoList2?.assigned_date
         },
         {
             icon: PiGraduationCap,
             label: "Position",
-            value: trainingInfoList2?.position
+            value: trainingInfoList2?.assigned_date
         },
         {
               icon: MdDateRange,
               label: "Assigned on",
-              value: trainingInfoList2?.date_assigned
+              value: "TEST" + trainingInfoList2?.assigned_date
         }
     ];
 
@@ -162,7 +162,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
             {/* Assignee  */}
            <div className="w-full py-6 pb-8 px-5 flex flex-col gap-4 bg-white shadow-sm shadow-secondary/30">
-              <label className="font-bold text-sm mb-2">Assignee</label>
+              <label className="font-bold text-sm mb-2">Assigneeuytgfgh</label>
               {assigneeList.map((training, index) => (
                       <TrainingInfoUi 
                         key = {index}

@@ -105,7 +105,18 @@
 
    $stmt2 = $conn->prepare($sql2);
 
-   $defaultPassPlain = "12345";
+
+   function generateRandomPass($length = 10) {
+      $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%";
+      $password = "";
+
+      for ($i = 0; $i < $length; $i++) {
+          $password .= $characters[random_int(0, strlen($characters) - 1)];
+      }
+      return $password;
+   }
+
+   $defaultPassPlain = generateRandomPass();
    $defaultPass = password_hash($defaultPassPlain, PASSWORD_DEFAULT);
    $role = "staff";
    $stmt2->bind_param("sssss", $role, $email, $first_name, $last_name, $defaultPass);

@@ -35,14 +35,11 @@
     $description = trim($data["description"]);
     $duration = trim($data["duration"]);
     $category = trim($data["category"]);
-    $trainer = trim($data["trainer"]);
-    $training_type = trim($data["training_type"]);
+    $type = trim($data["type"]);
     $validity = trim($data["validity"]);
     $status = trim($data["status"]);
-    $target_roles = trim($data["target_roles"]);
-    $start_date = trim($data["start_date"]);
-    $end_date = trim($data["end_date"]);
-    $recurrence = trim($data["recurrence"]);
+    $trainer = trim($data["trainer"]);
+    $provider = trim($data["provider"]);
     $location = trim($data["location"]);
     $contact_no = trim($data["contact_no"]);
     $email = trim($data["email"]);
@@ -55,14 +52,11 @@
               description = ?,
               duration = ?,
               category = ?,
-              trainer = ?,
-              training_type = ?,
+              type = ?,
               validity = ?,
               status = ?,
-              target_roles = ?,
-              start_date = ?,
-              end_date = ?,
-              recurrence = ?,
+              trainer = ?,
+              provider = ?,
               location = ?,
               contact_no = ?,
               email = ?
@@ -73,20 +67,17 @@
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-        "ssssssssssssssssi",
+        "sssssssssssssi",
         $training_code,
         $training_name,
         $description,
         $duration,
         $category,
-        $trainer,
-        $training_type,
+        $type,
         $validity,
         $status,
-        $target_roles,
-        $start_date,
-        $end_date,
-        $recurrence,
+        $trainer,
+        $provider,
         $location,
         $contact_no,
         $email,

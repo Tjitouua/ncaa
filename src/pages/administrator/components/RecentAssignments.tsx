@@ -50,7 +50,7 @@ const RecentAssignments = () => {
                              <th className="text-left p-3">Employee</th>
                              <th className="text-left p-3">Training</th>
                              <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Deadline</th>
+                             <th className="text-left p-3">Scheduled</th>
                              <th className="text-left p-3">Status</th>
                           </tr>
                        </thead>
@@ -74,8 +74,8 @@ const RecentAssignments = () => {
                           <tr key={assign.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.date_assigned}</td>
-                             <td className="px-3 py-3">{assign.deadline}</td>
+                             <td className="px-3 py-3">{assign.assigned_date}</td>
+                             <td className="px-3 py-3">{assign.scheduled_date}</td>
                              <td className="px-3 py-3">{assign.status}</td>
                           </tr>
                         ))

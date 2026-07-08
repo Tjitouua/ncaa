@@ -23,8 +23,10 @@ const NewAssignment = () => {
 
     const [selectedStaff, setSelectedStaff] = useState([]);
     const [selectedProgram, setSelectedProgram] = useState("");
-    const [dateAssigned, setDateAssigned] = useState("");
-    const [deadline, setDeadline] = useState("");
+    // const [dateAssigned, setDateAssigned] = useState("");
+    const [scheduledDate, setScheduledDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [type, setType] = useState("Mandatory");
     const [loading2, setLoading2] = useState(false);
 
 
@@ -103,21 +105,23 @@ const NewAssignment = () => {
         }
 
         const today = new Date();
-        const selectedDeadline = new Date(deadline);
+        const selectedDeadline = new Date(endDate);
 
         today.setHours(0,0,0,0);
         selectedDeadline.setHours(0,0,0,0);
 
         if (selectedDeadline < today) {
-            alert("❌ Deadline cannot be in the past!");
+            alert("❌ End date cannot be before the start date!");
             return;
         }
 
         const payload = {
             staff_ids: selectedStaff,
             program_id: selectedProgram,
-            date_assigned: dateAssigned,
-            deadline: deadline,
+            // date_assigned: dateAssigned,
+            scheduled_date: scheduledDate,
+            end_date: endDate,
+            type: type
         };
 
         setLoading2(true);
@@ -138,8 +142,9 @@ const NewAssignment = () => {
                 alert("Assignment created");
                 setSelectedStaff([]);
                 setSelectedProgram("");
-                setDateAssigned("");
-                setDeadline("");
+                setScheduledDate("");
+                setEndDate("");
+                setType("");
 
                 window.location.reload();
             } else {
@@ -230,9 +235,10 @@ const NewAssignment = () => {
 
                 <div className="w-full flex flex-col">
                     <label className="text-xs font-bold text-secondary/60">Training Program</label>
-                    <div className="w-full rounded-md mt-2 bg-secondaryy/30 border border-secondary/30 px-3">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                    <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                       <select value={selectedProgram} onChange={(e) => setSelectedProgram(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
-                        <option value="">All departments</option>
+                        <option value="">Choose training...</option>
                         {program.map((program, index) => (
                         <option
                          key = {program.id}
@@ -243,16 +249,23 @@ const NewAssignment = () => {
                         ))}
                       </select>
                     </div>
+                    <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                       <select value={type} onChange={(e) => setType(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                           <option value="Mandatory">Mandatory</option>
+                           <option value="Recommended">Recommended</option>
+                       </select>
+                    </div>
+                    </div>
                 </div>
 
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                     <div className="flex flex-col gap-1">
-                        <label className="font-bold text-xs text-secondary/60">Date Assigned</label>
-                        <input value={dateAssigned} onChange={(e) => setDateAssigned(e.target.value)} type="date" className="text-xs border border-secondary/30 rounded-md p-3" />
+                        <label className="font-bold text-xs text-secondary/60">Schedule Date</label>
+                        <input value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} type="date" className="text-xs border border-secondary/30 rounded-md p-3" />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="font-bold text-xs text-secondary/60">Deadline</label>
-                        <input value={deadline} onChange={(e) => setDeadline(e.target.value)} type="date" className="text-xs border border-secondary/30 rounded-md p-3" />
+                        <label className="font-bold text-xs text-secondary/60">End Date</label>
+                        <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" className="text-xs border border-secondary/30 rounded-md p-3" />
                     </div>
                 </div>
 

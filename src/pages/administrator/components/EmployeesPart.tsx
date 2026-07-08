@@ -158,7 +158,11 @@ const EmployeesPart = () => {
                        </thead>
                        <tbody>
                        {loading ? (
-                           <p>Loading staff...</p>
+                           <tr>
+                              <td colSpan={6} className="text-center py-15 text-secondary/60">
+                                 <p>Loading staff...</p>
+                              </td>
+                           </tr>
                        ) : filteredStaff.length === 0 ? (
                              <tr>
                                 <td colSpan={6} className="text-center py-15 text-secondary/60">

@@ -24,18 +24,14 @@ const ProgramAdd = () => {
       desc: "",
       duration: "",
       category: "",
-      trainer_provider: "",
-      trainingType: "",
+      type: "",
       validity: "",
       status: "",
-      targetRole: "",
-      startDate: "",
-      endDate: "",
-      recurrence: "",
+      trainer: "",
+      provider: "",
       location: "",
       contactNo: "",
       email: ""
-      // trainer: ""
    });
 
 
@@ -170,29 +166,17 @@ const ProgramAdd = () => {
                           </SelectInputs>
 
                           <SelectInputs
-                            label = "Trainer / Provider"
-                            name = "trainer_provider"
-                            value = {form.trainer_provider}
+                            label = "Type"
+                            name = "type"
+                            value = {form.type}
                             onChange = {handleChange}
                             error = {errors.trainer_provider}
                           >
-                            <option value="">Select trainer</option>
+                            <option value="">Select type</option>
                             <option value="Internal">Internal</option>
                             <option value="External">External</option>
                           </SelectInputs>
 
-                          <SelectInputs
-                            label = "Training Type"
-                            name = "trainingType"
-                            value = {form.trainingType}
-                            onChange = {handleChange}
-                            error = {errors.trainingType}
-                          >
-                            <option value="">Select training type</option>
-                            <option value="Mandatory">Mandatory</option>
-                            <option value="Recommended">Recommended</option>
-                            <option value="Optional">Optional</option>
-                          </SelectInputs>
 
                           <Inputs
                             label="Validity duration"
@@ -215,37 +199,24 @@ const ProgramAdd = () => {
                             <option value="Inactive">Inactive</option>
                           </SelectInputs>
 
+
                           <Inputs
-                            label="Target role (s)"
-                            name="targetRole"
-                            value={form.targetRole}
+                            label="Trainer"
+                            name="trainer"
+                            value={form.trainer}
                             onChange={handleChange}
-                            error={errors.targetRole}
-                            placeholder="Enter program target role (s)"
+                            error={errors.location}
+                            placeholder="Enter program location"
                           />
 
-                          <DateInputs name="startDate" value={form.startDate} onChange={handleChange} error={errors.startDate} label="Start date" />
-
-                          <DateInputs name="endDate" value={form.endDate} onChange={handleChange} error={errors.endDate} label="End date" />
-
-                          <SelectInputs
-                            label = "Recurrence"
-                            name = "recurrence"
-                            value = {form.recurrence}
-                            onChange = {handleChange}
-                            error = {errors.recurrence}
-                          >
-                            <option value="">Select recurrence</option>
-                            <option value="One Time">One Time</option>
-                            <option value="Monthly">Monthly</option>
-                            <option value="Quarterly">Quarterly</option>
-                            <option value="Semi-Annual">Semi-Annual</option>
-                            <option value="Annual">Annual</option>
-                            <option value="Every 2 years">Every 2 years</option>
-                            <option value="Every 3 years">Every 3 years</option>
-                            <option value="Every 5 years">Every 5 years</option>
-                            <option value="Every 10 years">Every 10 years</option>
-                          </SelectInputs>
+                          <Inputs
+                            label="Provider"
+                            name="provider"
+                            value={form.provider}
+                            onChange={handleChange}
+                            error={errors.location}
+                            placeholder="Enter program location"
+                          />
 
                           <Inputs
                             label="Location"
@@ -264,6 +235,7 @@ const ProgramAdd = () => {
                             error={errors.contactNo}
                             placeholder="Enter program contact number"
                           />
+
                           <Inputs
                             label="Email"
                             name="email"
@@ -289,3 +261,75 @@ const ProgramAdd = () => {
 }
 
 export default ProgramAdd;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// targetRole: "",
+//       startDate: "",
+//       endDate: "",
+
+
+
+
+
+
+
+
+
+
+{/* <SelectInputs
+                            label = "Training Type"
+                            name = "trainingType"
+                            value = {form.trainingType}
+                            onChange = {handleChange}
+                            error = {errors.trainingType}
+                          >
+                            <option value="">Select training type</option>
+                            <option value="Mandatory">Mandatory</option>
+                            <option value="Recommended">Recommended</option>
+                            <option value="Optional">Optional</option>
+                          </SelectInputs> */}
+
+
+
+{/* <Inputs
+                            label="Target role (s)"
+                            name="targetRole"
+                            value={form.targetRole}
+                            onChange={handleChange}
+                            error={errors.targetRole}
+                            placeholder="Enter program target role (s)"
+                          /> */}
+
+                          {/* <DateInputs name="startDate" value={form.startDate} onChange={handleChange} error={errors.startDate} label="Start date" />
+
+                          <DateInputs name="endDate" value={form.endDate} onChange={handleChange} error={errors.endDate} label="End date" /> */}
+
+                          {/* <SelectInputs
+                            label = "Recurrence"
+                            name = "recurrence"
+                            value = {form.recurrence}
+                            onChange = {handleChange}
+                            error = {errors.recurrence}
+                          >
+                            <option value="">Select recurrence</option>
+                            <option value="One Time">One Time</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Semi-Annual">Semi-Annual</option>
+                            <option value="Annual">Annual</option>
+                            <option value="Every 2 years">Every 2 years</option>
+                            <option value="Every 3 years">Every 3 years</option>
+                            <option value="Every 5 years">Every 5 years</option>
+                            <option value="Every 10 years">Every 10 years</option>
+                          </SelectInputs> */}

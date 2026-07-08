@@ -18,8 +18,9 @@
 
     $staff_ids = $data["staff_ids"];
     $program_id = $data["program_id"];
-    $date_assigned = $data["date_assigned"];
-    $deadline = $data["deadline"];
+    $scheduled_date = $data["scheduled_date"];
+    $end_date = $data["end_date"];
+    $type = $data["type"];
 
     $response = ["success" => false];
 
@@ -44,9 +45,11 @@
 
 
     $sql = "
-         INSERT INTO training_assignments (staff_id, program_id, date_assigned, deadline, status)
+         INSERT INTO training_assignments (staff_id, program_id, assigned_date, scheduled_date, end_date, type, status)
            VALUES (
                ?,
+               ?,
+               NOW(),
                ?,
                ?,
                ?,
@@ -80,25 +83,63 @@
 
 
 
-        $stmt->bind_param("iiss", $staff_id, $program_id, $date_assigned, $deadline);
+        $checkAssignment = "SELECT
+                            id,
+                            status
+                            FROM training_assignments
+                            WHERE staff_id = ?
+                            AND program_id = ?
+                            AND status != 'Completed';
+        ";
+
+        $checkStmt = $conn->prepare($checkAssignment);
+        $checkStmt->bind_param("ii", $staff_id, $program_id);
+        $checkStmt->execute();
+
+        $existing = $checkStmt->get_result();
+
+        if ($existing->num_rows > 0) {
+            continue;
+        };
+
+
+
+
+
+        $stmt->bind_param("iisss", $staff_id, $program_id, $scheduled_date, $end_date, $type);
         $stmt->execute();
 
 
+        $assignment_id = $conn->insert_id;
+
+
+
         $title = "New training assigned";
-        $formatted_date = date("d F Y", strtotime($deadline));
-        $message = "You have been assigned $trainingName. Complete it before $formatted_date";
+        // $formatted_date = date("d F Y", strtotime($deadline));
+        $formatted_start = date("d F Y", strtotime($scheduled_date));
+        $formatted_end = date("d F Y", strtotime($end_date));
+        $message = "You have been assigned $trainingName. The training runs from $formatted_start to $formatted_end.";
         $status = "Unread";
 
-        $NotifStmt->bind_param("sisss", $staff["email"], $program_id, $title, $message, $status);
-        $NotifStmt->execute();
+        
 
 
         sendAssignmentEmail(
             $staff["email"],
             $staff["first_name"],
             $trainingName,
-            $deadline
+            $formatted_start,
+            $formatted_end
         );
+
+
+
+
+        $NotifStmt->bind_param("sisss", $staff["email"], $assignment_id, $title, $message, $status);
+        $NotifStmt->execute();
+
+
+        
 
 
 

@@ -62,7 +62,7 @@ const TrainingInfo = () => {
         {
           icon: MdDateRange,
           label: "Scheduled Date",
-          value: "2026-06-20"
+          value: trainingInfoList2?.scheduled_date
         },
         {
             icon: MdOutlineAccessTime,
@@ -76,8 +76,8 @@ const TrainingInfo = () => {
         },
         {
               icon: MdDateRange,
-              label: "Deadline",
-              value: "2026-12-31"
+              label: "End Date",
+              value: trainingInfoList2?.end_date
         }
     ];
 
@@ -87,17 +87,17 @@ const TrainingInfo = () => {
         {
           icon: PiGraduationCap,
           label: "Provider",
-          value: "ICAO Training Institude"
+          value: trainingInfoList2?.provider
         },
         {
             icon: BiCategory,
             label: "Type",
-            value: "External Provider"
+            value: trainingInfoList2?.training_type
         },
         {
             icon: FiUser,
             label: "Trainer",
-            value: "Mr Natangwe Joseph"
+            value: trainingInfoList2?.trainer
         },
         {
             icon: MdOutlineContactMail,
@@ -123,7 +123,7 @@ const TrainingInfo = () => {
                     <label>{trainingInfoList2?.category}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
-                    <label>{trainingInfoList2?.training_type}</label>
+                    <label>{trainingInfoList2?.assignment_type}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
                     <label>{trainingInfoList2?.duration}</label>

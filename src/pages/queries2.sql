@@ -1,6 +1,9 @@
 
 
-CREATE DATABASE IF NOT EXIST ncaa_trainings;
+CREATE DATABASE IF NOT EXISTS ncaa_trainings_2;
+
+
+USE ncaa_trainings_2;
 
 
 -- User table 
@@ -24,14 +27,11 @@ CREATE TABLE IF NOT EXISTS training_programs
     description VARCHAR (250) NOT NULL,
     duration VARCHAR (250) NOT NULL,
     category VARCHAR (250) NOT NULL,
-    trainer VARCHAR (250) NOT NULL,
-    training_type VARCHAR (250) NOT NULL,
+    type VARCHAR (250) NOT NULL,
     validity VARCHAR (250) NOT NULL,
     status VARCHAR (250) NOT NULL,
-    target_roles VARCHAR (250) NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    recurrence VARCHAR (250) NOT NULL,
+    trainer VARCHAR (250) NOT NULL,
+    provider VARCHAR (250) NOT NULL,
     location VARCHAR (250) NOT NULL,
     contact_no VARCHAR (250) NOT NULL,
     email VARCHAR (250) NOT NULL
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS staff
     postal_address VARCHAR (250) NOT NULL,
     department VARCHAR (50) NOT NULL,
     role VARCHAR (250) NOT NULL,
-    employement_type VARCHAR (250) NOT NULL,
+    employment_type VARCHAR (250) NOT NULL,
     doj DATE,
-    employement_status VARCHAR (250) NOT NULL,
+    employment_status VARCHAR (250) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -84,8 +84,10 @@ CREATE TABLE training_assignments
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_id INT NOT NULL,
     program_id INT NOT NULL,
-    date_assigned DATE,
-    deadline DATE,
+    assigned_date DATE,
+    scheduled_date DATE,
+    end_date DATE,
+    type VARCHAR (250), 
     status VARCHAR (250),
     
     FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE CASCADE,
@@ -170,4 +172,16 @@ CREATE TABLE admin_notifications
         training_id,
         notification_type
     )
+);
+
+
+
+INSERT INTO users (role, email, first_name, last_name, password)
+VALUES
+(
+    'admin',
+    'admin@ncaa.na',
+    'Administrator',
+    'Administrator',
+    'admin@123'
 );
