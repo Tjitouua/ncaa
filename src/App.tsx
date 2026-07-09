@@ -22,6 +22,7 @@ import AssignmentDetails from './pages/staff/AssignmentDetails'
 import TrainingDetails from './pages/administrator/TrainingDetails'
 import NotificationsStaff from './pages/staff/NotificationsStaff'
 import Home from './pages/Home'
+import TrainingMatrix from './pages/administrator/TrainingMatrix'
 
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/admin/training_details/:id" element={<TrainingDetails />} />
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
+          <Route path="/admin/training_matrix" element={<TrainingMatrix />} />
 
 
           {/* Staff pages  */}

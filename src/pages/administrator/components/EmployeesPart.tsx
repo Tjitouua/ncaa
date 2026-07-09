@@ -114,7 +114,7 @@ const EmployeesPart = () => {
 
     return (
        <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
-          <div className="w-full h-screen  py-5">
+          <div className="w-full h-screen py-5">
 
              <div className="flex flex-col">
                {/* Top Part  */}

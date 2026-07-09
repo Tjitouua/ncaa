@@ -1,6 +1,6 @@
 import { RxDashboard } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
-import { FiUsers } from "react-icons/fi";
+import { FiUserCheck, FiUsers } from "react-icons/fi";
 import { PiGraduationCap } from "react-icons/pi";
 import { FaRegFileAlt } from "react-icons/fa";
 import { PiCertificateBold } from "react-icons/pi";
@@ -29,13 +29,18 @@ const menuItems = [
    },
    {
       name: "Training Matrix",
-      path: "/admin/notifications",
+      path: "/admin/training_matrix",
       icon: <MdGridOn />
    },
    {
       name: "Assign Training",
       path: "/admin/assign_training",
       icon: <FaRegFileAlt />
+   },
+   {
+      name: "Staff Compliance",
+      path: "/admin/assign_training",
+      icon: <FiUserCheck />
    },
    {
       name: "Training History",

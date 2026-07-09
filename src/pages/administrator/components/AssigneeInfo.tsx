@@ -129,7 +129,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         {
               icon: MdDateRange,
               label: "Assigned on",
-              value: "TEST" + trainingInfoList2?.assigned_date
+              value: trainingInfoList2?.assigned_date
         }
     ];
 
@@ -162,7 +162,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
             {/* Assignee  */}
            <div className="w-full py-6 pb-8 px-5 flex flex-col gap-4 bg-white shadow-sm shadow-secondary/30">
-              <label className="font-bold text-sm mb-2">Assigneeuytgfgh</label>
+              <label className="font-bold text-sm mb-2">Assignee</label>
               {assigneeList.map((training, index) => (
                       <TrainingInfoUi 
                         key = {index}
