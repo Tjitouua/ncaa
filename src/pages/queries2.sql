@@ -176,6 +176,36 @@ CREATE TABLE admin_notifications
 
 
 
+
+
+
+-- Role table 
+CREATE TABLE roles
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    department VARCHAR (250) NOT NULL,
+    role VARCHAR (250) NOT NULL,
+    description VARCHAR (250) NOT NULL,
+    status VARCHAR (250) NOT NULL,
+    
+    UNIQUE KEY unique_role (
+        department,
+        role
+    )
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO users (role, email, first_name, last_name, password)
 VALUES
 (

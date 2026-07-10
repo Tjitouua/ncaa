@@ -6,10 +6,17 @@ import { RiAddLargeLine } from "react-icons/ri"
 import { FiUserCheck } from "react-icons/fi"
 import Roles from "../ui/Roles"
 import Requirements from "../ui/Requirements"
+import type React from "react"
 
 
 
-const TrainingMatrixPart = () => {
+interface Props {
+    setShowAddRole: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
+
+const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole }) => {
 
     const navigate = useNavigate();
 
@@ -36,7 +43,7 @@ const TrainingMatrixPart = () => {
                           <FiUserCheck />
                           Staff Compliance
                     </SecondaryButt>
-                    <PrimaryButt>
+                    <PrimaryButt onClick={() => setShowAddRole(true)}>
                        <RiAddLargeLine /> Add Role
                     </PrimaryButt>
                  </div>
@@ -45,7 +52,7 @@ const TrainingMatrixPart = () => {
 
 
                 {/* Main Part  */}
-                <div className="w-full min-h-screen flex items-start justify-between gap-5">
+                <div className="w-full min-h-screen flex flex-col lg:flex-row items-start justify-between gap-5">
                     <Roles />
                     <Requirements />
                 </div>

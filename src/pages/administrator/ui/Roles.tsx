@@ -58,7 +58,7 @@ const Roles = () => {
 
 
     return (
-        <div className="w-[30%] h-[75vh] flex flex-col gap-4 items-center py-6 px-5 bg-white shadow-sm shadow-secondary/30">
+        <div className="w-full lg:w-[30%] h-[75vh] flex flex-col gap-4 items-center py-6 px-5 bg-white shadow-sm shadow-secondary/30">
             {/* Top Part  */}
             <div className="w-full flex items-center text-secondary/80 font-bold text-sm justify-between">
                 <label>1. Select Role</label>

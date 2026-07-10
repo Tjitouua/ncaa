@@ -3,6 +3,7 @@ import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
 import { useState } from "react";
 import TrainingMatrixPart from "./components/TrainingMatrixPart";
+import AddingRole from "./components/AddingRole";
 
 
 
@@ -10,6 +11,7 @@ import TrainingMatrixPart from "./components/TrainingMatrixPart";
 const TrainingMatrix = () => {
 
    const [showMenu, setShowMenu] = useState(false);
+   const [showAddRole, setShowAddRole] = useState(false);
 
 
     return (
@@ -17,7 +19,10 @@ const TrainingMatrix = () => {
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Training Matrix" />
-             <TrainingMatrixPart />
+             {showAddRole && (
+               <AddingRole setShowAddRole={setShowAddRole} />
+             )}
+             <TrainingMatrixPart setShowAddRole={setShowAddRole} />
           </div>
        </div>
     );

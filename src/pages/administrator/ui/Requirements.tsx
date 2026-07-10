@@ -141,7 +141,7 @@ const tabInfo = {
 
 
     return (
-        <div className="w-[70%] h-[75vh] overflow-y-auto scrollbar-thin scrollbar-secondaryy/10 flex flex-col items-start gap-2 py-6 px-5 bg-white shadow-sm shadow-secondary/30">
+        <div className="w-full lg:w-[70%] h-[75vh] overflow-y-auto scrollbar-thin scrollbar-secondaryy/10 flex flex-col items-start gap-2 py-6 px-5 bg-white shadow-sm shadow-secondary/30">
 
             {/* Top Part  */}
             <div className="w-full flex items-center text-secondary/80 font-bold text-sm justify-between">
