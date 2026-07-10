@@ -39,7 +39,7 @@ const menuItems = [
    },
    {
       name: "Staff Compliance",
-      path: "/admin/assign_training",
+      path: "/admin/staff_compliance",
       icon: <FiUserCheck />
    },
    {

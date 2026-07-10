@@ -12,6 +12,8 @@ interface Props {
     role: string;
     number: number;
     department: string
+    selected: boolean;
+    onClick: () => void;
 }
 
 
@@ -49,7 +51,7 @@ const departmentConfig: Record<string, { icon: IconType; color: string }> = {
 
 
 
-const RoleUi:React.FC<Props> = ({ role, number, department }) => {
+const RoleUi:React.FC<Props> = ({ role, number, department, selected, onClick }) => {
 
     const departmentData = departmentConfig[department] || {
         icon: HiBuildingOffice2,
@@ -59,7 +61,7 @@ const RoleUi:React.FC<Props> = ({ role, number, department }) => {
     const Icon = departmentData.icon;
 
     return (
-        <div className="w-full flex items-center rounded-md py-3 px-2 justify-between cursor-pointer hover:bg-primary/10">
+        <div onClick={onClick} className={`w-full ${selected ? "bg-primary/10 border border-primary" : ""} flex items-center rounded-md py-3 px-2 justify-between cursor-pointer hover:bg-primary/5`}>
             <div className="flex items-center gap-4 text-xs font-bold">
                 <Icon className={`${departmentData.color} text-sm`} />
                 <label>{role}</label>

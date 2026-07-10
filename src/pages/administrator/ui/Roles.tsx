@@ -2,10 +2,14 @@ import { IoSearchSharp } from "react-icons/io5";
 import { HiComputerDesktop } from "react-icons/hi2";
 import { RiComputerFill } from "react-icons/ri";
 import RoleUi from "./RoleUi";
+import { useState } from "react";
 
 
 
 const Roles = () => {
+
+
+    const [selectedRole, setSelectedRole] = useState(0);
 
 
     const roles = [
@@ -73,6 +77,8 @@ const Roles = () => {
                     role = {role.role}
                     number = {role.number}
                     department = {role.department}
+                    selected = {selectedRole === index}
+                    onClick={() => setSelectedRole(index)}
                  />
                 ))}
             </div>

@@ -203,7 +203,7 @@ const NewAssignment = () => {
                       <IoSearchSharp />
                       <input value={searchStaff} onChange={(e) => setSearchStaff(e.target.value)} className="py-3 w-full font-bold focus:outline-none placeholder:font-normal placeholder:text-xs" type="text" placeholder="Search staff..." />
                     </div>
-                    <div className="w-full flex flex-col scrollbar-thin scrollbar-secondaryy/10 mt-2 h-[26vh] overflow-y-scroll rounded-md border border-secondary/30 overflow-hidden">
+                    <div className="w-full flex flex-col scrollbar-thin scrollbar-secondaryy/10 mt-2 h-[26vh] overflow-y-auto rounded-md border border-secondary/30 overflow-hidden">
                         {loading ? (
                             <p>Loading staff...</p>
                         ): filteredStaff.length === 0 ? (
