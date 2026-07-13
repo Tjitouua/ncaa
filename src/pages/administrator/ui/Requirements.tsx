@@ -2,11 +2,17 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { RiAddLargeLine, RiDeleteBin6Line } from "react-icons/ri";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { useState } from "react";
+import React, { useState } from "react";
+
+
+interface Props {
+    setShowAddRequirement: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedRole: any;
+}
 
 
 
-const Requirements = () => {
+const Requirements: React.FC<Props> = ({ setShowAddRequirement, selectedRole }) => {
 
 // const [loading, setLoading] = 
 const [selectedTab, setSelectedTab] = useState("Mandatory");
@@ -119,10 +125,10 @@ const [selectedTab, setSelectedTab] = useState("Mandatory");
 
 const tabInfo = {
     Mandatory: {
-        text: "These are the mandatory training requirements for the Software Developer."
+        text: `These are the mandatory training requirements for the ${selectedRole?.role || "Select a role"}.`
     },
     Recommended: {
-        text: "These are the recommended training requirements for the Software Developer."
+        text: `These are the recommended training requirements for the ${selectedRole?.role || "Select a role"}.`
     },
     "Not Required": {
         text: "Training programs not assigned to Software Developer."
@@ -145,7 +151,7 @@ const tabInfo = {
 
             {/* Top Part  */}
             <div className="w-full flex items-center text-secondary/80 font-bold text-sm justify-between">
-                <label>2. Manage Requirements for:  <span className="text-primary ml-2">Software Developer</span></label>
+                <label>2. Manage Requirements for:  <span className="text-primary ml-2">{selectedRole?.role || "Select a role"}</span></label>
                 <div className="flex items-center gap-3">
                    <div className="py-2 px-3 bg-red-100 flex items-3 gap-3 text-xs text-red-700">
                        <label>Mandatory</label>
@@ -181,7 +187,7 @@ const tabInfo = {
                    <IoMdInformationCircleOutline />
                    <label>{currentTab.text}</label>
                 </div>
-                <PrimaryButt>
+                <PrimaryButt onClick={() => setShowAddRequirement(true)}>
                     <RiAddLargeLine />
                     Add Requirement
                 </PrimaryButt>

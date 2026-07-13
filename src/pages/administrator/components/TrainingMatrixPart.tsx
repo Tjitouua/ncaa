@@ -7,17 +7,22 @@ import { FiUserCheck } from "react-icons/fi"
 import Roles from "../ui/Roles"
 import Requirements from "../ui/Requirements"
 import type React from "react"
+import { useState } from "react"
 
 
 
 interface Props {
     setShowAddRole: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowAddRequirement: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedRole: any;
+    setSelectedRole: React.Dispatch<React.SetStateAction<any>>;
 }
 
 
 
-const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole }) => {
+const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole, setShowAddRequirement, selectedRole, setSelectedRole }) => {
 
+    // const [selectedRole, setSelectedRole] = useState<any>(null);
     const navigate = useNavigate();
 
 
@@ -53,8 +58,8 @@ const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole }) => {
 
                 {/* Main Part  */}
                 <div className="w-full min-h-screen flex flex-col lg:flex-row items-start justify-between gap-5">
-                    <Roles />
-                    <Requirements />
+                    <Roles selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
+                    <Requirements setShowAddRequirement={setShowAddRequirement} selectedRole={selectedRole} />
                 </div>
 
 

@@ -19,27 +19,27 @@ interface Props {
 
 
 const departmentConfig: Record<string, { icon: IconType; color: string }> = {
-    ITC: {
+    "ICTP": {
         icon: RiComputerFill,
         color: "text-primary"
     },
-    "Safety & Security": {
+    "Aviation Security (AvSec)": {
         icon: SiSpringsecurity,
         color: "text-red-800"
     },
-    "Air Navigation": {
+    "Air Navigation Services Safety Oversight (ANSSO)": {
         icon: BsFillRouterFill,
         color: "text-pink-800"
     },
-    "Flight Operations": {
+    "Flight Operations (OPS)": {
         icon: FaPlaneDeparture,
         color: "text-orange-800"
     },
-    "Administration": {
+    "Finance and Administration": {
         icon: FaBriefcase,
         color: "text-purple-800"
     },
-    "Aerodromes": {
+    "Aerodromes and Ground Aids (AGA)": {
         icon: HiBuildingOffice2,
         color: "text-green-800"
     },
