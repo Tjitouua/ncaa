@@ -44,7 +44,7 @@ const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole, setShowAddRequire
                     <label className="text-xs text-secondary/60">Define mandatory and recommended training requirements per role.</label>
                  </div>
                  <div className="flex items-center gap-3">
-                    <SecondaryButt>
+                    <SecondaryButt onClick={() => navigate("/admin/staff_compliance")}>
                           <FiUserCheck />
                           Staff Compliance
                     </SecondaryButt>

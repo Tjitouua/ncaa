@@ -107,7 +107,7 @@ const ProgramDetails = () => {
                                     <option>Internal</option>
                                     <option>External</option>
                               </DetailsSelect>
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="Validity" label="Validity" value={program.validity}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="validity" label="validity" value={program.validity}/>
                               <DetailsSelect label="Status" onChange={handleChange} name="status" value={program.status}>
                                     <option>Active</option>
                                     <option>Inactive</option>

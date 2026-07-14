@@ -80,16 +80,26 @@ const Roles: React.FC<Props> = ({ selectedRole, setSelectedRole }) => {
             </div>
             {/* Roles  */}
             <div className="w-full flex flex-col">
-                {filteredRoles.map((role) => (
+                {loading ? (
+                    <div className="w-full py-7 flex items-center justify-center">
+                        <label>Loading roles...</label>
+                    </div>
+                ) : filteredRoles.length === 0 ? (
+                    <div className="w-full py-7 flex items-center justify-center">
+                        <label>No roles available.</label>
+                    </div>
+                ) : (
+                filteredRoles.map((role) => (
                  <RoleUi 
                     key = {role.id}
                     role = {role.role}
-                    number = {role.trainings}
+                    number = {role.requirements}
                     department = {role.department}
                     selected = {selectedRole?.id === role.id}
                     onClick={() => setSelectedRole(role)}
                  />
-                ))}
+                ))
+                )}
             </div>
         </div>
     );

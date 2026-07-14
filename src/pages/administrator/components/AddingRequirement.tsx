@@ -26,6 +26,79 @@ const AddingRequirement: React.FC<Props> = ({ setShowAddRequirement, selectedRol
   const navigate = useNavigate();
   const [program, setProgram] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [form, setForm] = useState({
+     program: "",
+     type: "",
+  });
+
+  const [errors, setErrors] = useState<any>({});
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value})
+  };
+
+
+  const validate = () => {
+    const newErrors: any = {};
+
+    Object.keys(form).forEach((key) => {
+       if(!form[key as keyof typeof form]) {
+         newErrors[key] = "This field is required";
+       }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
+
+
+
+
+  const handleSubmit = async () => {
+     if(!validate()) return;
+
+
+     const requirementData = {
+      role_id: selectedRole.id,
+      program_id: form.program,
+      type: form.type
+    };
+
+
+     try {
+       const response = await fetch(
+         "http://localhost/ncaa/roles/create_requirement.php",
+         {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json",
+           },
+           body: JSON.stringify(requirementData),
+         }
+       );
+
+       const data = await response.json();
+
+       if (data.success) {
+         alert("Requirement added successfully");
+         setShowAddRequirement(false);
+         window.location.reload();
+       } else {
+         alert(data.message);
+       }
+     } catch (error) {
+       console.error(error);
+       alert("Failed to connect to server");
+     }
+  }
+
+
+
+
+
+
   
 
   useEffect(() => {
@@ -74,20 +147,27 @@ const AddingRequirement: React.FC<Props> = ({ setShowAddRequirement, selectedRol
                     <SelectInputs
                       label = "Training Program"
                       name = "program"
+                      value = {form.program}
+                      onChange={handleChange}
+                      error = {errors.program}
                     >
+                      <option value="">Select Training</option>
                      {program.map((program) => (
                       <option key={program.id} value={program.id}>{program.training_name}</option>
                      ))}
                     </SelectInputs>
                     <SelectInputs
                       label ="Requirement Type"
-                      name = "status"
+                      name = "type"
+                      value = {form.type}
+                      onChange={handleChange}
+                      error = {errors.type}
                     >
                        <option value="">Select Type</option>
-                       <option value="Active">Mandatory (must be completed)</option>
-                       <option value="Inactive">Recommended (suggested)</option>
+                       <option value="Mandatory">Mandatory (must be completed)</option>
+                       <option value="Recommended">Recommended (suggested)</option>
                     </SelectInputs>
-                    <PrimaryButt><RiAddLargeLine /> Add Requirement</PrimaryButt>
+                    <PrimaryButt onClick={handleSubmit}><RiAddLargeLine /> Add Requirement</PrimaryButt>
                 </div>
             </div>
             </div>

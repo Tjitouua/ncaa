@@ -162,6 +162,7 @@ const ProgramAdd = () => {
                             <option value="Operations">Operations</option>
                             <option value="Safety">Safety</option>
                             <option value="Security">Security</option>
+                            <option value="Health">Health</option>
                             <option value="Human Factors">Human Factors</option>
                           </SelectInputs>
 

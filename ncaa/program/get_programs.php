@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 include "../database.php";
 
-$sql = "SELECT * FROM training_programs ORDER BY id ASC";
+$sql = "SELECT * FROM training_programs ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
 
 $trainingPrograms = [];

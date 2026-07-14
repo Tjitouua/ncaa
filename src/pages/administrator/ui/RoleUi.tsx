@@ -1,6 +1,6 @@
 import type React from "react";
 import type { IconType } from "react-icons";
-import { BsFillRouterFill } from "react-icons/bs";
+import { BsFillPersonVcardFill, BsFillRouterFill } from "react-icons/bs";
 import { FaPlaneDeparture, FaWrench } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa6";
 import { HiBuildingOffice2, HiComputerDesktop } from "react-icons/hi2";
@@ -23,6 +23,10 @@ const departmentConfig: Record<string, { icon: IconType; color: string }> = {
         icon: RiComputerFill,
         color: "text-primary"
     },
+    "Airworthiness (AIR)": {
+        icon: FaWrench,
+        color: "text-purple-800"
+    },
     "Aviation Security (AvSec)": {
         icon: SiSpringsecurity,
         color: "text-red-800"
@@ -43,9 +47,9 @@ const departmentConfig: Record<string, { icon: IconType; color: string }> = {
         icon: HiBuildingOffice2,
         color: "text-green-800"
     },
-    "Engineering": {
-        icon: FaWrench,
-        color: "text-black-800"
+    "Human Resources": {
+        icon: BsFillPersonVcardFill,
+        color: "text-yellow-800"
     },
 };
 

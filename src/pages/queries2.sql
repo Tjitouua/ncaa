@@ -187,7 +187,6 @@ CREATE TABLE roles
     role VARCHAR (250) NOT NULL,
     description VARCHAR (250) NOT NULL,
     status VARCHAR (250) NOT NULL,
-    trainings INT NOT NULL,
     
     UNIQUE KEY unique_role (
         department,
@@ -208,6 +207,7 @@ CREATE TABLE matrix
     id INT PRIMARY KEY AUTO_INCREMENT,
     role_id INT NOT NULL,
     program_id INT NOT NULL,
+    type VARCHAR (250),
     
     FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE,
     FOREIGN KEY (program_id) REFERENCES training_programs (id) ON DELETE CASCADE
