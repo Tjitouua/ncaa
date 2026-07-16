@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopMenu from "./components/TopMenu";
 import Menu from "./components/Menu";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,25 @@ const EmployeeAdd = () => {
    const [loading, setLoading] = useState(false);
 
    const navigate = useNavigate();
+   const [roles, setRoles] = useState([]);
+   
+
+   // Getting roles from the database 
+   useEffect(() => {
+      fetch("http://localhost/ncaa/roles/get_roles.php")
+      .then((response) => response.json())
+      .then((data) => {
+         if (data.success) {
+            setRoles(data.data);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching roles: ", error);
+      })
+      .finally(() => {
+         setLoading(false);
+      });
+   }, []);
 
 
    const [form, setForm] = useState({
@@ -224,14 +243,27 @@ const EmployeeAdd = () => {
                             placeholder="Enter postal address"
                           />
 
-                          <Inputs
+                          {/* <Inputs
                             label="Role"
                             name="role"
                             value={form.role}
                             onChange={handleChange}
                             error={errors.role}
                             placeholder="Enter employee role"
-                          />
+                          /> */}
+
+                          <SelectInputs
+                            label="Role"
+                            name="role"
+                            value={form.role}
+                            onChange={handleChange}
+                            error={errors.role}
+                          >
+                             <option value="">Select role</option>
+                             {roles.map((role) => (
+                              <option key={role.id} value={role.role}>{role.role}</option>
+                             ))}
+                          </SelectInputs>
 
                           <SelectInputs
                              label = "Department"

@@ -187,6 +187,7 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
+                  onClick = {() => navigate(`/staff/assignment_details/${notification.training_id}`)}
                />
                ))
                )}
@@ -211,6 +212,7 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
+                  onClick = {() => navigate(`/staff/assignment_details/${notification.training_id}`)}
                />
                ))
                )}

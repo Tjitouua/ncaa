@@ -21,6 +21,7 @@ const AddingRole: React.FC<Props> = ({ setShowAddRole }) => {
 
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
 
   const [form, setForm] = useState({
@@ -55,6 +56,8 @@ const AddingRole: React.FC<Props> = ({ setShowAddRole }) => {
   const handleSubmit = async () => {
      if (!validate()) return;
 
+     setLoading(true);
+
      try {
        const response = await fetch(
         "http://localhost/ncaa/roles/add_role.php",
@@ -79,6 +82,8 @@ const AddingRole: React.FC<Props> = ({ setShowAddRole }) => {
      } catch (error) {
        console.error(error);
        alert("Failed to connect to server");
+     } finally {
+       setLoading(false);
      }
   }
 
@@ -145,7 +150,9 @@ const AddingRole: React.FC<Props> = ({ setShowAddRole }) => {
                        <option value="Active">Active</option>
                        <option value="Inactive">Inactive</option>
                     </SelectInputs>
-                    <PrimaryButt onClick={handleSubmit}><RiAddLargeLine /> Add Role</PrimaryButt>
+                    <PrimaryButt 
+                    disabled={loading}
+                    onClick={handleSubmit}>{loading ? "Adding role..." : (<><RiAddLargeLine /> Add Role</>)}</PrimaryButt>
                 </div>
             </div>
             </div>

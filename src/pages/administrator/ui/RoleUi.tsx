@@ -12,8 +12,8 @@ interface Props {
     role: string;
     number: number;
     department: string
-    selected: boolean;
-    onClick: () => void;
+    selected?: boolean;
+    onClick?: () => void;
 }
 
 

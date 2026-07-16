@@ -17,6 +17,7 @@ const ProgramAdd = () => {
    const [showMenu, setShowMenu] = useState(false);
 
    const navigate = useNavigate();
+   const [loading, setLoading] = useState(false);
 
    const [form, setForm] = useState({
       trainingName: "",
@@ -61,6 +62,8 @@ const ProgramAdd = () => {
    const handleSubmit = async () => {
       if (!validate()) return;
 
+      setLoading(true);
+
       try {
         const response = await fetch(
            "http://localhost/ncaa/program/add_program.php",
@@ -84,6 +87,8 @@ const ProgramAdd = () => {
       } catch (error) {
           console.error(error);
           alert("Failed to connect to server");
+      } finally {
+        setLoading(false);
       }
 
    }
@@ -247,7 +252,13 @@ const ProgramAdd = () => {
                           />
 
                       </div>
-                      <PrimaryButt onClick={handleSubmit} className="w-full"><RiAddLargeLine /> Add Training Program</PrimaryButt>
+                      <PrimaryButt 
+                      disabled={loading}
+                      onClick={handleSubmit} className="w-full">
+                        {loading ? "Adding program..." : (
+                        <><RiAddLargeLine /> Add Training Program</>
+                        )}
+                      </PrimaryButt>
                    </div>
                 </div>
              </div>
