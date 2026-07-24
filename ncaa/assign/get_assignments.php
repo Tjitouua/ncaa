@@ -31,6 +31,7 @@
                FROM training_assignments a 
                LEFT JOIN staff s ON a.staff_id = s.id
                LEFT JOIN training_programs t ON a.program_id = t.id
+               ORDER BY a.id DESC
      ";
 
      $result = mysqli_query($conn, $sql);

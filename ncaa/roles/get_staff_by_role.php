@@ -17,32 +17,37 @@
         exit;
     }
 
-    $sql = "SELECT 
-            m.id,
-            m.type,
-            r.department,
-            r.role,
-            r.status,
-            p.training_name,
-            p.duration,
-            p.category,
-            p.validity,
-            COUNT(DISTINCT s.id) AS members
-            FROM matrix m
-            LEFT JOIN roles r ON r.id = m.role_id
-            LEFT JOIN training_programs p ON p.id = m.program_id
-            LEFT JOIN staff s ON s.role = r.role
-            AND s.department = r.department
-            WHERE m.role_id = ?
-            GROUP BY m.id
-            ORDER BY m.id DESC;
-    ";
-
+    $sql = "SELECT role, department FROM roles WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
+
     $result = $stmt->get_result();
+
+    $roleData = $result->fetch_assoc();
+
+    if(!$roleData) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Role not found"
+        ]);
+        exit;
+    };
+
+
+    $role = $roleData["role"];
+    $department = $roleData["department"];
+
+
+    
+
+    $query = "SELECT * FROM staff WHERE role = ? AND department = ?";
+    $stmt2 = $conn->prepare($query);
+    $stmt2->bind_param("ss", $role, $department);
+    $stmt2->execute();
+
+    $result = $stmt2->get_result();
 
     $data = [];
 
@@ -50,17 +55,24 @@
         $data[] = $row;
     }
 
-
     if($data) {
         echo json_encode([
             "success" => true,
-            "data" => $data 
+            "data" => $data
         ]);
-    } 
+        exit;
+    }
 
+
+    
 
     $stmt->close();
     $conn->close();
+
+
+
+
+
 
 
 

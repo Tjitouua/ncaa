@@ -24,6 +24,7 @@
 
    $sql = "SELECT
              n.id,
+             n.training_id,
              n.title,
              n.message,
              n.status,
