@@ -1,5 +1,5 @@
 import { IoLocationOutline } from "react-icons/io5";
-import { MdDateRange, MdOutlineAccessTime } from "react-icons/md";
+import { MdDateRange, MdOutlineAccessTime, MdOutlineCancel } from "react-icons/md";
 import TrainingInfoUi from "../ui/TrainingInfoUi";
 import { FiUser } from "react-icons/fi";
 import { LiaBuildingSolid } from "react-icons/lia";
@@ -118,7 +118,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         },
         {
             icon: LiaBuildingSolid,
-            label: "Departmentsss",
+            label: "Departments",
             value: trainingInfoList2?.assigned_date
         },
         {
@@ -206,7 +206,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
               </div>
               <div className="w-full mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
                   <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
-                  <SecondaryButt className="!border !border-secondary/30"><LuDownload /> Download</SecondaryButt>
+                  <SecondaryButt className="!border !border-secondary/30"><MdOutlineCancel /> Reject</SecondaryButt>
               </div>
               <SecondaryButt onClick={cycleStatus}  className="!bg-secondaryy">Mark {getNextStatus(trainingInfoList2?.status)}</SecondaryButt>
            </div>

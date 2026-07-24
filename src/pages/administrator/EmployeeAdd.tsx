@@ -272,15 +272,20 @@ const EmployeeAdd = () => {
                             onChange = {handleChange}
                             error = {errors.department}
                           >
-                             <option value="">Select employee department</option>
-                             <option value="Administration">Administration</option>
-                             <option value="Aerodromes">Aerodromes</option>
-                             <option value="Air Navigation">Air Navigation</option>
-                             <option value="Airworthiness">Airworthiness</option>
-                             <option value="Engineering">Engineering</option>
-                             <option value="Flight Operations">Flight Operations</option>
-                             <option value="Safety $ Security">Safety $ Security</option>
-                             <option value="ICT">ICT</option>
+                             <option value="">Select Department</option>
+                             <option value="Airworthiness (AIR)">Airworthiness (AIR)</option>
+                             <option value="Flight Operations (OPS)">Flight Operations (OPS)</option>
+                             <option value="Personnel Licensing (PEL)">Personnel Licensing (PEL)</option>
+                             <option value="Aerodromes and Ground Aids (AGA)">Aerodromes and Ground Aids (AGA)</option>
+                             <option value="Aviation Security (AvSec)">Aviation Security (AvSec)</option>
+                             <option value="Air Navigation Services Safety Oversight (ANSSO)">Air Navigation Services Safety Oversight (ANSSO)</option>
+                             <option value="Safety Promotion and Quality (SPG)">Safety Promotion and Quality (SPG)</option>
+                             <option value="Compliance and Regulatory Risk (CRR)">Compliance and Regulatory Risk (CRR)</option>
+                             <option value="Finance and Administration">Finance and Administration</option>
+                             <option value="Human Resources">Human Resources</option>
+                             <option value="Procurement">Procurement</option>
+                             <option value="Legal">Legal</option>
+                             <option value="ICTP">ICTP</option>
                           </SelectInputs>
 
                           <SelectInputs

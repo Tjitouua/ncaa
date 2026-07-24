@@ -9,12 +9,21 @@ import { IoAlarmOutline } from "react-icons/io5";
 import { FaRegFileAlt } from "react-icons/fa";
 import ComplianceRoles from "../ui/ComplianceRoles";
 import ComplianceRequirements from "../ui/ComplianceRequirements";
+import type React from "react";
+
+
+
+
+interface Props {
+    selectedRole: any;
+    setSelectedRole: React.Dispatch<React.SetStateAction<any>>;
+}
 
 
 
 
 
-const StaffCompliancePart = () => {
+const StaffCompliancePart: React.FC<Props> = ({ selectedRole, setSelectedRole }) => {
 
 
 
@@ -76,8 +85,8 @@ const StaffCompliancePart = () => {
 
                {/* Main Part  */}
                <div className="w-full min-h-screen flex flex-col lg:flex-row items-start justify-between gap-5">
-                 <ComplianceRoles />
-                 <ComplianceRequirements />
+                 <ComplianceRoles selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
+                 <ComplianceRequirements selectedRole={selectedRole} />
                </div>
                
            </div>

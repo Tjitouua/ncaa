@@ -6,68 +6,58 @@ import React, { useEffect, useState } from "react";
 
 
 
-// interface Props {
-//     selectedRole: any;
-//     setSelectedRole: React.Dispatch<React.SetStateAction<any>>;
-// }
+interface Props {
+    selectedRole: any;
+    setSelectedRole: React.Dispatch<React.SetStateAction<any>>;
+}
 
 
 
-const ComplianceRoles = () => {
+const ComplianceRoles: React.FC<Props> = ({ selectedRole, setSelectedRole }) => {
 
     // const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [roles, setRoles] = useState([]);
     const [searchRole, setSearchRole] = useState("");
 
 
     // const [selectedRole, setSelectedRole] = useState<number>(0);
 
 
+    useEffect(() => {
+        fetch("http://localhost/ncaa/roles/get_roles.php")
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.success) {
+                setRoles(data.data);
+                if(data.data.length > 0) {
+                    setSelectedRole(data.data[0]);
+                }
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching roles: ", error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }, []);
 
 
-    const roles = [
-        {
-            role: "Software Developer",
-            number: 5,
-            department: "ICTP"
-        },
-        {
-            role: "Senior Controller",
-            number: 3,
-            department: "Air Navigation"
-        },
-        {
-            role: "Safety Inspector",
-            number: 2,
-            department: "Safety & Security"
-        },
-        {
-            role: "Aerodrome Office",
-            number: 6,
-            department: "Aerodromes"
-        },
-        {
-            role: "Operations Officer",
-            number: 3,
-            department: "Flight Operations"
-        },
-        {
-            role: "Avionics Engineer",
-            number: 6,
-            department: "Engineering"
-        },
-        {
-            role: "HR Officer",
-            number: 1,
-            department: "Administration"
-        },
-        {
-            role: "Secure Lead",
-            number: 7,
-            department: "Safety & Security"
-        },
-    ];
+
+    const filteredRoles = roles.filter((role) => {
+        const search = searchRole.toLowerCase().trim();
+
+        return (
+            role.role?.toLowerCase().includes(search) ||
+            role.department?.toLowerCase().includes(search) ||
+            role.description?.toLowerCase().includes(search) ||
+            role.status?.toLowerCase().includes(search)
+        );
+    });
+
+
+
 
 
 
@@ -80,7 +70,7 @@ const ComplianceRoles = () => {
             {/* Top Part  */}
             <div className="w-full flex items-center text-secondary/80 font-bold text-sm justify-between">
                 <label>1. Select Role</label>
-                <label className="text-secondary/50 font-semibold">4 Roles</label>
+                <label className="text-secondary/50 font-semibold">{filteredRoles.length} Roles</label>
             </div>
             {/* Search  */}
             <div className="w-full flex items-center text-xs gap-2 border px-3 border-secondary/30 bg-secondaryy/30 rounded-md">
@@ -90,12 +80,14 @@ const ComplianceRoles = () => {
             {/* Roles  */}
             <div className="w-full flex flex-col">
                 
-                {roles.map((role, index) => (
+                {filteredRoles.map((role) => (
                  <RoleUi 
-                    key = {index}
+                    key = {role.id}
                     role = {role.role}
-                    number = {role.number}
+                    number = {role.members}
                     department = {role.department}
+                    selected = {selectedRole?.id === role.id}
+                    onClick = {() => setSelectedRole(role)}
                  />
                 ))}
             </div>
@@ -106,6 +98,55 @@ const ComplianceRoles = () => {
 export default ComplianceRoles;
 
 
+
+
+
+
+
+
+
+// const roles = [
+//     {
+//         role: "Software Developer",
+//         number: 5,
+//         department: "ICTP"
+//     },
+//     {
+//         role: "Senior Controller",
+//         number: 3,
+//         department: "Air Navigation"
+//     },
+//     {
+//         role: "Safety Inspector",
+//         number: 2,
+//         department: "Safety & Security"
+//     },
+//     {
+//         role: "Aerodrome Office",
+//         number: 6,
+//         department: "Aerodromes"
+//     },
+//     {
+//         role: "Operations Officer",
+//         number: 3,
+//         department: "Flight Operations"
+//     },
+//     {
+//         role: "Avionics Engineer",
+//         number: 6,
+//         department: "Engineering"
+//     },
+//     {
+//         role: "HR Officer",
+//         number: 1,
+//         department: "Administration"
+//     },
+//     {
+//         role: "Secure Lead",
+//         number: 7,
+//         department: "Safety & Security"
+//     },
+// ];
 
 
 
