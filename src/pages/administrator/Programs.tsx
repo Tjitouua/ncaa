@@ -104,7 +104,7 @@ const Programs = () => {
 
              <div className="w-full min-h-screen flex flex-col gap-3 py-6 px-2 md:px-6">
                  {/* Top Part  */}
-                 <div className="w-full flex items-start justify-between">
+                 <div className="w-full flex items-start justify-between border-b border-secondary/30 pb-4">
                     <div className="flex flex-col">
                        <label className="text-lg">All Programs</label>
                        <label className="text-xs text-secondary/60">{filteredPrograms.length} program (s)</label>
@@ -125,7 +125,7 @@ const Programs = () => {
                     </div>
                  </div>
                  {/* Programs  */}
-                 <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-3">
+                 <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-4">
                   {loading ? (
                        <div className="w-full py-20 flex items-center justify-center">
                           <p>Loading programs...</p>

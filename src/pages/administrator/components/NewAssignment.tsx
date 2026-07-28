@@ -26,13 +26,13 @@ const NewAssignment = () => {
     // const [dateAssigned, setDateAssigned] = useState("");
     const [scheduledDate, setScheduledDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [type, setType] = useState("Mandatory");
+    // const [type, setType] = useState("Mandatory");
     const [loading2, setLoading2] = useState(false);
 
 
     // Staff 
     useEffect(() => {
-        fetch("http://localhost/ncaa/staff/get_staff.php")
+        fetch("http://localhost/ncaa/staff/get_assignment_staff.php")
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
@@ -68,6 +68,23 @@ const NewAssignment = () => {
 
 
 
+    // Preventing assignment without the matrix 
+    useEffect(() => {
+        if(!selectedProgram) return;
+
+        setSelectedStaff((prevSelected) =>
+            prevSelected.filter((staffId) => {
+                const employee = staff.find((s) => s.id === staffId);
+
+                return employee?.programs.some(
+                    (program) => program.id === Number(selectedProgram)
+                );
+            })
+        );
+    }, [selectedProgram, staff]);
+
+
+
 
     // Searching 
     const filteredStaff = staff.filter((employee) => {
@@ -84,8 +101,15 @@ const NewAssignment = () => {
            selectedDepartment === "All departments" ||
            employee.department === selectedDepartment;
 
+
+        const matchesProgram =
+           selectedProgram == "" ||
+           employee.programs.some(
+              (program) => program.id === Number(selectedProgram)
+           )
+        //    employee.programs.includes(Number(selectedProgram));
         
-        return matchesSearch && matchesDepartment;
+        return matchesSearch && matchesDepartment && matchesProgram;
         
     });
 
@@ -115,13 +139,42 @@ const NewAssignment = () => {
             return;
         }
 
+        // const selectedEmployee = staff.find(
+        //     employee => employee.id === selectedStaff[0]
+        // );
+
+        // const trainingType = selectedEmployee.programs.find(
+        //     program => program.id === Number(selectedProgram)
+        // )?.type;
+
+
+
+        const assignments = selectedStaff.map((staffId) => {
+            const employee = staff.find(
+                employee => employee.id === staffId
+            );
+
+            const type = employee.programs.find(
+                program => program.id === Number(selectedProgram)
+            )?.type;
+
+            return {
+                staff_id: staffId,
+                type: type
+            };
+        });
+
+
+
+
+
         const payload = {
-            staff_ids: selectedStaff,
+            assignments: assignments,
             program_id: selectedProgram,
             // date_assigned: dateAssigned,
             scheduled_date: scheduledDate,
             end_date: endDate,
-            type: type
+            // type: trainingType
         };
 
         setLoading2(true);
@@ -139,12 +192,12 @@ const NewAssignment = () => {
             console.log(data);
 
             if (data.success) {
-                alert("Assignment created");
+                alert("Assignment (s) created");
                 setSelectedStaff([]);
                 setSelectedProgram("");
                 setScheduledDate("");
                 setEndDate("");
-                setType("");
+                // setType("");
 
                 window.location.reload();
             } else {
@@ -172,14 +225,20 @@ const NewAssignment = () => {
 
                 <div className="w-full rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                     <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
-                        <option>All departments</option>
-                        <option>Air Navigation</option>
-                        <option>Safety & Security</option>
-                        <option>Aerodromes</option>
-                        <option>Flight Operations</option>
-                        <option>Engineering</option>
-                        <option>ICT</option>
-                        <option>Administration</option>
+                      <option value="All departments">All departments</option>
+                      <option value="Airworthiness (AIR)">Airworthiness (AIR)</option>
+                      <option value="Flight Operations (OPS)">Flight Operations (OPS)</option>
+                      <option value="Personnel Licensing (PEL)">Personnel Licensing (PEL)</option>
+                      <option value="Aerodromes and Ground Aids (AGA)">Aerodromes and Ground Aids (AGA)</option>
+                      <option value="Aviation Security (AvSec)">Aviation Security (AvSec)</option>
+                      <option value="Air Navigation Services Safety Oversight (ANSSO)">Air Navigation Services Safety Oversight (ANSSO)</option>
+                      <option value="Safety Promotion and Quality (SPG)">Safety Promotion and Quality (SPG)</option>
+                      <option value="Compliance and Regulatory Risk (CRR)">Compliance and Regulatory Risk (CRR)</option>
+                      <option value="Finance and Administration">Finance and Administration</option>
+                      <option value="Human Resources">Human Resources</option>
+                      <option value="Procurement">Procurement</option>
+                      <option value="Legal">Legal</option>
+                      <option value="ICTP">ICTP</option>
                     </select>
                 </div>
 
@@ -235,7 +294,7 @@ const NewAssignment = () => {
 
                 <div className="w-full flex flex-col">
                     <label className="text-xs font-bold text-secondary/60">Training Program</label>
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-1 gap-3 mt-2">
                     <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                       <select value={selectedProgram} onChange={(e) => setSelectedProgram(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                         <option value="">Choose training...</option>
@@ -249,12 +308,12 @@ const NewAssignment = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                    {/* <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                        <select value={type} onChange={(e) => setType(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                            <option value="Mandatory">Mandatory</option>
                            <option value="Recommended">Recommended</option>
                        </select>
-                    </div>
+                    </div> */}
                     </div>
                 </div>
 

@@ -33,7 +33,7 @@ const StaffCompliancePart: React.FC<Props> = ({ selectedRole, setSelectedRole })
         {
             icon: BsFileEarmarkCheck,
             name: "Compliance rate",
-            stat: 240,
+            stat: 40,
             desc: "Training currently underway"
         },
         {

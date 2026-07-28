@@ -48,7 +48,7 @@ const ComplianceRequirements: React.FC<Props> = ({ selectedRole }) => {
 
         setStaff([]);
 
-        fetch(`http://localhost/ncaa/roles/get_staff_by_role.php?id=${selectedRole.id}`)
+        fetch(`http://localhost/ncaa/roles/get_role_compliance.php?id=${selectedRole.id}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
@@ -141,6 +141,7 @@ const ComplianceRequirements: React.FC<Props> = ({ selectedRole }) => {
                  last_name={staff.last_name}
                  email={staff.email}
                  department={staff.department.length > 20 ? staff.department.substring(0, 20) + "..." : staff.department}
+                 trainings={staff.trainings}
               />
              ))
              )}
