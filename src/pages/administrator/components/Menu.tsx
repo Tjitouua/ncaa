@@ -8,6 +8,7 @@ import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import { MdGridOn } from "react-icons/md";
+import { LuInbox } from "react-icons/lu";
 
 
 
@@ -31,6 +32,11 @@ const menuItems = [
       name: "Training Matrix",
       path: "/admin/training_matrix",
       icon: <MdGridOn />
+   },
+   {
+      name: "Training Requests",
+      path: "/admin/training_requests",
+      icon: <LuInbox />
    },
    {
       name: "Assign Training",

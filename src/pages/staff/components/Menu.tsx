@@ -1,11 +1,9 @@
 import { RxDashboard } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
 import { FaClockRotateLeft } from "react-icons/fa6";
-import { IoNotificationsOutline } from "react-icons/io5";
 import { GrCertificate } from "react-icons/gr";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { MdCircleNotifications } from "react-icons/md";
 import { GrNotification } from "react-icons/gr";
+import { FiSend } from "react-icons/fi";
 
 
 
@@ -24,6 +22,11 @@ const menuItems = [
       name: "My Training History",
       path: "/staff/my_training_history",
       icon: <FaClockRotateLeft />
+   },
+   {
+      name: "Request Training",
+      path: "/staff/request_training",
+      icon: <FiSend />
    },
    {
       name: "Notifications",

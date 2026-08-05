@@ -127,16 +127,17 @@ const ComplianceRequirements: React.FC<Props> = ({ selectedRole }) => {
           {/* Staff Part  */}
           <div className="w-full py-4 grid grid-cols-1 md:grid-cols-2 gap-5">
              {loading ? (
-                <div className="w-full col-span-full py-20 flex items-center justify-center">
+                <div className="w-full col-span-full py-20 flex items-center shadow-sm gap-5 shadow-secondary/30 justify-center">
                    <label>Staff loading...</label>
                 </div>
              ) : filteredStaff.length === 0 ? (
-                <div className="w-full col-span-full py-20 flex items-center justify-center">
+                <div className="w-full col-span-full py-20 flex items-center shadow-sm gap-5 shadow-secondary/30 justify-center">
                   <label>No staff available...</label>
                 </div>
              ) : ( filteredStaff.map((staff) => (
               <RequirementUI 
                  key={staff.id}
+                 id={staff.id}
                  first_name={staff.first_name}
                  last_name={staff.last_name}
                  email={staff.email}

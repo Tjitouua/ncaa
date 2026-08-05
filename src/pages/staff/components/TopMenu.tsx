@@ -206,7 +206,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
                    notifications.slice(0,2).map((notification) => (
                    <div key = {notification.id} className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
                       <label className="font-bold text-sm">{notification.title}</label>
-                      <label className="text-xs hover:underline">{notification.message.split(".")[0]}.</label>
+                      <label onClick={() => navigate("/staff/notifications")} className="text-xs hover:underline">{notification.message.split(".")[0]}.</label>
                       <label className="text-[10px]">{notification.sent_date}</label>
                    </div>
                    ))

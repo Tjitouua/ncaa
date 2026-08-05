@@ -62,7 +62,11 @@ const TrainingInfo = () => {
         {
           icon: MdDateRange,
           label: "Scheduled Date",
-          value: "2026-06-20"
+          value: new Date(trainingInfoList2?.scheduled_date).toLocaleDateString("en-GB", {
+             day: "numeric",
+             month: "long",
+             year: "numeric"
+          })
         },
         {
             icon: MdOutlineAccessTime,
@@ -76,8 +80,12 @@ const TrainingInfo = () => {
         },
         {
               icon: MdDateRange,
-              label: "Deadline",
-              value: "2026-12-31"
+              label: "End Date",
+              value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
+                 day: "numeric",
+                 month: "long",
+                 year: "numeric"
+              })
         }
     ];
 
@@ -87,17 +95,17 @@ const TrainingInfo = () => {
         {
           icon: PiGraduationCap,
           label: "Provider",
-          value: "ICAO Training Institude"
+          value: trainingInfoList2?.provider
         },
         {
             icon: BiCategory,
             label: "Type",
-            value: "External Provider"
+            value: trainingInfoList2?.training_type
         },
         {
             icon: FiUser,
             label: "Trainer",
-            value: "Mr Natangwe Joseph"
+            value: trainingInfoList2?.trainer
         },
         {
             icon: MdOutlineContactMail,

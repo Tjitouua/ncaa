@@ -8,11 +8,24 @@ import ComplianceGraph from "../ui/ComplianceGraph";
 import MonthsGraph from "../ui/MonthsGraph";
 import CertificationGraph from "../ui/CertificationGraph";
 import EmployeesGraph from "../ui/EmployeesGraph";
+import { useEffect, useState } from "react";
 
 
 
 
 const DashboardPart = () => {
+
+    const [stats, setStats] = useState<any>(null);
+
+    useEffect(() => {
+        fetch("http://localhost/ncaa/dashboard/admin.php")
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                setStats(data.stats);
+            }
+        });
+    }, []);
 
 
 
@@ -20,13 +33,13 @@ const DashboardPart = () => {
         {
             icon: FiUsers,
             name: "Employees",
-            stat: 240,
+            stat: stats?.employees ?? 0,
             desc: "Registered staff"
         },
         {
             icon: PiGraduationCap,
             name: "Trainings",
-            stat: 14,
+            stat: stats?.trainings ?? 0,
             desc: "Available programs"
         },
         // {
@@ -38,19 +51,19 @@ const DashboardPart = () => {
         {
             icon: MdOutlinePendingActions,
             name: "Pending",
-            stat: 150,
+            stat: stats?.pending ?? 0,
             desc: "Awaiting completion"
         },
         {
             icon: MdOutlineWarningAmber,
             name: "Overdue",
-            stat: 6,
+            stat: stats?.overdue ?? 0,
             desc: "Missed deadlines"
         },
         {
             icon: TbFileCertificate,
             name: "Certification Alerts",
-            stat: 43,
+            stat: stats?.alerts ?? 0,
             desc: "Expiring or expired"
         },
     ]

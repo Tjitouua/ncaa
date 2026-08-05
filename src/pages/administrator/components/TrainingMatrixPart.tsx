@@ -8,6 +8,7 @@ import Roles from "../ui/Roles"
 import Requirements from "../ui/Requirements"
 import type React from "react"
 import { useState } from "react"
+import { IoAlertCircleOutline } from "react-icons/io5"
 
 
 
@@ -57,9 +58,33 @@ const TrainingMatrixPart: React.FC<Props> = ({ setShowAddRole, setShowAddRequire
 
 
                 {/* Main Part  */}
-                <div className="w-full min-h-screen flex flex-col lg:flex-row items-start justify-between gap-5">
+                <div className="w-full min-h-[78vh] flex flex-col lg:flex-row items-start justify-between gap-5">
                     <Roles selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
                     <Requirements setShowAddRequirement={setShowAddRequirement} selectedRole={selectedRole} />
+                </div>
+
+
+
+                {/* Info Part  */}
+                <div className="w-full grid grid-cols-1 lg:grid-cols-2 py-8 px-5 bg-white shadow-sm shadow-secondary/30">
+                    <div className="flex gap-5 items-start">
+                        <IoAlertCircleOutline className="text-3xl" />
+                        <div className="flex flex-col">
+                           <label className="font-bold">How it works?</label>
+                           <label className="text-xs">Select a role and manage it's training requirements. Add and remove training courses as Mandatory or Recommended. Changes are applied immediately</label>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-end gap-10 mr-4">
+                        <div className="flex flex-col">
+                           <label className="text-xs font-bold">Mandatory</label>
+                           <label className="text-[10px] text-secondary/50">Must be completed</label>
+                        </div>
+                        <div className="flex flex-col">
+                           <label className="text-xs font-bold">Recommended</label>
+                           <label className="text-[10px] text-secondary/50">Suggested training</label>
+                        </div>
+                    </div>
                 </div>
 
 

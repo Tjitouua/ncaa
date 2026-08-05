@@ -24,6 +24,8 @@ import NotificationsStaff from './pages/staff/NotificationsStaff'
 import Home from './pages/Home'
 import TrainingMatrix from './pages/administrator/TrainingMatrix'
 import StaffCompliance from './pages/administrator/StaffCompliance'
+import TrainingRequests from './pages/administrator/TrainingRequests'
+import RequestTraining from './pages/staff/RequestTraining'
 
 
 
@@ -51,6 +53,7 @@ function App() {
           <Route path="/admin/notifications" element={<Notifications />} />
           <Route path="/admin/training_matrix" element={<TrainingMatrix />} />
           <Route path="/admin/staff_compliance" element={<StaffCompliance />} />
+          <Route path="/admin/training_requests" element={<TrainingRequests />} />
 
 
           {/* Staff pages  */}
@@ -59,6 +62,7 @@ function App() {
           <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />
           <Route path="/staff/assignment_details/:id" element={<AssignmentDetails />} />
           <Route path="/staff/notifications" element={<NotificationsStaff />} />
+          <Route path="/staff/request_training" element={<RequestTraining />} />
 
 
       </Routes>

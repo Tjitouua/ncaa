@@ -119,17 +119,21 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         {
             icon: LiaBuildingSolid,
             label: "Departments",
-            value: trainingInfoList2?.assigned_date
+            value: trainingInfoList2?.department
         },
         {
             icon: PiGraduationCap,
             label: "Position",
-            value: trainingInfoList2?.assigned_date
+            value: trainingInfoList2?.position
         },
         {
               icon: MdDateRange,
               label: "Assigned on",
-              value: trainingInfoList2?.assigned_date
+              value: new Date(trainingInfoList2?.assigned_date).toLocaleDateString("en-GB", {
+                 day: "numeric",
+                 month: "long",
+                 year: "numeric"
+              })
         }
     ];
 

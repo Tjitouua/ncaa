@@ -143,7 +143,11 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         {
               icon: MdDateRange,
               label: "Assigned on",
-              value: trainingInfoList2?.assigned_date
+              value: new Date(trainingInfoList2?.assigned_date).toLocaleDateString("en-GB", {
+                 day: "numeric",
+                 month: "long",
+                 year: "numeric"
+              })
         }
     ];
 
@@ -163,7 +167,11 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         },
         {
             label: "Expiry",
-            value: trainingInfoList2?.expiry_date
+            value: new Date(trainingInfoList2?.expiry_date).toLocaleDateString("en-GB", {
+               day: "numeric",
+               month: "long",
+               year: "numeric"
+            })
         }
     ]
 

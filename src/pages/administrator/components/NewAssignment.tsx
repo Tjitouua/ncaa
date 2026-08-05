@@ -264,7 +264,9 @@ const NewAssignment = () => {
                     </div>
                     <div className="w-full flex flex-col scrollbar-thin scrollbar-secondaryy/10 mt-2 h-[26vh] overflow-y-auto rounded-md border border-secondary/30 overflow-hidden">
                         {loading ? (
-                            <p>Loading staff...</p>
+                            <div className="w-full h-full flex items-center justify-center">
+                               <p>Loading staff...</p>
+                            </div>
                         ): filteredStaff.length === 0 ? (
                             <div className="w-full h-full flex items-center justify-center">
                                 <label>No Staff available</label>

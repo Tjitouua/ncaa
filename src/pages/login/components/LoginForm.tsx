@@ -85,7 +85,7 @@ const LoginForm = () => {
             
 
             <div className="w-full flex items-center justify-center text-xs mt-5">
-              <label>Forgot Password? <span className="font-bold cursor-pointer hover:underline">Click here</span></label>
+              <label>Forgot Password? <span onClick={() => navigate("/password")} className="font-bold cursor-pointer hover:underline">Click here</span></label>
             </div>
             </div>
           </div>

@@ -62,7 +62,11 @@ const TrainingInfo = () => {
         {
           icon: MdDateRange,
           label: "Scheduled Date",
-          value: trainingInfoList2?.scheduled_date
+          value: new Date(trainingInfoList2?.scheduled_date).toLocaleDateString("en-GB", {
+             day: "numeric",
+             month: "long",
+             year: "numeric"
+          })
         },
         {
             icon: MdOutlineAccessTime,
@@ -77,7 +81,11 @@ const TrainingInfo = () => {
         {
               icon: MdDateRange,
               label: "End Date",
-              value: trainingInfoList2?.end_date
+              value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
+                 day: "numeric",
+                 month: "long",
+                 year: "numeric"
+              })
         }
     ];
 

@@ -4,12 +4,14 @@ import { FiAlertCircle, FiEye } from "react-icons/fi";
 import type React from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { MdRemoveCircleOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 
 interface Props {
+   id: number;
    first_name: string;
    last_name: string;
    email: string;
@@ -21,7 +23,10 @@ interface Props {
 
 
 
-const RequirementUI: React.FC<Props> = ({ first_name, last_name, email, department, trainings }) => {
+const RequirementUI: React.FC<Props> = ({ id, first_name, last_name, email, department, trainings }) => {
+
+
+   const navigate = useNavigate();
 
 
 
@@ -138,7 +143,7 @@ const RequirementUI: React.FC<Props> = ({ first_name, last_name, email, departme
 
            {/* Button  */}
            <div className="w-full flex justify-end">
-             <SecondaryButt><FiEye /> View History</SecondaryButt>
+             <SecondaryButt onClick={() => navigate(`/admin/employees/employee_details/${id}`)}><FiEye /> View History</SecondaryButt>
            </div>
 
         </div>

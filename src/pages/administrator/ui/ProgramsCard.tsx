@@ -17,7 +17,7 @@ interface Props {
    duration: string;
    provider: string;
    training_code: string;
-   onDelete: (id: number) => void;
+   onDelete?: (id: number) => void;
 }
 
 
