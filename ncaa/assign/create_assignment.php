@@ -16,15 +16,16 @@
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    $staff_ids = $data["staff_ids"];
+    // $staff_ids = $data["staff_ids"];
+    $assignments = $data["assignments"];
     $program_id = $data["program_id"];
     $scheduled_date = $data["scheduled_date"];
     $end_date = $data["end_date"];
-    $type = $data["type"];
+    // $type = $data["type"];
 
     $response = ["success" => false];
 
-    if (!$staff_ids || !$program_id) {
+    if (!$assignments || !$program_id) {
         echo json_encode($response);
         exit;
     }
@@ -66,7 +67,10 @@
 
     $NotifStmt = $conn->prepare($notifSql);
     
-    foreach ($staff_ids as $staff_id) {
+    foreach ($assignments as $assignment) {
+
+        $staff_id = $assignment["staff_id"];
+        $type = $assignment["type"];
 
 
         

@@ -17,7 +17,7 @@
             $mail->Host = "smtp.office365.com";
             $mail->SMTPAuth = true;
             $mail->Username = "mapohaT@ncaa.na";
-            $mail->Password = "Spillo@2002";
+            $mail->Password = "Veripamwe@2002";
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 

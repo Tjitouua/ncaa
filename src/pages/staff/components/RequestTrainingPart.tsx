@@ -47,7 +47,7 @@ const RequestTrainingPart = () => {
                           <IoSearchSharp className="text-secondary/30" />
                           <input type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search program..." />
                      </div>
-                     <PrimaryButt><RiAddLargeLine /> Request Training</PrimaryButt>
+                     <PrimaryButt onClick={() => navigate("/staff/programs/program_add")} ><RiAddLargeLine /> Request Training</PrimaryButt>
                   </div>
               </div>
 

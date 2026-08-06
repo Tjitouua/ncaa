@@ -26,6 +26,7 @@ import TrainingMatrix from './pages/administrator/TrainingMatrix'
 import StaffCompliance from './pages/administrator/StaffCompliance'
 import TrainingRequests from './pages/administrator/TrainingRequests'
 import RequestTraining from './pages/staff/RequestTraining'
+import StaffProgramAdd from './pages/staff/ProgramAdd'
 
 
 
@@ -63,6 +64,7 @@ function App() {
           <Route path="/staff/assignment_details/:id" element={<AssignmentDetails />} />
           <Route path="/staff/notifications" element={<NotificationsStaff />} />
           <Route path="/staff/request_training" element={<RequestTraining />} />
+          <Route path="/staff/programs/program_add" element={<StaffProgramAdd />} />
 
 
       </Routes>
