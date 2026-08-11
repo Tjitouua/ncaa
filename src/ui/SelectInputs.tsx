@@ -16,9 +16,9 @@ interface Props {
 const SelectInputs: React.FC<Props> = ({ label, name, value, onChange, error, children }) => {
     return (
       <div className="text-xs flex flex-col gap-1">
-        <label className="font-bold">{label}</label>
+        <label className="font-bold text-xs">{label}</label>
         <div className="rounded-sm px-3 border border-secondary/40">
-          <select name={name} value={value} onChange={onChange} className="w-full py-2 h-full focus:outline-none focus:ring-0 cursor-pointer">
+          <select name={name} value={value} onChange={onChange} className="w-full text-xs py-2 h-full focus:outline-none focus:ring-0 cursor-pointer">
               {children}
           </select>
         </div>

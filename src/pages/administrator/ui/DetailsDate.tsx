@@ -15,7 +15,7 @@ const DetailsDate: React.FC<Props> = ({ label, name, value, className="", onChan
     return (
         <div className="flex flex-col text-sm">
            <label className="text-secondary/50">{label}</label>
-           <input name={name} onChange={onChange} value={value} className={`w-full py-1 font-bold rounded-md focus:py-2 focus:px-3 focus:mt-2 focus:outline-secondary/30 ${className}`} type="date" />
+           <input name={name} onChange={onChange} value={value} className={`w-full text-xs py-1 font-bold rounded-md focus:py-2 focus:px-3 focus:mt-2 focus:outline-secondary/30 ${className}`} type="date" />
         </div>
     );
 }

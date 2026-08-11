@@ -37,6 +37,44 @@ CREATE TABLE IF NOT EXISTS training_programs
     email VARCHAR (250) NOT NULL
 );
 
+
+
+
+-- Training requests table 
+CREATE TABLE IF NOT EXISTS training_requests
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT NOT NULL,
+    
+    training_code VARCHAR (50),
+    training_name VARCHAR (250) NOT NULL,
+    description VARCHAR (250) NOT NULL,
+    duration VARCHAR (250) NOT NULL,
+    category VARCHAR (250) NOT NULL,
+    type VARCHAR (250) NOT NULL,
+    validity VARCHAR (250) NOT NULL,
+    training_status VARCHAR (250) NOT NULL,
+    trainer VARCHAR (250) NOT NULL,
+    provider VARCHAR (250) NOT NULL,
+    location VARCHAR (250) NOT NULL,
+    contact VARCHAR (50) NOT NULL,
+    email VARCHAR (250) NOT NULL,
+    
+    cost DECIMAL (10,2) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason TEXT NOT NULL,
+    
+    request_status VARCHAR (250) DEFAULT 'Pending',
+    requested_date DATE DEFAULT (CURRENT_DATE),
+    
+    FOREIGN KEY (staff_id) REFERENCES staff(id)
+    
+);
+
+
+
+
 -- INSERT INTO training_programs (training_code, training_name, description, category, duration, provider)
 -- VALUES
 -- (

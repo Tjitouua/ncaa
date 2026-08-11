@@ -27,6 +27,8 @@ import StaffCompliance from './pages/administrator/StaffCompliance'
 import TrainingRequests from './pages/administrator/TrainingRequests'
 import RequestTraining from './pages/staff/RequestTraining'
 import StaffProgramAdd from './pages/staff/ProgramAdd'
+import RequestDetails from './pages/staff/RequestDetails'
+import AdminRequestDetails from './pages/administrator/RequestDetails'
 
 
 
@@ -55,6 +57,7 @@ function App() {
           <Route path="/admin/training_matrix" element={<TrainingMatrix />} />
           <Route path="/admin/staff_compliance" element={<StaffCompliance />} />
           <Route path="/admin/training_requests" element={<TrainingRequests />} />
+          <Route path="/admin/request_details/:id" element={<AdminRequestDetails />} />
 
 
           {/* Staff pages  */}
@@ -65,6 +68,7 @@ function App() {
           <Route path="/staff/notifications" element={<NotificationsStaff />} />
           <Route path="/staff/request_training" element={<RequestTraining />} />
           <Route path="/staff/programs/program_add" element={<StaffProgramAdd />} />
+          <Route path="/staff/request_training/request_details/:id" element={<RequestDetails />} />
 
 
       </Routes>

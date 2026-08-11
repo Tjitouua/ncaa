@@ -21,9 +21,9 @@ const StaffProgramAdd = () => {
    const [loading, setLoading] = useState(false);
 
    const [form, setForm] = useState({
-      trainingName: "",
       trainingCode: "",
-      desc: "",
+      trainingName: "",
+      description: "",
       duration: "",
       category: "",
       type: "",
@@ -33,12 +33,17 @@ const StaffProgramAdd = () => {
       provider: "",
       location: "",
       contactNo: "",
-      email: ""
+      email: "",
+
+      cost: "",
+      start_date: "",
+      end_date: "",
+      reason: ""
    });
 
 
    const [errors, setErrors] = useState<any>({});
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       setForm({ ...form, [e.target.name]: e.target.value})
    };
 
@@ -67,9 +72,10 @@ const StaffProgramAdd = () => {
 
       try {
         const response = await fetch(
-           "http://localhost/ncaa/program/add_program.php",
+           "http://localhost/ncaa/program/add_request.php",
            {
              method: "POST",
+             credentials: "include",
              headers: {
                 "Content-Type": "application/json",
              },
@@ -78,6 +84,7 @@ const StaffProgramAdd = () => {
         );
 
         const data = await response.json();
+        
 
         if (data.success) {
            alert("Training added successfully");
@@ -116,8 +123,8 @@ const StaffProgramAdd = () => {
                    </div>
                    {/* Form (WHite Part) */}
                    <div className="bg-white flex flex-col py-5 pb-10 px-5">
-                      <label className="font-bold">Add Training Program</label>
-                      <label className="text-xs mb-3 text-secondary/40">Register a new program in the system.</label>
+                      <label className="font-bold">Training Details</label>
+                      <label className="text-xs mb-3 text-secondary/40">Tell HR everything about the training</label>
                       <div className="w-full pb-7 py-2 gap-4 text-secondary/60 grid grid-cols-1 sm:grid-cols-4">
 
                           <Inputs
@@ -140,10 +147,10 @@ const StaffProgramAdd = () => {
 
                           <Inputs
                             label="Description"
-                            name="desc"
-                            value={form.desc}
+                            name="description"
+                            value={form.description}
                             onChange={handleChange}
-                            error={errors.desc}
+                            error={errors.description}
                             placeholder="Enter training description"
                           />
 
@@ -194,7 +201,7 @@ const StaffProgramAdd = () => {
                             placeholder="Enter validity duration"
                           />
 
-                          <SelectInputs
+                          {/* <SelectInputs
                             label = "Status"
                             name = "status"
                             value = {form.status}
@@ -204,7 +211,7 @@ const StaffProgramAdd = () => {
                             <option value="">Select status</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
-                          </SelectInputs>
+                          </SelectInputs> */}
 
 
                           <Inputs
@@ -235,7 +242,7 @@ const StaffProgramAdd = () => {
                           />
 
                           <Inputs
-                            label="Contact number"
+                            label="Contact number (trainer)"
                             name="contactNo"
                             value={form.contactNo}
                             onChange={handleChange}
@@ -244,7 +251,7 @@ const StaffProgramAdd = () => {
                           />
 
                           <Inputs
-                            label="Email"
+                            label="Email (trainer)"
                             name="email"
                             value={form.email}
                             onChange={handleChange}
@@ -254,37 +261,35 @@ const StaffProgramAdd = () => {
 
                          <Inputs
                             label="Cost (N$)"
-                            // name="email"
-                            // value={form.email}
-                            // onChange={handleChange}
-                            error={errors.email}
+                            name="cost"
+                            value={form.cost}
+                            onChange={handleChange}
+                            error={errors.cost}
                             placeholder="Enter the cost of the training"
                           />
 
                           <DateInputs
                             label="Start Date"
-                            // name="email"
-                            // value={form.email}
-                            // onChange={handleChange}
-                            error={errors.email}
-                            placeholder="Enter the starting date for the training"
+                            name="start_date"
+                            value={form.start_date}
+                            onChange={handleChange}
+                            error={errors.start_date}
                           />
 
                           <DateInputs
                             label="End Date"
-                            // name="email"
-                            // value={form.email}
-                            // onChange={handleChange}
-                            error={errors.email}
-                            placeholder="Enter when the training will end"
+                            name="end_date"
+                            value={form.end_date}
+                            onChange={handleChange}
+                            error={errors.end_date}
                           />
 
                           <TextAreaInputs
                             label="Reason for training"
-                            // name="email"
-                            // value={form.email}
-                            // onChange={handleChange}
-                            error={errors.email}
+                            name="reason"
+                            value={form.reason}
+                            onChange={handleChange}
+                            error={errors.reason}
                             placeholder="Enter the reason for the training"
                           />
 

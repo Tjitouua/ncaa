@@ -3,7 +3,7 @@ import { RiAddLargeLine } from "react-icons/ri";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ProgramsCard from "../../administrator/ui/ProgramsCard";
+import RequestsCard from "../ui/RequestsCard";
 
 
 
@@ -13,7 +13,7 @@ const RequestTrainingPart = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost/ncaa/program/get_programs.php")
+        fetch("http://localhost/ncaa/program/get_request_by_staff_id.php", { credentials: "include", })
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
@@ -27,6 +27,35 @@ const RequestTrainingPart = () => {
            setLoading(false);
         });
     }, []);
+
+
+    // Deleting 
+    const handleDelete = (id) => {
+        if (!window.confirm("Are you sure you want to delete this request?")) return;
+
+        fetch("http://localhost/ncaa/program/delete_request.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.success) {
+                setPrograms((prev) => prev.filter((pro) => pro.id !== id));
+            } else {
+                alert(data.message || "Failed to delete");
+            }
+        })
+        .catch ((err) => {
+            console.error("Delete error", err);
+        });
+    };
+
+
+
+
 
     const navigate = useNavigate();
 
@@ -54,8 +83,17 @@ const RequestTrainingPart = () => {
 
               {/* Trainings Part */}
               <div className="w-full grid items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-4">
-                 {programs.map((program) => (
-                  <ProgramsCard 
+                 {loading ? (
+                    <div className="col-span-full w-full flex py-20 items-center justify-center">
+                        <label>Requests loading...</label>
+                    </div>
+                 ) : programs.length === 0 ? (
+                    <div className="col-span-full w-full flex py-20 items-center justify-center">
+                        <label>You haven't made any training requests to HR...</label>
+                    </div>
+                 ): (
+                 programs.map((program) => (
+                  <RequestsCard 
                     key={program.id}
                     id={program.id}
                     training_name={program.training_name}
@@ -64,9 +102,10 @@ const RequestTrainingPart = () => {
                     duration={program.duration}
                     provider={program.trainer}
                     training_code={program.training_code}
-                    // onDelete={}
+                    onDelete={handleDelete}
                   />
-                  ))}
+                  ))
+                  )}
               </div>
 
 
