@@ -23,11 +23,11 @@ const menuItems = [
       path: "/staff/my_training_history",
       icon: <FaClockRotateLeft />
    },
-   {
-      name: "Request Training",
-      path: "/staff/request_training",
-      icon: <FiSend />
-   },
+   // {
+   //    name: "Request Training",
+   //    path: "/staff/request_training",
+   //    icon: <FiSend />
+   // },
    {
       name: "Notifications",
       path: "/staff/notifications",

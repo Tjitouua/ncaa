@@ -160,14 +160,20 @@ const EmployeeDetails = () => {
                               <DetailsInput label="Phone Number" name="phone_no" onChange={handleChange} value={employee.phone_no || ""}/>
                               <DetailsInput label="User Role" name="role" onChange={handleChange} value={employee.role || ""}/>
                               <DetailsSelect label="Department" name="department" onChange={handleChange} value={employee.department || ""}>
-                                  <option value="">Select department</option>
-                                  <option value="Air Navigation">Air Navigation</option>
-                                  <option value="Safety & Security">Safety & Security</option>
-                                  <option value="ICT">ICT</option>
-                                  <option value="Aerodromes">Aerodromes</option>
-                                  <option value="Flight Operations">Flight Operations</option>
-                                  <option value="Engineering">Engineering</option>
-                                  <option value="Administration">Administration</option>
+                                 <option value="">Select Department</option>
+                                 <option value="Airworthiness (AIR)">Airworthiness (AIR)</option>
+                                 <option value="Flight Operations (OPS)">Flight Operations (OPS)</option>
+                                 <option value="Personnel Licensing (PEL)">Personnel Licensing (PEL)</option>
+                                 <option value="Aerodromes and Ground Aids (AGA)">Aerodromes and Ground Aids (AGA)</option>
+                                 <option value="Aviation Security (AvSec)">Aviation Security (AvSec)</option>
+                                 <option value="Air Navigation Services Safety Oversight (ANSSO)">Air Navigation Services Safety Oversight (ANSSO)</option>
+                                 <option value="Safety Promotion and Quality (SPG)">Safety Promotion and Quality (SPG)</option>
+                                 <option value="Compliance and Regulatory Risk (CRR)">Compliance and Regulatory Risk (CRR)</option>
+                                 <option value="Finance and Administration">Finance and Administration</option>
+                                 <option value="Human Resources">Human Resources</option>
+                                 <option value="Procurement">Procurement</option>
+                                 <option value="Legal">Legal</option>
+                                 <option value="ICTP">ICTP</option>
                               </DetailsSelect>
                               <DetailsSelect label="Employment Type" name="employment_type" onChange={handleChange} value={employee.employment_type || ""}>
                                   <option value="">Select employment type</option>
@@ -181,13 +187,24 @@ const EmployeeDetails = () => {
                                   <option value="Inactive">Inactive</option>
                                   <option value="Suspended">Suspended</option>
                               </DetailsSelect>
+                              <DetailsInput label="City" name="city" onChange={handleChange} value={employee.city || ""}/>
+                              <DetailsSelect label="Disadvantaged" name="disadvantaged" onChange={handleChange} value={employee.disadvantaged || ""}>
+                                  <option value="">Disadvantaged</option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                              </DetailsSelect>
+                              <DetailsSelect label="Disability" name="disability" onChange={handleChange} value={employee.disability || ""}>
+                                  <option value="">Disability</option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                              </DetailsSelect>
                            </div>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-3">
                     {/* Address  */}
-                    <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/10 ">
+                    {/* <div className="py-3 pb-1 px-7 bg-white shadow-xs shadow-black/10 ">
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
                            <label className="font-bold">Address</label>
                            <SecondaryButt onClick={handleUpdate} className="!bg-secondary/30">Edit <GrEdit /></SecondaryButt>
@@ -199,11 +216,26 @@ const EmployeeDetails = () => {
                               <DetailsInput label="Postal Code" name="postal_address" onChange={handleChange} value={employee.postal_address || ""}/>
                            </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/* Training History  */}
                     <div className="w-full py-3 pb-5 px-7 bg-white shadow-xs shadow-black/10 ">
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
-                           <label className="font-bold">Training History</label>
+                           <label className="font-bold">Training Plan</label>
+                           <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                             <select  className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                                <option value="">2026</option>
+                                <option>2016</option>
+                                <option>2017</option>
+                                <option>2018</option>
+                                <option>2019</option>
+                                <option>2020</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                             </select>
+                           </div>
                            {/* <SecondaryButt className="!bg-secondary/30">Edit <GrEdit /></SecondaryButt> */}
                         </div>
                         <div className="w-full flex flex-col gap-2 py-1">
@@ -217,7 +249,7 @@ const EmployeeDetails = () => {
                               </div>
                            ) : (
                             trainings.map((training) => (
-                            <div key={training.id} onClick={() => navigate(`/admin/training_details/${training.id}`)} className="w-full text-secondary/60 py-2 flex items-center justify-between cursor-pointer hover:bg-secondaryy">
+                            <div key={training.id} onClick={() => navigate(`/admin/training_details/${training.id}`)} className="w-full text-secondary/60 py-2 flex items-center justify-between cursor-pointer hover:px-2 hover:bg-secondaryy">
                                 <label className="text-xs font-bold">{training.training_name}</label>
                                 <div className={`py-2 flex items-center justify-center px-3 ${getStatusColor(training.status)} text-secondary font-bold rounded-md`}>
                                     <label className="text-xs">{training.status}</label>

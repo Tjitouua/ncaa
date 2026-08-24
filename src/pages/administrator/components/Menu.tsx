@@ -33,11 +33,11 @@ const menuItems = [
       path: "/admin/training_matrix",
       icon: <MdGridOn />
    },
-   {
-      name: "Training Requests",
-      path: "/admin/training_requests",
-      icon: <LuInbox />
-   },
+   // {
+   //    name: "Training Requests",
+   //    path: "/admin/training_requests",
+   //    icon: <LuInbox />
+   // },
    {
       name: "Assign Training",
       path: "/admin/assign_training",

@@ -32,7 +32,8 @@ const ProgramAdd = () => {
       provider: "",
       location: "",
       contactNo: "",
-      email: ""
+      email: "",
+      cost: ""
    });
 
 
@@ -249,6 +250,15 @@ const ProgramAdd = () => {
                             onChange={handleChange}
                             error={errors.email}
                             placeholder="Enter program email address"
+                          />
+
+                         <Inputs
+                            label="Cost (N$)"
+                            name="cost"
+                            value={form.cost}
+                            onChange={handleChange}
+                            error={errors.cost}
+                            placeholder="Enter program cost"
                           />
 
                       </div>

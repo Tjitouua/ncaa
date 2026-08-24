@@ -1,8 +1,14 @@
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { IoSearchSharp } from "react-icons/io5";
-import { LuDownload } from "react-icons/lu";
+import { LuDownload, LuFilter } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import SecondaryButt from "../../../ui/SecondaryButt";
+
+
+
+
+
 
 
 
@@ -17,6 +23,7 @@ const TrainingHistoryPart = () => {
    const [loading, setLoading] = useState(true);
    const [selectedStatus, setSelectedStatus] = useState("All status");
    const [searchTraining, setSearchTraining] = useState("");
+   const [showFilters, setShowFilters] = useState(false);
    
    const getNextStatus = (current) => {
       if (current === "Pending") return "Completed";
@@ -86,7 +93,114 @@ const TrainingHistoryPart = () => {
          } catch (error) {
             console.error("Error updating status: ", error);
          }
-   }
+   };
+
+
+
+
+
+
+   // Filtering 
+   
+   const [filters, setFilters] = useState({
+      department: "",
+      status: "",
+      disadvantaged: "",
+      disability: "",
+      gender: "",
+      year: ""
+   });
+
+
+
+
+   const filterOptions = [
+      {
+         name: "department",
+         label: "Department",
+         options: [
+            "Airworthiness (AIR)",
+            "Flight Operations (OPS)",
+            "Personnel Licensing (PEL)",
+            "Aerodromes and Ground Aids (AGA)",
+            "Aviation Security (AvSec)",
+            "Air Navigation Services Safety Oversight (ANSSO)",
+            "Safety Promotion and Quality (SPG)",
+            "Compliance and Regulatory Risk (CRR)", 
+            "Finance and Administration",
+            "Human Resources", 
+            "Procurement",
+            "Legal",
+            "ICTP"
+         ]
+      },
+      {
+         name: "status",
+         label: "Status",
+         options: [
+            "Completed",
+            "Pending",
+            "Rejected"
+         ]
+      },
+      {
+         name: "disadvantaged",
+         label: "Disadvantaged",
+         options: [
+            "Yes",
+            "No"
+         ]
+      },
+      {
+         name: "disability",
+         label: "Disability",
+         options: [
+            "Yes",
+            "No"
+         ]
+      },
+      {
+         name: "gender",
+         label: "Gender",
+         options: [
+            "Male",
+            "Female"
+         ]
+      },
+      {
+         name: "year",
+         label: "Year",
+         options: [
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021",
+            "2022",
+            "2023",
+            "2024",
+            "2025",
+            "2026",
+            "2027",
+            "2028",
+            "2029",
+            "2030",
+            "2031",
+            "2032"
+         ]
+      }
+   ];
+
+
+
+
+   const handleFilterChange = (name, value) => {
+      setFilters((prev) => ({
+         ...prev,
+         [name]: value
+      }));
+   };
+
 
 
 
@@ -101,16 +215,44 @@ const TrainingHistoryPart = () => {
            training.last_name?.toLowerCase().includes(search) ||
            training.training_name?.toLowerCase().includes(search) ||
            training.duration?.toLowerCase().includes(search) ||
-           training.date_assigned?.toLowerCase().includes(search) ||
-           training.deadline?.toLowerCase().includes(search) ||
+           training.assigned_date?.toLowerCase().includes(search) ||
+           training.scheduled_date?.toLowerCase().includes(search) ||
            training.status?.toLowerCase().includes(search) ||
            `${training.first_name} ${training.last_name}`.toLowerCase().includes(search);
 
-           const matchesStatus = 
-               selectedStatus === "All status" ||
-               training.status === selectedStatus;
+       const matchesDepartment =
+           !filters.department ||
+           training.department === filters.department;
 
-           return matchesSearch && matchesStatus;
+       const matchesStatus =
+           !filters.status ||
+           training.status === filters.status;
+
+       const matchesDisadvantaged =
+           !filters.disadvantaged ||
+           training.disadvantaged === filters.disadvantaged;
+
+       const matchesDisability =
+           !filters.disability ||
+           training.disability === filters.disability;
+
+       const matchesGender = 
+           !filters.gender ||
+           training.gender === filters.gender;
+
+       const matchesYear =
+           !filters.year ||
+           training.scheduled_date?.slice(0, 4) === filters.year;
+
+       return (
+          matchesSearch && 
+          matchesDepartment &&
+          matchesStatus &&
+          matchesDisadvantaged &&
+          matchesDisability &&
+          matchesGender &&
+          matchesYear
+       );
    })
 
 
@@ -119,9 +261,70 @@ const TrainingHistoryPart = () => {
 
    // Exporting 
    const handleExport = () => {
+      const params = new URLSearchParams();
+
+      if (searchTraining.trim()) {
+         params.append("search", searchTraining.trim());
+      }
+
+      if (filters.department) {
+         params.append("department", filters.department);
+      }
+
+      if (filters.status) {
+         params.append("status", filters.status);
+      }
+
+      if (filters.disadvantaged) {
+         params.append("disadvantaged", filters.disadvantaged);
+      }
+
+      if (filters.disability) {
+         params.append("disability", filters.disability);
+      }
+
+      if (filters.gender) {
+         params.append("gender", filters.gender);
+      }
+
+      if (filters.year) {
+         params.append("year", filters.year);
+      }
+
+
+
+
       window.open(
-         "http://localhost/ncaa/assign/export_assignments.php"
+         `http://localhost/ncaa/assign/export_assignments.php?${params.toString()}`,
+         "_blank"
       );
+   };
+
+
+
+
+
+
+   // Filtering 
+   const resetFilters = () => {
+      setFilters({
+         department: "",
+         role: "",
+         disadvantaged: "",
+         disability: "",
+         gender: ""
+      });
+   };
+
+
+
+   // Filter Button function 
+   const handleFilterToggle = () => {
+      if (showFilters) {
+         // resetFilters();
+      }
+
+      setShowFilters((prev) => !prev);
    };
 
 
@@ -132,8 +335,9 @@ const TrainingHistoryPart = () => {
 
 
 
+
     return (
-       <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
+       <div onClick={() => {setShowFilters(false);}} className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
           <div className="w-full h-screen  py-5">
 
              <div className="flex flex-col">
@@ -144,14 +348,37 @@ const TrainingHistoryPart = () => {
                     <label className="text-xs text-secondary/60">{filteredTraining.length} records found</label>
                  </div>
                  <div className="flex items-center gap-3">
-                    <div className="w-[20vh] rounded-md bg-white border border-secondary/30 px-3">
+                    {/* <div className="w-[20vh] rounded-md bg-white border border-secondary/30 px-3">
                       <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                         <option>All status</option>
                         <option>Completed</option>
                         <option>Pending</option>
                         <option>Overdue</option>
                       </select>
-                   </div>
+                   </div> */}
+                   {/* Filtering  */}
+                   <div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-3 items-end">
+                          <SecondaryButt onClick={handleFilterToggle}><LuFilter /> Filter</SecondaryButt>
+                          {showFilters && (
+                          <div className="px-5 py-9 scrollbar-thin scrollbar-secondary/10 overflow-y-auto max-h-120 min-w-40 fixed mt-12 bg-white shadow-sm text-xs flex flex-col">
+                              <label>Filters</label>
+                              <hr className="border border-secondary/10 mt-3" />
+                              {/* department  */}
+                              {filterOptions.map((filter) => (
+                              <div key={filter.name} className="flex flex-col gap-2 border-b border-secondary/20 py-3">
+                                  <label className="font-bold">{filter.label}</label>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {filter.options.map((option) => (
+                                      <div key={option} className="flex items-center gap-1">
+                                         <input name={filter.name} value={option} type="radio" checked={filters[filter.name] === option} onClick={() => handleFilterChange(filter.name, filters[filter.name] === option ? "" : option)} readOnly /> <label>{option}</label>
+                                      </div>
+                                    ))}
+                                  </div>
+                              </div>
+                              ))}
+                          </div>
+                          )}
+                      </div>
                  </div>
                </div>
                {/* Names  */}
@@ -161,10 +388,12 @@ const TrainingHistoryPart = () => {
                        <IoSearchSharp className="text-secondary/30" />
                        <input value={searchTraining} onChange={(e) => setSearchTraining(e.target.value)} type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search training..." />
                       </div>
+                      <div className="flex items-center gap-3">
                       <PrimaryButt onClick={handleExport}>
                           <LuDownload />
                           Export CSV
                       </PrimaryButt>
+                    </div>
                     </div>
                     {/* Employees Table  */}
                     <table className="w-full mt-1 border text-xs border-secondary/30">
@@ -175,7 +404,7 @@ const TrainingHistoryPart = () => {
                              <th className="text-left p-3">Type</th>
                              <th className="text-left p-3">Duration</th>
                              <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Deadline</th>
+                             <th className="text-left p-3">Scheduled</th>
                              <th className="text-left p-3">Status</th>
                              {/* <th className="text-right p-3">Action</th> */}
                           </tr>

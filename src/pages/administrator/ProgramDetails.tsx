@@ -118,6 +118,7 @@ const ProgramDetails = () => {
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="location" label="Location" value={program.location}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="contact_no" label="Contact Number" value={program.contact_no}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="email" label="Email" value={program.email}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="cost" label="Cost (N$)" value={program.cost}/>
                            </div>
                         </div>
                     </div>

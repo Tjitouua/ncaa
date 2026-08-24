@@ -49,8 +49,10 @@ const EmployeeAdd = () => {
       nationalId: "",
       phoneNo: "",
       city: "",
-      address: "",
-      postal: "",
+      // address: "",
+      // postal: "",
+      disadvantaged: "No",
+      disability: "No",
       role: "",
       department: "",
       employmentType: "",
@@ -225,7 +227,7 @@ const EmployeeAdd = () => {
                             placeholder="Enter city"
                           />
 
-                          <Inputs
+                          {/* <Inputs
                             label="Address"
                             name="address"
                             value={form.address}
@@ -241,16 +243,33 @@ const EmployeeAdd = () => {
                             onChange={handleChange}
                             error={errors.postal}
                             placeholder="Enter postal address"
-                          />
-
-                          {/* <Inputs
-                            label="Role"
-                            name="role"
-                            value={form.role}
-                            onChange={handleChange}
-                            error={errors.role}
-                            placeholder="Enter employee role"
                           /> */}
+
+
+                          <SelectInputs
+                             label = "Disadvantaged"
+                             name = "disadvantaged"
+                             value = {form.disadvantaged}
+                             onChange = {handleChange}
+                             error = {errors.disadvantaged}
+                          >
+                              <option value="No">No</option>
+                              <option value="Yes">Yes</option>
+                          </SelectInputs>
+
+
+                          <SelectInputs
+                            label = "Disability"
+                            name = "disability"
+                            value = {form.disability}
+                            onChange = {handleChange}
+                            error = {errors.disability}
+                          >
+                             <option value="No">No</option>
+                             <option value="Yes">Yes</option>
+                          </SelectInputs>
+
+                          
 
                           <SelectInputs
                             label="Role"

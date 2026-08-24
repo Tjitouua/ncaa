@@ -295,10 +295,12 @@ const NewAssignment = () => {
                 </div>
 
                 <div className="w-full flex flex-col">
-                    <label className="text-xs font-bold text-secondary/60">Training Program</label>
-                    <div className="w-full grid grid-cols-1 md:grid-cols-1 gap-3 mt-2">
-                    <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
-                      <select value={selectedProgram} onChange={(e) => setSelectedProgram(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                    {/* <label className="text-xs font-bold text-secondary/60">Training Program</label> */}
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-bold text-secondary/60">Training Program</label>
+                      <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                       <select value={selectedProgram} onChange={(e) => setSelectedProgram(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                         <option value="">Choose training...</option>
                         {program.map((program, index) => (
                         <option
@@ -308,14 +310,23 @@ const NewAssignment = () => {
                             {program.training_name}
                         </option>
                         ))}
-                      </select>
-                    </div>
-                    {/* <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
-                       <select value={type} onChange={(e) => setType(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
-                           <option value="Mandatory">Mandatory</option>
-                           <option value="Recommended">Recommended</option>
                        </select>
-                    </div> */}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-bold text-secondary/60">Quarter</label>
+                      <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                        <select  className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                         <option value="All departments">Choose Quarter</option>
+                         <option value="Airworthiness (AIR)">First (1)</option>
+                         <option>Second (2)</option>
+                         <option>Third (3)</option>
+                         <option>Fourth (4)</option>
+                        </select>
+                      </div>
+                    </div>
+                    
                     </div>
                 </div>
 

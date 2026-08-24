@@ -16,7 +16,7 @@ const TrainingHistory = () => {
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Training History" />
-             <TrainingHistoryPart />
+               <TrainingHistoryPart />
           </div>
        </div>
     );

@@ -1,9 +1,9 @@
 
 
-CREATE DATABASE IF NOT EXISTS ncaa_trainings_2;
+CREATE DATABASE IF NOT EXISTS ncaa_trainings;
 
 
-USE ncaa_trainings_2;
+USE ncaa_trainings;
 
 
 -- User table 
@@ -34,43 +34,11 @@ CREATE TABLE IF NOT EXISTS training_programs
     provider VARCHAR (250) NOT NULL,
     location VARCHAR (250) NOT NULL,
     contact_no VARCHAR (250) NOT NULL,
-    email VARCHAR (250) NOT NULL
-);
-
-
-
-
--- Training requests table 
-CREATE TABLE IF NOT EXISTS training_requests
-(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    staff_id INT NOT NULL,
-    
-    training_code VARCHAR (50),
-    training_name VARCHAR (250) NOT NULL,
-    description VARCHAR (250) NOT NULL,
-    duration VARCHAR (250) NOT NULL,
-    category VARCHAR (250) NOT NULL,
-    type VARCHAR (250) NOT NULL,
-    validity VARCHAR (250) NOT NULL,
-    training_status VARCHAR (250) NOT NULL,
-    trainer VARCHAR (250) NOT NULL,
-    provider VARCHAR (250) NOT NULL,
-    location VARCHAR (250) NOT NULL,
-    contact VARCHAR (50) NOT NULL,
     email VARCHAR (250) NOT NULL,
-    
-    cost DECIMAL (10,2) NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    reason TEXT NOT NULL,
-    
-    request_status VARCHAR (250) DEFAULT 'Pending',
-    requested_date DATE DEFAULT (CURRENT_DATE),
-    
-    FOREIGN KEY (staff_id) REFERENCES staff(id)
-    
+    cost DECIMAL (10,2)
 );
+
+
 
 
 
@@ -101,8 +69,8 @@ CREATE TABLE IF NOT EXISTS staff
     national_id VARCHAR (250) NOT NULL UNIQUE,
     phone_no VARCHAR (250) NOT NULL,
     city VARCHAR (250) NOT NULL,
-    address VARCHAR (250) NOT NULL,
-    postal_address VARCHAR (250) NOT NULL,
+    disadvantaged VARCHAR (250) NOT NULL,
+    disability VARCHAR (250) NOT NULL,
     department VARCHAR (50) NOT NULL,
     role VARCHAR (250) NOT NULL,
     employment_type VARCHAR (250) NOT NULL,
@@ -117,7 +85,7 @@ CREATE TABLE IF NOT EXISTS staff
 
 
 -- Assignments table 
-CREATE TABLE training_assignments
+CREATE TABLE IF NOT EXISTS training_assignments
 ( 
     id INT PRIMARY KEY AUTO_INCREMENT,
     staff_id INT NOT NULL,
@@ -249,6 +217,45 @@ CREATE TABLE matrix
     
     FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE,
     FOREIGN KEY (program_id) REFERENCES training_programs (id) ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+
+-- Training requests table 
+CREATE TABLE IF NOT EXISTS training_requests
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT NOT NULL,
+    
+    training_code VARCHAR (50),
+    training_name VARCHAR (250) NOT NULL,
+    description VARCHAR (250) NOT NULL,
+    duration VARCHAR (250) NOT NULL,
+    category VARCHAR (250) NOT NULL,
+    type VARCHAR (250) NOT NULL,
+    validity VARCHAR (250) NOT NULL,
+    training_status VARCHAR (250) NOT NULL,
+    trainer VARCHAR (250) NOT NULL,
+    provider VARCHAR (250) NOT NULL,
+    location VARCHAR (250) NOT NULL,
+    contact VARCHAR (50) NOT NULL,
+    email VARCHAR (250) NOT NULL,
+    
+    cost DECIMAL (10,2) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason TEXT NOT NULL,
+    
+    request_status VARCHAR (250) DEFAULT 'Pending',
+    requested_date DATE DEFAULT (CURRENT_DATE),
+    
+    FOREIGN KEY (staff_id) REFERENCES staff(id)
+    
 );
 
 

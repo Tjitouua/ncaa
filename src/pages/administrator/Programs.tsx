@@ -145,6 +145,7 @@ const Programs = () => {
                        duration = {program.duration}
                        provider = {program.trainer}
                        training_code = {program.training_code}
+                       cost = {Number(program.cost)}
                        onDelete = {handleDelete}
                     />
                    ))

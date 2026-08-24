@@ -7,10 +7,12 @@ import { MdOutlineAccessTime } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { PiGraduationCap } from "react-icons/pi";
 import { BiCategory } from "react-icons/bi";
-import { FiUser } from "react-icons/fi";
+import { FiPieChart, FiUser } from "react-icons/fi";
 import { MdOutlineContactMail } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { VscPieChart } from "react-icons/vsc";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 
 
@@ -60,37 +62,81 @@ const TrainingInfo = () => {
 
     const trainingInfoList = [
         {
+            icon: VscPieChart,
+            label: "Quarter",
+            value: "First (1)"
+          },
+        {
           icon: MdDateRange,
-          label: "Scheduled Date",
+          label: "Start Date",
           value: new Date(trainingInfoList2?.scheduled_date).toLocaleDateString("en-GB", {
-             day: "numeric",
-             month: "long",
-             year: "numeric"
-          })
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+         })
         },
         {
-            icon: MdOutlineAccessTime,
-            label: "Start Time",
-            value: "08:30"
+            icon: MdDateRange,
+            label: "End Date",
+            value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
+               day: "numeric",
+               month: "long",
+               year: "numeric"
+            })
         },
         {
             icon: IoLocationOutline,
             label: "Venue/Location",
             value: trainingInfoList2?.location
-        },
-        {
-              icon: MdDateRange,
-              label: "End Date",
-              value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
-                 day: "numeric",
-                 month: "long",
-                 year: "numeric"
-              })
         }
     ];
 
 
 
+    // Cost 
+    const costInfoList = [
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Accomodation (N$)",
+            value: Number(trainingInfoList2?.cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Travel Tickets (N$)",
+            value: Number(trainingInfoList2?.cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Training Fees (N$)",
+            value: "15 000.00"
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Others (N$)",
+            value: "12 000. 00"
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Total Cost (N$)",
+            value: Number(trainingInfoList2?.cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        }
+    ];
+
+
+    
+    // Provider 
     const trainerInfoList = [
         {
           icon: PiGraduationCap,
@@ -126,7 +172,7 @@ const TrainingInfo = () => {
             <label className="text-xs text-secondary/50">{trainingInfoList2?.training_code}</label>
             <label className="font-bold text-lg">{trainingInfoList2?.training_name}</label>
             <label className="text-xs text-secondary/50">{trainingInfoList2?.description}</label>
-            <div className="flex items-center gap-3 mt-3">
+            <div className="flex items-center mb-4 gap-3 mt-3">
                 <div className="py-1 px-3 bg-secondary/20 text-xs font-bold rounded-md">
                     <label>{trainingInfoList2?.category}</label>
                 </div>
@@ -138,9 +184,9 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Session Schedule  */}
-            <div className="w-full mt-6 flex flex-col gap-2 py-4 border-t border-t-secondary/30">
-                <label className="font-bold text-sm mb-2">Session Schedule</label> 
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="w-full flex flex-col pt-4 mb-1 border-t border-t-secondary/10">
+                <label className="font-bold text-sm mb-2 underline underline-offset-2">Session Schedule</label> 
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 pb-2">
                     {trainingInfoList.map((training, index) => (
                       <TrainingInfoUi 
                         key = {index}
@@ -151,10 +197,24 @@ const TrainingInfo = () => {
                     ))}
                 </div>
             </div>
+            {/* Cost  */}
+            <div className="w-full flex flex-col mt-2 pt-4 mb-2 border-t border-t-secondary/10">
+                <label className="font-bold text-sm mb-2  underline underline-offset-2">Cost</label> 
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {costInfoList.map((cost, index) => (
+                      <TrainingInfoUi 
+                        key = {index}
+                        icon = {cost.icon}
+                        label = {cost.label}
+                        value = {cost.value}
+                      />
+                    ))}
+                </div>
+            </div>
             {/* Trainer / Provider  */}
-            <div className="w-full mt-2 flex flex-col gap-2 py-5 border-t border-t-secondary/30">
-                <label className="font-bold text-sm mb-2">Trainer / Provider</label> 
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="w-full mt-2 flex flex-col mb-2 pt-4 border-t border-t-secondary/10">
+                <label className="font-bold text-sm mb-2 underline underline-offset-2">Trainer / Provider</label> 
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
                     {trainerInfoList.map((trainer, index) => (
                       <TrainingInfoUi 
                         key = {index}
@@ -166,7 +226,7 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Notes  */}
-            <div className="w-full mt-2 flex flex-col gap-2 pt-5 pb-2 border-t border-t-secondary/30">
+            <div className="w-full mt-2 flex flex-col gap-2 pt-5 pb-2 border-t border-t-secondary/10">
                <label className="font-bold text-sm mb-2">Notes</label>
                <label className="text-xs">Review the training details before making changes. Updates will be reflected in the employee's training record.</label>
             </div>

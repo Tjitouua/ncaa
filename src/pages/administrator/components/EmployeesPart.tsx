@@ -1,6 +1,6 @@
 import { IoMdAdd } from "react-icons/io";
 import { RiAddLargeLine } from "react-icons/ri";
-import { LuUpload } from "react-icons/lu";
+import { LuFilter, LuUpload } from "react-icons/lu";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import { IoSearchSharp } from "react-icons/io5";
@@ -20,11 +20,115 @@ const EmployeesPart = () => {
    const navigate = useNavigate();
    
    const [staff, setStaff] = useState([]);
+   const[roles, setRoles] = useState([]);
    const [loading, setLoading] = useState(true);
 
    const [searchStaff, setSearchStaff] = useState("");
+   const [showFilters, setShowFilters] = useState(false);
 
 
+
+
+
+
+   // Getting roles 
+   useEffect(() => {
+      fetch("http://localhost/ncaa/roles/get_roles.php")
+      .then((response) => response.json())
+      .then((data) => {
+         if (data.success) {
+            setRoles(data.data);
+         }
+      })
+      .catch((error) => {
+         console.error("Error fetching roles: ", error);
+      });
+   }, []);
+
+
+
+
+
+
+
+
+   const [filters, setFilters] = useState({
+      department: "",
+      role: "",
+      disadvantaged: "",
+      disability: "",
+      gender: ""
+   });
+
+
+
+
+   const filterOptions = [
+      {
+         name: "department",
+         label: "Department",
+         options: [
+            "Airworthiness (AIR)",
+            "Flight Operations (OPS)",
+            "Personnel Licensing (PEL)",
+            "Aerodromes and Ground Aids (AGA)",
+            "Aviation Security (AvSec)",
+            "Air Navigation Services Safety Oversight (ANSSO)",
+            "Safety Promotion and Quality (SPG)",
+            "Compliance and Regulatory Risk (CRR)", 
+            "Finance and Administration",
+            "Human Resources", 
+            "Procurement",
+            "Legal",
+            "ICTP"
+         ]
+      },
+      {
+         name: "role",
+         label: "Role",
+         options: roles.map((item) => item.role)
+      },
+      {
+         name: "disadvantaged",
+         label: "Disadvantaged",
+         options: [
+            "Yes",
+            "No"
+         ]
+      },
+      {
+         name: "disability",
+         label: "Disability",
+         options: [
+            "Yes",
+            "No"
+         ]
+      },
+      {
+         name: "gender",
+         label: "Gender",
+         options: [
+            "Male",
+            "Female"
+         ]
+      }
+   ];
+
+
+
+
+   const handleFilterChange = (name, value) => {
+      setFilters((prev) => ({
+         ...prev,
+         [name]: value
+      }));
+   };
+
+
+
+
+
+   // Getting Staff 
    useEffect(() => {
       fetch("http://localhost/ncaa/staff/get_staff.php")
       .then((response) => response.json())
@@ -75,8 +179,36 @@ const EmployeesPart = () => {
 
    // Exporting 
    const handleExport = () => {
+      const params = new URLSearchParams();
+
+      if (searchStaff.trim()) {
+         params.append("search", searchStaff.trim());
+      }
+
+      if (filters.department) {
+         params.append("department", filters.department);
+      }
+
+      if (filters.role) {
+         params.append("role", filters.role);
+      }
+
+      if (filters.disadvantaged) {
+         params.append("disadvantaged", filters.disadvantaged);
+      }
+
+      if (filters.disability) {
+         params.append("disability", filters.disability);
+      }
+
+      if (filters.gender) {
+         params.append("gender", filters.gender);
+      }
+
+
        window.open(
-          "http://localhost/ncaa/staff/export_staff.php"
+          `http://localhost/ncaa/staff/export_staff.php?${params.toString()}`,
+          "_blank"
        );
    };
 
@@ -88,7 +220,7 @@ const EmployeesPart = () => {
    const filteredStaff = staff.filter((employee) => {
        const search = searchStaff.toLowerCase().trim();
 
-       return (
+       const matchesSearch =
           employee.staff_id?.toLowerCase().includes(search) ||
           employee.first_name?.toLowerCase().includes(search) ||
           employee.last_name?.toLowerCase().includes(search) ||
@@ -105,15 +237,81 @@ const EmployeesPart = () => {
           employee.employment_type?.toLowerCase().includes(search) ||
           employee.doj?.toLowerCase().includes(search) ||
           employee.employment_status?.toLowerCase().includes(search) ||
-          `${employee.first_name} ${employee.last_name}`.toLowerCase().includes(search)
-       );
+          `${employee.first_name} ${employee.last_name}`.toLowerCase().includes(search);
+
+
+          const matchesDepartment = 
+             !filters.department ||
+             employee.department === filters.department;
+
+
+         const matchesRole =
+             !filters.role ||
+             employee.role === filters.role;
+
+
+         const matchesDisadvantaged =
+             !filters.disadvantaged || 
+             employee.disadvantaged === filters.disadvantaged;
+
+
+
+         const matchesDisability =
+             !filters.disability ||
+             employee.disability === filters.disability;
+
+
+         const matchesGender =
+            !filters.gender ||
+            employee.gender === filters.gender;
+
+
+        return (
+           matchesSearch &&
+           matchesDepartment &&
+           matchesRole &&
+           matchesDisadvantaged &&
+           matchesDisability &&
+           matchesGender
+        );
+       
    });
 
 
 
 
+
+   const resetFilters = () => {
+      setFilters({
+         department: "",
+         role: "",
+         disadvantaged: "",
+         disability: "",
+         gender: ""
+      });
+   };
+
+
+
+   // Filter Button function 
+   const handleFilterToggle = () => {
+      if (showFilters) {
+         // resetFilters();
+      }
+
+      setShowFilters((prev) => !prev);
+   };
+
+
+
+
+
+
+
+
+
     return (
-       <div className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
+       <div onClick={() => {setShowFilters(false);}} className="w-full min-h-screen py-2 text-secondary/90 px-2 md:px-6">
           <div className="w-full h-screen py-5">
 
              <div className="flex flex-col">
@@ -140,9 +338,31 @@ const EmployeesPart = () => {
                        <IoSearchSharp className="text-secondary/30" />
                        <input value={searchStaff} onChange={(e) => setSearchStaff(e.target.value)} type="text" className="py-2 w-full px-2 focus:outline-none focus:ring-0 text-sm" placeholder="Search staff..." />
                       </div>
-                      <SecondaryButt>
-                        <LuUpload /> Import CSV
-                      </SecondaryButt>
+
+                      {/* Filtering  */}
+                      <div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-3 items-end">
+                          <SecondaryButt onClick={handleFilterToggle}><LuFilter /> Filter</SecondaryButt>
+                          {showFilters && (
+                          <div className="px-5 py-9 scrollbar-thin scrollbar-secondary/10 overflow-y-auto max-h-120 min-w-40 fixed mt-12 bg-white shadow-sm text-xs flex flex-col">
+                              <label>Filters</label>
+                              <hr className="border border-secondary/10 mt-3" />
+                              {/* department  */}
+                              {filterOptions.map((filter) => (
+                              <div key={filter.name} className="flex flex-col gap-2 border-b border-secondary/20 py-3">
+                                  <label className="font-bold">{filter.label}</label>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {filter.options.map((option) => (
+                                      <div key={option} className="flex items-center gap-1">
+                                         <input name={filter.name} value={option} type="radio" checked={filters[filter.name] === option} onClick={() => handleFilterChange(filter.name, filters[filter.name] === option ? "" : option)} readOnly /> <label>{option}</label>
+                                      </div>
+                                    ))}
+                                  </div>
+                              </div>
+                              ))}
+                          </div>
+                          )}
+                      </div>
+
                     </div>
                     {/* Employees Table  */}
                     <table className="w-full border text-xs border-secondary/30">
@@ -204,6 +424,14 @@ const EmployeesPart = () => {
 
 
 export default EmployeesPart;
+
+
+
+
+
+
+
+// resetFilters(); 
 
 
 

@@ -17,6 +17,7 @@ interface Props {
    duration: string;
    provider: string;
    training_code: string;
+   cost: number;
    onDelete?: (id: number) => void;
 }
 
@@ -24,7 +25,7 @@ interface Props {
 
 
 
-const ProgramsCard: React.FC<Props> = ( {id, training_name, description, category, duration, provider, training_code, onDelete} ) => {
+const ProgramsCard: React.FC<Props> = ( {id, training_name, description, category, duration, provider, training_code, cost, onDelete} ) => {
 
 
 
@@ -35,9 +36,12 @@ const ProgramsCard: React.FC<Props> = ( {id, training_name, description, categor
 
     return (
         <div className="px-5 py-7 bg-white shadow-xs shadow-secondary/30 flex flex-col">
-            <div className="w-full flex items-center mb-5">
-               <div className="p-2 flex items-center justify-center bg-secondaryy">
+            <div className="w-full flex items-center mb-5 justify-between">
+               <div className="p-2 flex items-center justify-between bg-secondaryy">
                   <FaGraduationCap className="text-lg" />
+               </div>
+               <div className="px-2 py-1">
+                 <label className="text-xs font-bold text-secondary/50">N$ {cost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</label>
                </div>
             </div>
             <label className="text-sm font-bold whitespace-nowrap overflow-hidden text-ellipsis">{training_name}</label>
