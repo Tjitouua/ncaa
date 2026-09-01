@@ -192,7 +192,7 @@ const DashboardPart = () => {
             {/* Welcome Div  */}
             <div className="flex flex-col mt-9 mb-1">
                <label className="font-bold text-xl">Welcome, {user.first_name} {user.last_name}</label>
-               <label className="text-secondary/50 text-sm">{user.position} · {user.department}</label>
+               <label className="text-secondary/50 text-sm">{user.position} · {user.division}</label>
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">

@@ -140,12 +140,11 @@ const Programs = () => {
                        key = {program.id}
                        id = {program.id}
                        training_name = {program.training_name}
-                       description = {program.description}
                        category = {program.category}
                        duration = {program.duration}
-                       provider = {program.trainer}
-                       training_code = {program.training_code}
-                       cost = {Number(program.cost)}
+                       provider = {program.provider}
+                       reason = {program.reason}
+                       total_cost = {Number(program.total_cost)}
                        onDelete = {handleDelete}
                     />
                    ))

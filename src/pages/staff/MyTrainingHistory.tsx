@@ -118,11 +118,13 @@ const MyTrainingHistory = () => {
                  <table className="w-full mt-2 border text-xs border-secondary/30">
                        <thead>
                           <tr className="bg-secondary/10 border-b border-secondary/20">
-                             <th className="text-left p-3">Employee</th>
-                             <th className="text-left p-3">Department</th>
                              <th className="text-left p-3">Training</th>
-                             <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Scheduled</th>
+                             <th className="text-left p-3">Development Gap</th>
+                             <th className="text-left p-3">Provider</th>
+                             <th className="text-left p-3">Year</th>
+                             <th className="text-left p-3">Quarter</th>
+                             <th className="text-left p-3">Region</th>
+                             <th className="text-left p-3">Total Cost</th>
                              <th className="text-right p-3">Status</th>
                           </tr>
                        </thead>
@@ -140,11 +142,13 @@ const MyTrainingHistory = () => {
 
                         assignments.map((assign) => (
                           <tr key={assign.id} onClick={() => navigate(`/staff/assignment_details/${assign.id}`)} className="border-t cursor-pointer hover:bg-white/20 border-secondary/20 bg-white/60">
-                             <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
-                             <td className="px-3 py-3">{assign.department}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.assigned_date}</td>
-                             <td className="px-3 py-3">{assign.scheduled_date}</td>
+                             <td className="px-3 py-3">{assign.reason}</td>
+                             <td className="px-3 py-3">{assign.provider}</td>
+                             <td className="px-3 py-3">{assign.year}</td>
+                             <td className="px-3 py-3">{assign.quarter}</td>
+                             <td className="px-3 py-3">{assign.region}</td>
+                             <td className="px-3 py-3">{assign.total_cost}</td>
                              <td className="px-3 text-right py-3">
                                 <div className={`w-fit px-3 py-1 ${getStatusColor(assign.status)} rounded-xs font-bold inline-flex items-center justify-center`}>
                                    {assign.status}

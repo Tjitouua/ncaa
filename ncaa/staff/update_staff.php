@@ -29,7 +29,7 @@
         exit;
      }
 
-     $staff_id = trim($data["staff_id"]);
+     $staff_no = trim($data["staff_no"]);
      $first_name = trim($data["first_name"]);
      $last_name = trim($data["last_name"]);
      $gender = trim($data["gender"]);
@@ -38,19 +38,24 @@
      $national_id = trim($data["national_id"]);
      $phone_no = trim($data["phone_no"]);
      $city = trim($data["city"]);
-     $address = trim($data["address"]);
-     $postal_address = trim($data["postal_address"]);
+     $function = trim($data["function"]);
      $department = trim($data["department"]);
+     $division = trim($data["division"]);
+     $job_category = trim($data["job_category"]);
+     $job_grade = trim($data["job_grade"]);
+     $ethnicity = trim($data["ethnicity"]);
      $role = trim($data["role"]);
      $employment_type = trim($data["employment_type"]);
      $doj = trim($data["doj"]);
      $employment_status = trim($data["employment_status"]);
+     $disadvantaged = trim($data["disadvantaged"]);
+     $disability = trim($data["disability"]);
 
 
 
      $sql = "
         UPDATE staff SET
-            staff_id = ?,
+            staff_no = ?,
             first_name = ?,
             last_name = ?,
             gender = ?,
@@ -59,13 +64,18 @@
             national_id = ?,
             phone_no = ?,
             city = ?,
-            address = ?,
-            postal_address = ?,
+            function = ?,
             department = ?,
+            division = ?,
+            job_category = ?,
+            job_grade = ?,
+            ethnicity = ?,
             role = ?,
             employment_type = ?,
             doj = ?,
-            employment_status = ?
+            employment_status = ?,
+            disadvantaged = ?,
+            disability = ?
         WHERE id = ?;
      ";
 
@@ -73,8 +83,8 @@
      $stmt = $conn->prepare($sql);
 
      $stmt->bind_param(
-        "ssssssssssssssssi",
-        $staff_id,
+        "sssssssssssssssssssssi",
+        $staff_no,
         $first_name,
         $last_name,
         $gender,
@@ -83,13 +93,18 @@
         $national_id,
         $phone_no,
         $city,
-        $address,
-        $postal_address,
+        $function,
         $department,
+        $division,
+        $job_category,
+        $job_grade,
+        $ethnicity,
         $role,
         $employment_type,
         $doj,
         $employment_status,
+        $disadvantaged,
+        $disability,
         $id
      );
 

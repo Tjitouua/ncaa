@@ -103,7 +103,15 @@ const TrainingHistoryPart = () => {
    // Filtering 
    
    const [filters, setFilters] = useState({
+      function: "",
       department: "",
+      division: "",
+      job_category: "",
+      // trainer_status: "",
+      category: "",
+      training_type: "",
+      // quarter: "",
+      method: "",
       status: "",
       disadvantaged: "",
       disability: "",
@@ -116,8 +124,29 @@ const TrainingHistoryPart = () => {
 
    const filterOptions = [
       {
+         name: "function",
+         label: "Function",
+         options: [
+            "Regulatory",
+            "Support",
+            "Service Provider"
+         ]
+      },
+      {
          name: "department",
          label: "Department",
+         options: [
+            "ANS (Air Navigation Services)",
+            "Safety and Security",
+            "Finance and Administration",
+            "Human Capital and Strategy",
+            "Legal and Compliance",
+            "Office of the Executive Director",
+         ]
+      },
+      {
+         name: "division",
+         label: "Division",
          options: [
             "Airworthiness (AIR)",
             "Flight Operations (OPS)",
@@ -132,6 +161,68 @@ const TrainingHistoryPart = () => {
             "Procurement",
             "Legal",
             "ICTP"
+         ]
+      },
+      {
+         name: "job_category",
+         label: "Job/AA Category",
+         options: [
+            "Executive Director",
+            "Senior Management",
+            "Middle Management",
+            "Specialized / Senior supervisory",
+            "Skilled",
+            "Semi-skilled",
+            "Unskilled"
+         ]
+      },
+      // {
+      //    name: "trainer_status",
+      //    label: "Trainer Status",
+      //    options: [
+      //       "Qualified",
+      //       "Not Qualified"
+      //    ]
+      // },
+      {
+         name: "category",
+         label: "Category",
+         options: [
+            "Mandatory",
+            "Advanced",
+            "Certification",
+            "Personal Development"
+         ]
+      },
+      {
+         name: "training_type",
+         label: "Training Type",
+         options: [
+            "Initial / co-course",
+            "Recurring",
+            "Specialized",
+            "OJT",
+            "Academic qualification",
+            "Industrial workshop / conference / Seminar",
+         ]
+      },
+      // {
+      //    name: "quarter",
+      //    label: "Quarter",
+      //    options: [
+      //       "First (1)",
+      //       "Second (2)",
+      //       "Third (3)",
+      //       "Fourth (4)"
+      //    ]
+      // },
+      {
+         name: "method",
+         label: "Method",
+         options: [
+            "Online",
+            "In-house",
+            "Face-to-face"
          ]
       },
       {
@@ -220,9 +311,38 @@ const TrainingHistoryPart = () => {
            training.status?.toLowerCase().includes(search) ||
            `${training.first_name} ${training.last_name}`.toLowerCase().includes(search);
 
+
+       const matchesFunction = 
+           !filters.function ||
+           training.function === filters.function;
+
        const matchesDepartment =
            !filters.department ||
            training.department === filters.department;
+
+       const matchesDivision = 
+           !filters.division ||
+           training.division === filters.division;
+
+       const matchesAA =
+           !filters.job_category ||
+           training.job_category === filters.job_category;
+
+       const matchesCategory =
+           !filters.category ||
+           training.category === filters.category;
+
+       const matchesTrainingType =
+           !filters.training_type ||
+           training.training_type === filters.training_type;
+
+       const matchesQuarter =
+           !filters.quarter ||
+           training.quarter === filters.quarter;
+
+       const matchesMethod =
+           !filters.method ||
+           training.method === filters.method;
 
        const matchesStatus =
            !filters.status ||
@@ -246,7 +366,14 @@ const TrainingHistoryPart = () => {
 
        return (
           matchesSearch && 
+          matchesFunction &&
           matchesDepartment &&
+          matchesDivision &&
+          matchesAA &&
+          matchesCategory &&
+          matchesTrainingType &&
+          matchesQuarter &&
+          matchesMethod &&
           matchesStatus &&
           matchesDisadvantaged &&
           matchesDisability &&
@@ -267,8 +394,36 @@ const TrainingHistoryPart = () => {
          params.append("search", searchTraining.trim());
       }
 
+      if (filters.function) {
+         params.append("function", filters.function);
+      }
+
       if (filters.department) {
          params.append("department", filters.department);
+      }
+
+      if (filters.division) {
+         params.append("division", filters.division);
+      }
+
+      if (filters.job_category) {
+         params.append("job_category", filters.job_category);
+      }
+
+      if (filters.category) {
+         params.append("category", filters.category);
+      }
+
+      if (filters.training_type) {
+         params.append("training_type", filters.training_type);
+      }
+
+      if (filters.quarter) {
+         params.append("quarter", filters.quarter);
+      }
+
+      if (filters.method) {
+         params.append("method", filters.method);
       }
 
       if (filters.status) {
@@ -308,8 +463,15 @@ const TrainingHistoryPart = () => {
    // Filtering 
    const resetFilters = () => {
       setFilters({
+         function: "",
          department: "",
-         role: "",
+         division: "",
+         job_category: "",
+      // trainer_status: "",
+         category: "",
+         training_type: "",
+         quarter: "",
+         method: "",
          disadvantaged: "",
          disability: "",
          gender: ""
@@ -330,6 +492,14 @@ const TrainingHistoryPart = () => {
 
 
 
+   // Total Cost 
+   const totalCost = filteredTraining.reduce(
+      (total, training) => total + Number(training.total_cost || 0), 0
+   );
+
+
+
+
 
 
 
@@ -345,7 +515,11 @@ const TrainingHistoryPart = () => {
                <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg">Training Records</label>
-                    <label className="text-xs text-secondary/60">{filteredTraining.length} records found</label>
+                    <div className="flex gap-5 items-center text-xs text-secondary/60">
+                      <label>{filteredTraining.length} records found</label>
+                      <label>:</label>
+                      <label>Total cost: <span className="font-bold ml-2 text-primary">N$ {totalCost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(",", ".")}</span></label>
+                    </div>
                  </div>
                  <div className="flex items-center gap-3">
                     {/* <div className="w-[20vh] rounded-md bg-white border border-secondary/30 px-3">
@@ -360,7 +534,7 @@ const TrainingHistoryPart = () => {
                    <div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-3 items-end">
                           <SecondaryButt onClick={handleFilterToggle}><LuFilter /> Filter</SecondaryButt>
                           {showFilters && (
-                          <div className="px-5 py-9 scrollbar-thin scrollbar-secondary/10 overflow-y-auto max-h-120 min-w-40 fixed mt-12 bg-white shadow-sm text-xs flex flex-col">
+                          <div className="px-9 py-9 scrollbar-thin scrollbar-secondary/10 overflow-y-auto max-h-120 min-w-40 fixed mt-12 bg-white shadow-sm text-xs flex flex-col">
                               <label>Filters</label>
                               <hr className="border border-secondary/10 mt-3" />
                               {/* department  */}
@@ -401,10 +575,10 @@ const TrainingHistoryPart = () => {
                           <tr className="bg-secondary/10 border-b border-secondary/20">
                              <th className="text-left p-3">Employee</th>
                              <th className="text-left p-3">Training</th>
-                             <th className="text-left p-3">Type</th>
+                             <th className="text-left p-3">Development gap</th>
+                             <th className="text-left p-3">Training type</th>
                              <th className="text-left p-3">Duration</th>
-                             <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Scheduled</th>
+                             <th className="text-left p-3">Total cost (N$)</th>
                              <th className="text-left p-3">Status</th>
                              {/* <th className="text-right p-3">Action</th> */}
                           </tr>
@@ -425,14 +599,13 @@ const TrainingHistoryPart = () => {
                           </tr>
                        ) : (     
                         filteredTraining.map((assign, index) => (
-                           // const effectiveStatus = getEffectiveStatus(assign);
                           <tr key = {index} onClick={() => navigate(`/admin/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.type}</td>
+                             <td className="px-3 py-3">{assign.reason}</td>
+                             <td className="px-3 py-3">{assign.training_type}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
-                             <td className="px-3 py-3">{assign.assigned_date}</td>
-                             <td className="px-3 py-3">{assign.scheduled_date}</td>
+                             <td className="px-3 py-3">{Number(assign.total_cost).toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                              <td className="px-3 py-3">
                                   <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-20`}>
                                     {assign.status}

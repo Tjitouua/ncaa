@@ -23,6 +23,18 @@ const ProgramDetails = () => {
 
    const [program, setProgram] = useState<any>(null);
 
+   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+   const startYear = 2016;
+   const currentYear = new Date().getFullYear();
+
+   const years = Array.from(
+      { length: currentYear - startYear + 1 },
+      (_, i) => currentYear - i
+   );
+
+
+
+
    useEffect(() => {
       fetch(`http://localhost/ncaa/program/get_program_by_id.php?id=${id}`)
       .then(res => res.json())
@@ -76,7 +88,7 @@ const ProgramDetails = () => {
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
  
              <div className="w-full min-h-screen items-center flex flex-col gap-3 px-2 md:px-6 py-8">
-                <div className="w-full"><label onClick={() => navigate("/admin/training_programs")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
+                <div className="w-full"><label onClick={() => navigate(-1)}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
                 {/* Program Div  */}
                 <div className="w-4/5 flex mt-3 flex-col gap-4 py-3">
 
@@ -92,33 +104,70 @@ const ProgramDetails = () => {
                         </div>
                         <div className="w-full py-2 px-6">
                            <div className="w-full py-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="training_code" label="Training Code" value={program.training_code}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="training_name" label="Training Name" value={program.training_name}/>
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="description" label="Description" value={program.description}/>
+                              <DetailsSelect label="Learning and Development Gap" onChange={handleChange} name="reason" value={program.reason}>
+                                   <option value="Skill">Skill</option>
+                                   <option value="Knowledge">Knowledge</option>
+                                   <option value="Attitude">Attitude</option>
+                                   <option value="Behavior">Behavior</option>
+                              </DetailsSelect>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="duration" label="Duration" value={program.duration}/>
                               <DetailsSelect label="Category" onChange={handleChange} name="category" value={program.category}>
-                                    <option>Language</option>
-                                    <option>Operations</option>
-                                    <option>Safety</option>
-                                    <option>Security</option>
-                                    <option>Human Factors</option>
+                                    <option value="Mandatory">Mandatory</option>
+                                    <option value="Advanced">Advanced</option>
+                                    <option value="Certification">Certification</option>
+                                    <option value="Personal Development">Personal Development</option>
                               </DetailsSelect>
-                              <DetailsSelect label="Type" onChange={handleChange} name="type" value={program.type}>
-                                    <option>Internal</option>
-                                    <option>External</option>
+                              <DetailsSelect label="Training Type" onChange={handleChange} name="training_type" value={program.training_type}>
+                                    <option value="Initial / co-course">Initial / co-course</option>
+                                    <option value="Recurring">Recurring</option>
+                                    <option value="Specialized">Specialized</option>
+                                    <option value="OJT">OJT</option>
+                                    <option value="Academic qualification">Academic qualification</option>
+                                    <option value="Industrial workshop / conference / Seminar">Industrial workshop / conference / Seminar</option>
+                              </DetailsSelect>
+                              <DetailsSelect label="Method" onChange={handleChange} name="method" value={program.method}>
+                                    <option value="Online">Online</option>
+                                    <option value="Face-to-face">Face-to-face</option>
                               </DetailsSelect>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="validity" label="validity" value={program.validity}/>
-                              <DetailsSelect label="Status" onChange={handleChange} name="status" value={program.status}>
-                                    <option>Active</option>
-                                    <option>Inactive</option>
-                              </DetailsSelect>
-
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="trainer" label="Trainer" value={program.trainer}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="provider" label="Provider" value={program.provider}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="trainer" label="Trainer" value={program.trainer}/>
+                              <DetailsSelect label="Trainer Status" onChange={handleChange} name="trainer_status" value={program.trainer_status}>
+                                    <option value="Qualified">Qualified</option>
+                                    <option value="Not Qualified">Not Qualified</option>
+                              </DetailsSelect>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="location" label="Location" value={program.location}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="contact_no" label="Contact Number" value={program.contact_no}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="email" label="Email" value={program.email}/>
-                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="cost" label="Cost (N$)" value={program.cost}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="training_cost" label="Training Cost (N$)" value={program.training_cost}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="accommodation_cost" label="Accommodation Cost (N$)" value={program.accommodation_cost}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="snt_cost" label="SNT Cost (N$)" value={program.snt_cost}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="flight_cost" label="Flight Cost (N$)" value={program.flight_cost}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} name="other_costs" label="Other Costs (N$)" value={program.other_costs}/>
+                              <DetailsInput className="text-secondary/50" onChange={handleChange} disabled={true} name="total_cost" label="total_cost (N$)" value={program.total_cost}/>
+                              <DetailsSelect label="Plan Approved" onChange={handleChange} name="approved" value={program.approved}>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                              </DetailsSelect>
+                              <DetailsSelect label="Year" onChange={handleChange} name="year" value={program.year}>
+                                  {years.map((year) => (
+                                    <option key={year} value={year}>{year}</option>
+                                  ))}
+                              </DetailsSelect>
+                              <DetailsSelect label="Quarter" onChange={handleChange} name="quarter" value={program.quarter}>
+                                   <option value="1">First (1)</option>
+                                   <option value="2">Second (2)</option>
+                                   <option value="3">Third (3)</option>
+                                   <option value="4">Fourth (4)</option>
+                              </DetailsSelect>
+                              <DetailsDate label="Start date" name="start_date" onChange={handleChange} value={program.start_date || ""}/>
+                              <DetailsDate label="End date" name="end_date" onChange={handleChange} value={program.end_date || ""}/>
+                              <DetailsSelect label="Training Region" onChange={handleChange} name="region" value={program.region}>
+                                  <option value="Namibia">Namibia</option>
+                                  <option value="Africa">Africa</option>
+                                  <option value="Africa">International</option>
+                              </DetailsSelect>
                            </div>
                         </div>
                     </div>

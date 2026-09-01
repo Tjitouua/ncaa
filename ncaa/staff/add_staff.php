@@ -23,7 +23,7 @@
 
    try {
 
-   $staff_id = trim($data["employeeId"]);
+   $staff_no = trim($data["employeeNo"]);
    $first_name = trim($data["firstName"]);
    $last_name = trim($data["lastName"]);
    $gender = trim($data["gender"]);
@@ -32,9 +32,14 @@
    $national_id = trim($data["nationalId"]);
    $phone_no = trim($data["phoneNo"]);
    $city = trim($data["city"]);
-   $address = trim($data["address"]);
-   $postal = trim($data["postal"]);
+   $disadvantaged = trim($data["disadvantaged"]);
+   $disability = trim($data["disability"]);
+   $function = trim($data["function"]);
    $department = trim($data["department"]);
+   $division = trim($data["division"]);
+   $job_category = trim($data["jobCategory"]);
+   $job_grade = trim($data["jobGrade"]);
+   $ethnicity = trim($data["ethnicity"]);
    $role = trim($data["role"]);
    $employment_type = trim($data["employmentType"]);
    $doj = trim($data["doj"]);
@@ -44,7 +49,7 @@
    // Employees table 
    $sql = "
        INSERT INTO staff (
-           staff_id,
+           staff_no,
            first_name,
            last_name,
            gender,
@@ -53,24 +58,29 @@
            national_id,
            phone_no,
            city,
-           address,
-           postal_address,
+           disadvantaged,
+           disability,
+           function,
            department,
+           division,
+           job_category,
+           job_grade,
+           ethnicity,
            role,
            employment_type,
            doj,
            employment_status
        )
        VALUES (
-           ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+           ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
        );
    ";
 
    $stmt = $conn->prepare($sql);
 
    $stmt->bind_param(
-        "ssssssssssssssss",
-        $staff_id,
+        "sssssssssssssssssssss",
+        $staff_no,
         $first_name,
         $last_name,
         $gender,
@@ -79,9 +89,14 @@
         $national_id,
         $phone_no,
         $city,
-        $address,
-        $postal,
+        $disadvantaged,
+        $disability,
+        $function,
         $department,
+        $division,
+        $job_category,
+        $job_grade,
+        $ethnicity,
         $role,
         $employment_type,
         $doj,

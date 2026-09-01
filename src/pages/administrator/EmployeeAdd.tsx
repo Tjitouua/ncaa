@@ -22,25 +22,25 @@ const EmployeeAdd = () => {
    
 
    // Getting roles from the database 
-   useEffect(() => {
-      fetch("http://localhost/ncaa/roles/get_roles.php")
-      .then((response) => response.json())
-      .then((data) => {
-         if (data.success) {
-            setRoles(data.data);
-         }
-      })
-      .catch((error) => {
-         console.error("Error fetching roles: ", error);
-      })
-      .finally(() => {
-         setLoading(false);
-      });
-   }, []);
+   // useEffect(() => {
+   //    fetch("http://localhost/ncaa/roles/get_roles.php")
+   //    .then((response) => response.json())
+   //    .then((data) => {
+   //       if (data.success) {
+   //          setRoles(data.data);
+   //       }
+   //    })
+   //    .catch((error) => {
+   //       console.error("Error fetching roles: ", error);
+   //    })
+   //    .finally(() => {
+   //       setLoading(false);
+   //    });
+   // }, []);
 
 
    const [form, setForm] = useState({
-      employeeId: "",
+      employeeNo: "",
       firstName: "",
       lastName: "",
       gender: "",
@@ -54,7 +54,12 @@ const EmployeeAdd = () => {
       disadvantaged: "No",
       disability: "No",
       role: "",
+      function: "",
       department: "",
+      division: "",
+      jobCategory: "",
+      jobGrade: "",
+      ethnicity: "",
       employmentType: "",
       doj: "",
       employmentStatus: "",
@@ -131,7 +136,7 @@ const EmployeeAdd = () => {
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
-             <div className="w-full min-h-screen flex flex-col gap-3 px-2 py-4 md:px-6">
+             <div className="w-full min-h-screen flex flex-col gap-6 px-2 py-9 md:px-6">
                 <label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
 
 
@@ -151,12 +156,12 @@ const EmployeeAdd = () => {
                       <div className="w-full pb-7 py-2 gap-4 text-secondary/60 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
                           <Inputs
-                            label="Employee ID"
-                            name="employeeId"
-                            value={form.employeeId}
+                            label="Employee Number"
+                            name="employeeNo"
+                            value={form.employeeNo}
                             onChange={handleChange}
-                            error={errors.employeeId}
-                            placeholder="Enter the employee ID"
+                            error={errors.employeeNo}
+                            placeholder="Enter the employee Number"
                           />
 
                           <Inputs
@@ -271,7 +276,7 @@ const EmployeeAdd = () => {
 
                           
 
-                          <SelectInputs
+                          {/* <SelectInputs
                             label="Role"
                             name="role"
                             value={form.role}
@@ -282,6 +287,30 @@ const EmployeeAdd = () => {
                              {roles.map((role) => (
                               <option key={role.id} value={role.role}>{role.role}</option>
                              ))}
+                          </SelectInputs> */}
+
+
+                          <Inputs
+                            label="Role"
+                            name="role"
+                            value={form.role}
+                            onChange={handleChange}
+                            error={errors.role}
+                            placeholder="Enter role"
+                          />
+
+
+                          <SelectInputs
+                            label = "Function"
+                            name = "function"
+                            value = {form.function}
+                            onChange = {handleChange}
+                            error = {errors.function}
+                          >
+                            <option value="">Select Function</option>
+                            <option value="Regulatory">Regulatory</option>
+                            <option value="Support">Support</option>
+                            <option value="Service Provider">Service Provider</option>
                           </SelectInputs>
 
                           <SelectInputs
@@ -292,6 +321,22 @@ const EmployeeAdd = () => {
                             error = {errors.department}
                           >
                              <option value="">Select Department</option>
+                             <option value="ANS (Air Navigation Services)">ANS (Air Navigation Services)</option>
+                             <option value="Safety and Security">Safety and Security</option>
+                             <option value="Finance and Administration">Finance and Administration</option>
+                             <option value="Human Capital and Strategy">Human Capital and Strategy</option>
+                             <option value="Legal and Compliance">Legal and Compliance</option>
+                             <option value="Office of the Executive Director">Office of the Executive Director</option>
+                          </SelectInputs>
+
+                          <SelectInputs
+                             label = "Division"
+                             name = "division"
+                            value = {form.division}
+                            onChange = {handleChange}
+                            error = {errors.division}
+                          >
+                             <option value="">Select Division</option>
                              <option value="Airworthiness (AIR)">Airworthiness (AIR)</option>
                              <option value="Flight Operations (OPS)">Flight Operations (OPS)</option>
                              <option value="Personnel Licensing (PEL)">Personnel Licensing (PEL)</option>
@@ -308,6 +353,54 @@ const EmployeeAdd = () => {
                           </SelectInputs>
 
                           <SelectInputs
+                             label = "Job/AA Category"
+                             name = "jobCategory"
+                            value = {form.jobCategory}
+                            onChange = {handleChange}
+                            error = {errors.jobCategory}
+                          >
+                             <option value="">Select AA Category</option>
+                             <option value="Executive Director">Executive Director</option>
+                             <option value="Senior Management">Senior Management</option>
+                             <option value="Middle Management">Middle Management</option>
+                             <option value="Specialized / Senior supervisory">Specialized / Senior supervisory</option>
+                             <option value="Skilled">Skilled</option>
+                             <option value="Semi-skilled">Semi-skilled</option>
+                             <option value="Unskilled">Unskilled</option>
+                          </SelectInputs>
+
+                          <SelectInputs
+                             label = "Job Grade"
+                             name = "jobGrade"
+                            value = {form.jobGrade}
+                            onChange = {handleChange}
+                            error = {errors.jobGrade}
+                          >
+                             <option value="">Select Job Grade</option>
+                             <option value="Grade 1">Grade 1 — Entry-level / Junior</option>
+                             <option value="Grade 2">Grade 2 — Junior</option>
+                             <option value="Grade 3">Grade 3 — Officer</option>
+                             <option value="Grade 4">Grade 4 — Senior Officer</option>
+                             <option value="Grade 5">Grade 5 — Supervisor</option>
+                             <option value="Grade 6">Grade 6 — Manager</option>
+                             <option value="Grade 7">Grade 7 — Senior Manager</option>
+                             <option value="Grade 8">Grade 8 — Director</option>
+                          </SelectInputs>
+
+                          <SelectInputs
+                            label = "Ethnicity"
+                            name = "ethnicity"
+                            value = {form.ethnicity}
+                            onChange = {handleChange}
+                            error = {errors.ethnicity}
+                          >
+                            <option value="">Select Ethnicity</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                            <option value="Coloured">Coloured</option>
+                          </SelectInputs>
+
+                          <SelectInputs
                              label = "Employment type"
                              name = "employmentType"
                              value = {form.employmentType}
@@ -316,7 +409,7 @@ const EmployeeAdd = () => {
                           >
                              <option value="">Select employment type</option>
                              <option value="Permanent">Permanent</option>
-                             <option value="Temporary">Temporary</option>
+                             <option value="Fixed-Term">Fixed-Term</option>
                           </SelectInputs>
 
                           <DateInputs name="doj" value={form.doj} onChange={handleChange} error={errors.doj} label="Date of joining" />

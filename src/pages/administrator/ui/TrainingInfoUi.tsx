@@ -6,16 +6,17 @@ interface Props {
     icon: React.ElementType;
     label: string;
     value: string;
+    valueClassName?: string; 
 };
 
 
-const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value} ) => {
+const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value, valueClassName=""} ) => {
     return (
-        <div className="flex gap-5 items-end">
-            <Icon className="text-xl"/>
+        <div className="flex gap-3 items-center">
+            {/* <Icon className="text-md"/> */}
             <div className="flex flex-col text-xs">
                 <label className="text-secondary/50">{label}</label>
-                <label className="font-bold">{value}</label>
+                <label className={`font-bold ${valueClassName || "text-secondary/60"}`}>{value}</label>
             </div>
         </div>
     );

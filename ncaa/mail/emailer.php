@@ -7,7 +7,7 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    function sendAssignmentEmail($toEmail, $name, $training, $scheduled_date, $end_date)
+    function sendAssignmentEmail($toEmail, $name, $training, $quarter, $year)
     {
         $mail = new PHPMailer(true);
 
@@ -36,8 +36,8 @@
               <br>
               <p>You have been assigned a new training program.</p>
               <p><strong style='margin-right: 5px;'>Training: </strong>$training</p>
-              <p><strong style='margin-right: 5px;'>Start Date: </strong>$scheduled_date</p>
-              <p><strong style='margin-right: 5px;'>End Date: </strong>$end_date</p>
+              <p><strong style='margin-right: 5px;'>Quarter: </strong>$quarter</p>
+              <p><strong style='margin-right: 5px;'>Year: </strong>$year</p>
               <br>
               <p>Please log into the system for more details.</p>
               <p>http://localhost:5173/</p>

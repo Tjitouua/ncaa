@@ -28,6 +28,7 @@
              u.last_name,
              u.password,
              s.department,
+             s.division,
              s.role AS position
              FROM users u
              LEFT JOIN staff s ON u.email = s.email
@@ -52,6 +53,7 @@
             "first_name" => $user["first_name"],
             "last_name" => $user["last_name"],
             "department" => $user["department"],
+            "division" => $user["division"],
             "position" => $user["position"]
       ];
 

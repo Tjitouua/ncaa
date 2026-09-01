@@ -53,8 +53,10 @@ const EmployeesPart = () => {
 
 
    const [filters, setFilters] = useState({
+      function: "",
       department: "",
-      role: "",
+      division: "",
+      job_category: "",
       disadvantaged: "",
       disability: "",
       gender: ""
@@ -65,8 +67,29 @@ const EmployeesPart = () => {
 
    const filterOptions = [
       {
+         name: "function",
+         label: "Function",
+         options: [
+            "Regulatory",
+            "Support",
+            "Service Provider"
+         ]
+      },
+      {
          name: "department",
          label: "Department",
+         options: [
+            "ANS (Air Navigation Services)",
+            "Safety and Security",
+            "Finance and Administration",
+            "Human Capital and Strategy",
+            "Legal and Compliance",
+            "Office of the Executive Director",
+         ]
+      },
+      {
+         name: "division",
+         label: "Division",
          options: [
             "Airworthiness (AIR)",
             "Flight Operations (OPS)",
@@ -84,9 +107,17 @@ const EmployeesPart = () => {
          ]
       },
       {
-         name: "role",
-         label: "Role",
-         options: roles.map((item) => item.role)
+         name: "job_category",
+         label: "Job/AA Category",
+         options: [
+            "Executive Director",
+            "Senior Management",
+            "Middle Management",
+            "Specialized / Senior supervisory",
+            "Skilled",
+            "Semi-skilled",
+            "Unskilled"
+         ]
       },
       {
          name: "disadvantaged",
@@ -240,9 +271,25 @@ const EmployeesPart = () => {
           `${employee.first_name} ${employee.last_name}`.toLowerCase().includes(search);
 
 
+          const matchesFunction =
+             !filters.function ||
+             employee.function === filters.function;
+
+
           const matchesDepartment = 
              !filters.department ||
              employee.department === filters.department;
+
+         
+         const matchesDivision =
+             !filters.division ||
+             employee.division === filters.division;
+
+
+
+         const matchesAA =
+            !filters.job_category ||
+            employee.job_category === filters.job_category;
 
 
          const matchesRole =
@@ -268,7 +315,10 @@ const EmployeesPart = () => {
 
         return (
            matchesSearch &&
+           matchesFunction &&
            matchesDepartment &&
+           matchesDivision &&
+           matchesAA &&
            matchesRole &&
            matchesDisadvantaged &&
            matchesDisability &&
@@ -368,7 +418,7 @@ const EmployeesPart = () => {
                     <table className="w-full border text-xs border-secondary/30">
                        <thead>
                           <tr className="bg-secondary/10 border-b border-secondary/20">
-                             <th className="text-left p-3">Employee ID</th>
+                             <th className="text-left p-3">Employee Number</th>
                              <th className="text-left p-3">Full Name</th>
                              <th className="text-left p-3">Email</th>
                              <th className="text-left p-3">Department</th>
@@ -392,7 +442,7 @@ const EmployeesPart = () => {
                        ) : (
                         filteredStaff.map((employee, index) => (
                           <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-2">{employee.staff_id}</td>
+                             <td className="px-3 py-2">{employee.staff_no}</td>
                              <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>
                              <td className="px-3 py-2">{employee.email}</td>
                              <td className="px-3 py-2">{employee.department}</td>

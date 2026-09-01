@@ -11,23 +11,39 @@
 
      $conn->query("
           UPDATE training_assignments
-          SET status = 'Overdue'
-          WHERE end_date < '$today'
-          AND status != 'Completed';
+          SET status = 'Pending'
+          WHERE status != 'Completed';
      ");
 
      $sql = "SELECT
-               a.id,
-               s.first_name,
-               s.last_name,
-               s.email,
+               s.*,
+               a.*,
                t.training_name,
-               a.type,
+               t.reason,
                t.duration,
-               a.assigned_date,
-               a.scheduled_date,
-               a.end_date, 
-               a.status
+               t.category,
+               t.training_type,
+               t.method,
+               t.validity,
+               t.provider,
+               t.trainer,
+               t.trainer_status,
+               t.location,
+               t.contact_no,
+               t.email,
+               t.training_cost,
+               t.accommodation_cost,
+               t.snt_cost,
+               t.flight_cost,
+               t.other_costs,
+               t.total_cost,
+               t.approved,
+               t.year,
+               t.quarter,
+               t.start_date,
+               t.end_date,
+               t.region,
+               t.acceptance
                FROM training_assignments a 
                LEFT JOIN staff s ON a.staff_id = s.id
                LEFT JOIN training_programs t ON a.program_id = t.id

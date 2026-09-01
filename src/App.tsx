@@ -29,6 +29,7 @@ import RequestTraining from './pages/staff/RequestTraining'
 import StaffProgramAdd from './pages/staff/ProgramAdd'
 import RequestDetails from './pages/staff/RequestDetails'
 import AdminRequestDetails from './pages/administrator/RequestDetails'
+import TrainingPlans from './pages/administrator/TrainingPlans'
 
 
 
@@ -48,7 +49,7 @@ function App() {
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
           <Route path="/admin/employees/employee_details/:id" element={<EmployeeDetails />} />
           <Route path="/admin/training_programs/" element={<Programs />} />
-          <Route path="/admin/training_programs/program_add" element={<ProgramAdd />} />
+          <Route path="/admin/training_programs/program_add/:id" element={<ProgramAdd />} />
           <Route path="/admin/training_programs/program_details/:id" element={<ProgramDetails />} />
           <Route path="/admin/assign_training" element={<Assign />} />
           <Route path="/admin/training_details/:id" element={<TrainingDetails />} />
@@ -58,6 +59,7 @@ function App() {
           <Route path="/admin/staff_compliance" element={<StaffCompliance />} />
           <Route path="/admin/training_requests" element={<TrainingRequests />} />
           <Route path="/admin/request_details/:id" element={<AdminRequestDetails />} />
+          <Route path="/admin/training_plans/:id" element={<TrainingPlans />} />
 
 
           {/* Staff pages  */}

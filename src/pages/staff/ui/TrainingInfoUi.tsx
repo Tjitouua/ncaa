@@ -12,7 +12,7 @@ interface Props {
 const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value} ) => {
     return (
         <div className="flex gap-5 items-end">
-            <Icon className="text-xl"/>
+            {/* <Icon className="text-xl"/> */}
             <div className="flex flex-col text-xs">
                 <label className="text-secondary/50">{label}</label>
                 <label className="font-bold">{value}</label>

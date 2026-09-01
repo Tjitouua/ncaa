@@ -23,16 +23,16 @@ const menuItems = [
       path: "/admin/employees",
       icon: <FiUsers />
    },
-   {
-      name: "Training Programs",
-      path: "/admin/training_programs",
-      icon: <PiGraduationCap />
-   },
-   {
-      name: "Training Matrix",
-      path: "/admin/training_matrix",
-      icon: <MdGridOn />
-   },
+   // {
+   //    name: "Training Programs",
+   //    path: "/admin/training_programs",
+   //    icon: <PiGraduationCap />
+   // },
+   // {
+   //    name: "Training Matrix",
+   //    path: "/admin/training_matrix",
+   //    icon: <MdGridOn />
+   // },
    // {
    //    name: "Training Requests",
    //    path: "/admin/training_requests",
@@ -43,11 +43,11 @@ const menuItems = [
       path: "/admin/assign_training",
       icon: <FaRegFileAlt />
    },
-   {
-      name: "Staff Compliance",
-      path: "/admin/staff_compliance",
-      icon: <FiUserCheck />
-   },
+   // {
+   //    name: "Staff Compliance",
+   //    path: "/admin/staff_compliance",
+   //    icon: <FiUserCheck />
+   // },
    {
       name: "Training History",
       path: "/admin/training_history",

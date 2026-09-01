@@ -7,33 +7,22 @@
     include "../database.php";
 
     $id = $_GET["id"] ?? null;
-    $year = $_GET["year"] ?? null;
 
     if (!$id) {
-        json_encode([
+        echo json_encode([
             "success" => false,
-            "message" => "Staff ID required"
+            "message" => "Request id required"
         ]);
         exit;
     }
 
-    $sql = "SELECT 
-            t.id,
-            p.training_name,
-            t.status
-            FROM training_assignments t
-            LEFT JOIN training_programs p ON p.id = t.program_id
-            LEFT JOIN staff s ON s.id = t.staff_id
-            WHERE t.staff_id = ?
-            AND p.year = ?;
-    ";
-
+    $sql = "SELECT * FROM training_requests WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $id, $year);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
 
     $result = $stmt->get_result();
-    $data = $result->fetch_all(MYSQLI_ASSOC);
+    $data = $result->fetch_assoc();
 
     if ($data) {
         echo json_encode([
@@ -43,13 +32,12 @@
     } else {
         echo json_encode([
             "success" => false,
-            "message" => "Training (s) not found"
+            "message" => "Request not found"
         ]);
     }
 
     $stmt->close();
     $conn->close();
-
 
 
 ?>

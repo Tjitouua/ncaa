@@ -16,7 +16,7 @@
      if (!isset($_SESSION["user"])) {
         echo json_encode([
            "success" => false,
-           "message" => "User is not looged in"
+           "message" => "User is not logged in"
         ]);
         exit;
      }

@@ -20,7 +20,7 @@ const DetailsSelect: React.FC<Props> = ({ label, name, value, className="", chil
            name={name}
            onChange={onChange}
            value={value} 
-           className={`w-full py-1 cursor-pointer font-bold rounded-md focus:py-2 focus:px-3 focus:mt-2 focus:outline-secondary/30 ${className}`}
+           className={`w-full py-1 text-xs cursor-pointer font-bold rounded-md focus:py-2 focus:px-3 focus:mt-2 focus:outline-secondary/30 ${className}`}
            >
                {children}
            </select>

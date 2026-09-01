@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TopMenu from "./components/TopMenu";
 import Menu from "./components/Menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import Inputs from "../../ui/Inputs";
 import PrimaryButt from "../../ui/PrimaryButt";
@@ -17,23 +17,46 @@ const ProgramAdd = () => {
    const [showMenu, setShowMenu] = useState(false);
 
    const navigate = useNavigate();
+   const { id } = useParams();
    const [loading, setLoading] = useState(false);
+
+   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+
+   const startYear = 2016;
+   const currentYear = new Date().getFullYear();
+
+   const years = Array.from(
+      { length: currentYear - startYear + 1 },
+      (_, i) => currentYear - i
+   );
+
 
    const [form, setForm] = useState({
       trainingName: "",
-      trainingCode: "",
-      desc: "",
+      reason: "",
       duration: "",
       category: "",
-      type: "",
+      trainingType: "",
+      method: "",
       validity: "",
-      status: "",
       trainer: "",
+      trainerStatus: "",
       provider: "",
       location: "",
       contactNo: "",
       email: "",
-      cost: ""
+      trainingCost: "",
+      accommodationCost: "",
+      sntCost: "",
+      flightCost: "",
+      otherCosts: "",
+      approved: "",
+      year: "",
+      quarter: "",
+      start_date: "",
+      end_date: "",
+      region: "",
+      acceptance: ""
    });
 
 
@@ -48,10 +71,30 @@ const ProgramAdd = () => {
       const newErrors: any = {};
 
       Object.keys(form).forEach((key) => {
-          if (!form[key as keyof typeof form]) {
-              newErrors[key] = "This field is required";
-          }
+
+        if (
+            key !== "contactNo" &&
+            key !== "email" &&
+            key !== "start_date" &&
+            key !== "end_date" &&
+            key !== "trainingCost" &&
+            key !== "accommodationCost" &&
+            key !== "sntCost" &&
+            key !== "flightCost" &&
+            key !== "otherCosts" &&
+            !form[key as keyof typeof form]
+        ) {
+           newErrors[key] = "This field is required";
+        }
       });
+
+
+
+      if (!form.contactNo.trim() && !form.email.trim()) {
+        alert("Please enter either a contact number or an email address...");
+        return false;
+      }
+
 
       setErrors(newErrors);
 
@@ -73,7 +116,10 @@ const ProgramAdd = () => {
              headers: {
                 "Content-Type": "application/json",
              },
-             body: JSON.stringify(form),
+             body: JSON.stringify({
+                ...form,
+                staff_id: id
+             }),
            }
         );
 
@@ -81,7 +127,7 @@ const ProgramAdd = () => {
 
         if (data.success) {
            alert("Training added successfully");
-           navigate("/admin/training_programs");
+           navigate(`/admin/training_plans/${id}`);
         } else {
            alert(data.message);
         }
@@ -101,8 +147,8 @@ const ProgramAdd = () => {
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
-             <div className="w-full min-h-screen flex flex-col gap-3 px-2 py-4 md:px-6">
-                <label onClick={() => navigate("/admin/training_programs")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
+             <div className="w-full min-h-screen flex flex-col gap-5 px-2 py-9 md:px-6">
+                <label onClick={() => navigate(-1)}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
 
 
 
@@ -129,23 +175,29 @@ const ProgramAdd = () => {
                             placeholder="Enter the program name"
                           />
 
-                          <Inputs
-                            label="Training Code"
-                            name="trainingCode"
-                            value={form.trainingCode}
-                            onChange={handleChange}
-                            error={errors.trainingCode}
-                            placeholder="Enter the program code"
-                          />
+                         <SelectInputs
+                            label = "Learning and Development Gap"
+                            name = "reason"
+                            value = {form.reason}
+                            onChange = {handleChange}
+                            error = {errors.reason}
+                          >
+                            <option value="">Select reason</option>
+                            <option value="Skill">Skill</option>
+                            <option value="Knowledge">Knowledge</option>
+                            <option value="Attitude">Attitude</option>
+                            <option value="Behavior">Behavior</option>
+                          </SelectInputs>
 
-                          <Inputs
+
+                          {/* <Inputs
                             label="Description"
                             name="desc"
                             value={form.desc}
                             onChange={handleChange}
                             error={errors.desc}
                             placeholder="Enter training description"
-                          />
+                          /> */}
 
                           <Inputs
                             label="Duration"
@@ -164,24 +216,39 @@ const ProgramAdd = () => {
                             error = {errors.category}
                           >
                             <option value="">Select category</option>
-                            <option value="Language">Language</option>
-                            <option value="Operations">Operations</option>
-                            <option value="Safety">Safety</option>
-                            <option value="Security">Security</option>
-                            <option value="Health">Health</option>
-                            <option value="Human Factors">Human Factors</option>
+                            <option value="Mandatory">Mandatory</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Certification">Certification</option>
+                            <option value="Personal Development">Personal Development</option>
                           </SelectInputs>
 
                           <SelectInputs
-                            label = "Type"
-                            name = "type"
-                            value = {form.type}
+                            label = "Training type"
+                            name = "trainingType"
+                            value = {form.trainingType}
                             onChange = {handleChange}
-                            error = {errors.trainer_provider}
+                            error = {errors.trainingType}
                           >
                             <option value="">Select type</option>
-                            <option value="Internal">Internal</option>
-                            <option value="External">External</option>
+                            <option value="Initial / co-course">Initial / co-course</option>
+                            <option value="Recurring">Recurring</option>
+                            <option value="Specialized">Specialized</option>
+                            <option value="OJT">OJT</option>
+                            <option value="Academic qualification">Academic qualification</option>
+                            <option value="Industrial workshop / conference / Seminar">Industrial workshop / conference / Seminar</option>
+                          </SelectInputs>
+
+                          <SelectInputs
+                            label = "Method"
+                            name = "method"
+                            value = {form.method}
+                            onChange = {handleChange}
+                            error = {errors.method}
+                          >
+                            <option value="">Select method</option>
+                            <option value="Online">Online</option>
+                            <option value="In-house">In-house</option>
+                            <option value="Face-to-face">Face-to-face</option>
                           </SelectInputs>
 
 
@@ -194,7 +261,7 @@ const ProgramAdd = () => {
                             placeholder="Enter validity duration"
                           />
 
-                          <SelectInputs
+                          {/* <SelectInputs
                             label = "Status"
                             name = "status"
                             value = {form.status}
@@ -204,11 +271,19 @@ const ProgramAdd = () => {
                             <option value="">Select status</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
-                          </SelectInputs>
-
+                          </SelectInputs> */}
 
                           <Inputs
-                            label="Trainer"
+                            label="Training Provider / Institution"
+                            name="provider"
+                            value={form.provider}
+                            onChange={handleChange}
+                            error={errors.provider}
+                            placeholder="Enter Institution (Provider)"
+                          />
+
+                          <Inputs
+                            label="Trainer / Instructor"
                             name="trainer"
                             value={form.trainer}
                             onChange={handleChange}
@@ -216,14 +291,17 @@ const ProgramAdd = () => {
                             placeholder="Enter program location"
                           />
 
-                          <Inputs
-                            label="Provider"
-                            name="provider"
-                            value={form.provider}
-                            onChange={handleChange}
-                            error={errors.location}
-                            placeholder="Enter program location"
-                          />
+                          <SelectInputs
+                            label = "Trainer Status"
+                            name = "trainerStatus"
+                            value = {form.trainerStatus}
+                            onChange = {handleChange}
+                            error = {errors.trainerStatus}
+                          >
+                            <option value="">Select trainer status</option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Not Qualified">Not Qualified</option>
+                          </SelectInputs>
 
                           <Inputs
                             label="Location"
@@ -239,7 +317,7 @@ const ProgramAdd = () => {
                             name="contactNo"
                             value={form.contactNo}
                             onChange={handleChange}
-                            error={errors.contactNo}
+                            // error={errors.contactNo}
                             placeholder="Enter program contact number"
                           />
 
@@ -248,18 +326,132 @@ const ProgramAdd = () => {
                             name="email"
                             value={form.email}
                             onChange={handleChange}
-                            error={errors.email}
+                            // error={errors.email}
                             placeholder="Enter program email address"
                           />
 
                          <Inputs
-                            label="Cost (N$)"
-                            name="cost"
-                            value={form.cost}
+                            label="Training Cost (N$)"
+                            name="trainingCost"
+                            value={form.trainingCost}
                             onChange={handleChange}
-                            error={errors.cost}
-                            placeholder="Enter program cost"
+                            // error={errors.cost}
+                            placeholder="Enter Training Cost (N$)"
                           />
+
+                          <Inputs
+                            label="Accommodation Cost (N$)"
+                            name="accommodationCost"
+                            value={form.accommodationCost}
+                            onChange={handleChange}
+                            // error={errors.accommodationCost}
+                            placeholder="Enter Accommodation Cost (N$)"
+                          />
+
+                          <Inputs
+                            label="SNT Cost (N$)"
+                            name="sntCost"
+                            value={form.sntCost}
+                            onChange={handleChange}
+                            // error={errors.sntCost}
+                            placeholder="Enter SNT Cost (N$)"
+                          />
+
+                          <Inputs
+                            label="Flight Cost (N$)"
+                            name="flightCost"
+                            value={form.flightCost}
+                            onChange={handleChange}
+                            // error={errors.flightCost}
+                            placeholder="Enter Flight Cost (N$)"
+                          />
+
+                          <Inputs
+                            label="Other Costs (N$)"
+                            name="otherCosts"
+                            value={form.otherCosts}
+                            onChange={handleChange}
+                            // error={errors.otherCosts}
+                            placeholder="Enter Other Costs (N$)"
+                          />
+
+                          <SelectInputs
+                            label = "Plan Approved"
+                            name = "approved"
+                            value = {form.approved}
+                            onChange = {handleChange}
+                            error = {errors.approved}
+                          >
+                            <option value="">Part of approved Training Plan</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </SelectInputs>
+
+
+                          <SelectInputs
+                            label = "Year"
+                            name = "year"
+                            value = {form.year}
+                            onChange = {handleChange}
+                            error = {errors.year}
+                          >
+                            <option value="">Choose year</option>
+                            {years.map((year) => (
+                              <option key={year} value={year}>{year}</option>
+                            ))}
+                          </SelectInputs>
+
+
+
+                          <SelectInputs
+                            label = "Quarter"
+                            name = "quarter"
+                            value = {form.quarter}
+                            onChange = {handleChange}
+                            error = {errors.quarter}
+                          >
+                            <option value="">Choose Quarter</option>
+                            <option value="1">First (1)</option>
+                            <option value="2">Second (2)</option>
+                            <option value="3">Third (3)</option>
+                            <option value="4">Fourth (4)</option>
+                          </SelectInputs>
+
+
+
+                          <DateInputs name="start_date" value={form.start_date} onChange={handleChange} label="Start date" />
+
+                          <DateInputs name="end_date" value={form.end_date} onChange={handleChange} label="End date" />
+
+
+
+                          <SelectInputs
+                            label = "Training Region"
+                            name = "region"
+                            value = {form.region}
+                            onChange = {handleChange}
+                            error = {errors.region}
+                          >
+                            <option value="">Select region</option>
+                            <option value="Namibia">Namibia</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Africa">International</option>
+                          </SelectInputs>
+
+
+
+                          <SelectInputs
+                            label = "Training Acceptance"
+                            name = "acceptance"
+                            value = {form.acceptance}
+                            onChange = {handleChange}
+                            error = {errors.acceptance}
+                          >
+                            <option value="">Select status</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
+                          </SelectInputs>
+
 
                       </div>
                       <PrimaryButt 

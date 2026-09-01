@@ -11,6 +11,8 @@ import { FiUser } from "react-icons/fi";
 import { MdOutlineContactMail } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { VscPieChart } from "react-icons/vsc";
 
 
 
@@ -57,40 +59,128 @@ const TrainingInfo = () => {
 
 
 
-
-    const trainingInfoList = [
+    //   Session 
+      const trainingInfoList = [
+        {
+            icon: VscPieChart,
+            label: "Year",
+            value: trainingInfoList2?.year
+          },
+        {
+            icon: VscPieChart,
+            label: "Quarter",
+            value: "First (1)"
+          },
         {
           icon: MdDateRange,
-          label: "Scheduled Date",
+          label: "Start Date",
           value: new Date(trainingInfoList2?.scheduled_date).toLocaleDateString("en-GB", {
-             day: "numeric",
-             month: "long",
-             year: "numeric"
-          })
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+         })
         },
         {
-            icon: MdOutlineAccessTime,
-            label: "Start Time",
-            value: "08:30"
+            icon: MdDateRange,
+            label: "End Date",
+            value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
+               day: "numeric",
+               month: "long",
+               year: "numeric"
+            })
         },
         {
             icon: IoLocationOutline,
             label: "Venue/Location",
             value: trainingInfoList2?.location
         },
+        ,
         {
-              icon: MdDateRange,
-              label: "End Date",
-              value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
-                 day: "numeric",
-                 month: "long",
-                 year: "numeric"
-              })
+            icon: IoLocationOutline,
+            label: "Method",
+            value: trainingInfoList2?.method
         }
     ];
 
 
 
+
+
+
+
+
+
+    
+    // Cost 
+    const costInfoList = [
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Training Cost (N$)",
+            value: Number(trainingInfoList2?.training_cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Accomodation (N$)",
+            value: Number(trainingInfoList2?.accommodation_cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "SNT Cost (N$)",
+            value: Number(trainingInfoList2?.snt_cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Flight Tickets (N$)",
+            value: Number(trainingInfoList2?.flight_cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Others Costs (N$)",
+            value: Number(trainingInfoList2?.other_costs).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", ".")
+        },
+        {
+            icon: FaRegMoneyBillAlt,
+            label: "Total Cost (N$)",
+            value: Number(trainingInfoList2?.total_cost).toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            .replace(",", "."),
+        }
+    ];
+
+
+
+
+
+
+
+
+
+
+
+    
+    // Provider 
     const trainerInfoList = [
         {
           icon: PiGraduationCap,
@@ -98,20 +188,26 @@ const TrainingInfo = () => {
           value: trainingInfoList2?.provider
         },
         {
-            icon: BiCategory,
-            label: "Type",
-            value: trainingInfoList2?.training_type
-        },
-        {
             icon: FiUser,
             label: "Trainer",
             value: trainingInfoList2?.trainer
         },
         {
+            icon: BiCategory,
+            label: "Trainer status",
+            value: trainingInfoList2?.trainer_status
+        },
+        {
+            icon: MdOutlineContactMail,
+            label: "Email",
+            value: trainingInfoList2?.email
+        },
+        ,
+        {
             icon: MdOutlineContactMail,
             label: "Contact",
-            value: trainingInfoList2?.email
-        }
+            value: trainingInfoList2?.contact_no
+        },
     ];
 
 
@@ -122,25 +218,28 @@ const TrainingInfo = () => {
 
 
     return (
-        <div className="w-full md:w-7/10 bg-white text-secondary/70 py-6 px-6 flex flex-col shadow-sm shadow-secondary/30">
+        <div className="w-full md:w-7/10 bg-white text-secondary/70 py-10 px-10 flex flex-col shadow-sm shadow-secondary/30">
             <label className="text-xs text-secondary/50">{trainingInfoList2?.training_code}</label>
             <label className="font-bold text-lg">{trainingInfoList2?.training_name}</label>
-            <label className="text-xs text-secondary/50">{trainingInfoList2?.description}</label>
+            <label className="text-xs text-secondary/50">{trainingInfoList2?.training_type}</label>
             <div className="flex items-center gap-3 mt-3">
                 <div className="py-1 px-3 bg-secondary/20 text-xs font-bold rounded-md">
                     <label>{trainingInfoList2?.category}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
-                    <label>{trainingInfoList2?.assignment_type}</label>
+                    <label>{trainingInfoList2?.reason}</label>
+                </div>
+                <div className="py-1 px-3 bg-secondary/10 text-xs font-bold rounded-md">
+                    <label>N$ {Number(trainingInfoList2?.total_cost).toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</label>
                 </div>
                 <div className="py-1 px-3 border border-secondary/20 text-xs font-bold rounded-md">
                     <label>{trainingInfoList2?.duration}</label>
                 </div>
             </div>
             {/* Session Schedule  */}
-            <div className="w-full mt-6 flex flex-col gap-2 py-4 border-t border-t-secondary/30">
+            <div className="w-full mt-6 flex flex-col gap-2 px-3 bg-secondaryy/30 py-4 border-t border-t-secondary/30">
                 <label className="font-bold text-sm mb-2">Session Schedule</label> 
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
                     {trainingInfoList.map((training, index) => (
                       <TrainingInfoUi 
                         key = {index}
@@ -151,10 +250,24 @@ const TrainingInfo = () => {
                     ))}
                 </div>
             </div>
+            {/* Cost  */}
+            <div className="w-full flex flex-col pt-4 px-3 mb-3 border-t border-t-secondary/10">
+                <label className="font-bold text-sm mb-2  underline underline-offset-2">Cost</label> 
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {costInfoList.map((cost, index) => (
+                      <TrainingInfoUi 
+                        key = {index}
+                        icon = {cost.icon}
+                        label = {cost.label}
+                        value = {cost.value}
+                      />
+                    ))}
+                </div>
+            </div>
             {/* Trainer / Provider  */}
-            <div className="w-full mt-2 flex flex-col gap-2 py-5 border-t border-t-secondary/30">
+            <div className="w-full mt-2 flex flex-col gap-2 px-3 bg-secondaryy/30 py-5 border-t border-t-secondary/30">
                 <label className="font-bold text-sm mb-2">Trainer / Provider</label> 
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
                     {trainerInfoList.map((trainer, index) => (
                       <TrainingInfoUi 
                         key = {index}

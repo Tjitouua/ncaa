@@ -30,36 +30,63 @@
     }
 
 
-    $training_code = trim($data["training_code"]);
     $training_name = trim($data["training_name"]);
-    $description = trim($data["description"]);
+    $reason = trim($data["reason"]);
     $duration = trim($data["duration"]);
     $category = trim($data["category"]);
-    $type = trim($data["type"]);
+    $training_type = trim($data["training_type"]);
+    $method = trim($data["method"]);
     $validity = trim($data["validity"]);
-    $status = trim($data["status"]);
-    $trainer = trim($data["trainer"]);
     $provider = trim($data["provider"]);
+    $trainer = trim($data["trainer"]);
+    $trainer_status = trim($data["trainer_status"]);
     $location = trim($data["location"]);
     $contact_no = trim($data["contact_no"]);
     $email = trim($data["email"]);
+    $training_cost = (float)($data["training_cost"] ?: 0);
+    $accommodation_cost = (float)($data["accommodation_cost"] ?: 0);
+    $snt_cost = (float)($data["snt_cost"] ?: 0);
+    $flight_cost = (float)($data["flight_cost"] ?: 0);
+    $other_costs = (float)($data["other_costs"] ?: 0);
+    $approved = trim($data["approved"]);
+    $region = trim($data["region"]);
+    $acceptance = trim($data["acceptance"]);
+    $year = trim($data["year"]);
+    $quarter = trim($data["quarter"]);
+    $start_date = trim($data["start_date"]) !== "" ? trim($data["start_date"]) : NULL;
+    $end_date = trim($data["end_date"]) !== "" ? trim($data["end_date"]) : NULL;
+
+    $total_cost = $training_cost + $accommodation_cost + $snt_cost + $flight_cost + $other_costs;
 
 
     $sql = "
         UPDATE training_programs SET
-              training_code = ?,
               training_name = ?,
-              description = ?,
+              reason = ?,
               duration = ?,
               category = ?,
-              type = ?,
+              training_type = ?,
+              method = ?,
               validity = ?,
-              status = ?,
-              trainer = ?,
               provider = ?,
+              trainer = ?,
+              trainer_status = ?,
               location = ?,
               contact_no = ?,
-              email = ?
+              email = ?,
+              training_cost = ?,
+              accommodation_cost = ?,
+              snt_cost = ?,
+              flight_cost = ?,
+              other_costs = ?,
+              total_cost = ?,
+              approved = ?,
+              year = ?,
+              quarter = ?,
+              start_date = ?,
+              end_date = ?,
+              region = ?,
+              acceptance = ?
         WHERE id = ?;
     ";
 
@@ -67,20 +94,33 @@
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssssssi",
-        $training_code,
+        "sssssssssssssddddddsiissssi",
         $training_name,
-        $description,
+        $reason,
         $duration,
         $category,
-        $type,
+        $training_type,
+        $method,
         $validity,
-        $status,
-        $trainer,
         $provider,
+        $trainer,
+        $trainer_status,
         $location,
         $contact_no,
         $email,
+        $training_cost,
+        $accommodation_cost,
+        $snt_cost,
+        $flight_cost,
+        $other_costs,
+        $total_cost,
+        $approved,
+        $year,
+        $quarter,
+        $start_date,
+        $end_date,
+        $region,
+        $acceptance,
         $id
     );
 

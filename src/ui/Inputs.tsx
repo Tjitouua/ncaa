@@ -9,7 +9,7 @@ interface Props {
     type?: string;
     placeholder: string;
     error?: string;
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 

@@ -18,59 +18,103 @@
     }
 
 
-    $trainingCode = trim($data["trainingCode"]);
+    $staff_id = (int)$data["staff_id"];
     $trainingName = trim($data["trainingName"]);
-    $desc = trim($data["desc"]);
+    $reason = trim($data["reason"]);
     $duration = trim($data["duration"]);
     $category = trim($data["category"]);
-    $type = trim($data["type"]);
+    $training_type = trim($data["trainingType"]);
+    $method = trim($data["method"]);
     $validity = trim($data["validity"]);
-    $status = trim($data["status"]);
-    $trainer = trim($data["trainer"]);
     $provider = trim($data["provider"]);
+    $trainer = trim($data["trainer"]);
+    $trainer_status = trim($data["trainerStatus"]);
     $location = trim($data["location"]);
-    $contact_no = trim($data["contactNo"]);
-    $email = trim($data["email"]);
+    $contact_no = trim($data["contactNo"]) !== "" ? trim($data["contactNo"]) : NULL;
+    $email = trim($data["email"]) !== "" ? trim($data["email"]) : NULL;
+    $training_cost = (float)($data["trainingCost"] ?: 0);
+    $accommodation_cost = (float)($data["accommodationCost"] ?: 0);
+    $snt_cost = (float)($data["sntCost"] ?: 0);
+    $flight_cost = (float)($data["flightCost"] ?: 0);
+    $other_costs = (float)($data["otherCosts"] ?: 0);
+    $approved = trim($data["approved"]);
+    $region = trim($data["region"]);
+    $acceptance = trim($data["acceptance"]);
+    $year = trim($data["year"]);
+    $quarter = trim($data["quarter"]);
+    $start_date = trim($data["start_date"]) !== "" ? trim($data["start_date"]) : NULL;
+    $end_date = trim($data["end_date"]) !== "" ? trim($data["end_date"]) : NULL;
+   
+
+    $total_cost = $training_cost + $accommodation_cost + $snt_cost + $flight_cost + $other_costs;
 
 
     $sql = "
          INSERT INTO training_programs (
-            training_code,
+            staff_id,
             training_name,
-            description,
+            reason,
             duration,
             category,
-            type,
+            training_type,
+            method,
             validity,
-            status,
-            trainer,
             provider,
+            trainer,
+            trainer_status,
             location,
             contact_no,
-            email
+            email,
+            training_cost,
+            accommodation_cost,
+            snt_cost,
+            flight_cost,
+            other_costs,
+            total_cost,
+            approved,
+            year,
+            quarter,
+            start_date,
+            end_date,
+            region,
+            acceptance
          )
          VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
          );
     ";
 
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssssss",
-        $trainingCode,
+        "isssssssssssssddddddsiissss",
+        $staff_id,
         $trainingName,
-        $desc,
+        $reason,
         $duration,
         $category,
-        $type,
+        $training_type,
+        $method,
         $validity,
-        $status,
-        $trainer,
         $provider,
+        $trainer,
+        $trainer_status,
         $location,
         $contact_no,
-        $email
+        $email,
+        $training_cost,
+        $accommodation_cost,
+        $snt_cost,
+        $flight_cost,
+        $other_costs,
+        $total_cost,
+        $approved,
+        $year,
+        $quarter,
+        $start_date,
+        $end_date,
+        $region,
+        $acceptance,
     );
 
 

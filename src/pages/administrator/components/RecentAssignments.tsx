@@ -49,8 +49,8 @@ const RecentAssignments = () => {
                           <tr className="bg-secondary/10 border-b border-secondary/20">
                              <th className="text-left p-3">Employee</th>
                              <th className="text-left p-3">Training</th>
-                             <th className="text-left p-3">Assigned</th>
-                             <th className="text-left p-3">Scheduled</th>
+                             <th className="text-left p-3">Year</th>
+                             <th className="text-left p-3">Quarter</th>
                              <th className="text-left p-3">Status</th>
                           </tr>
                        </thead>
@@ -74,8 +74,8 @@ const RecentAssignments = () => {
                           <tr key={assign.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
-                             <td className="px-3 py-3">{assign.assigned_date}</td>
-                             <td className="px-3 py-3">{assign.scheduled_date}</td>
+                             <td className="px-3 py-3">{assign.year}</td>
+                             <td className="px-3 py-3">{Number(assign.quarter) === 1 ? "First (1)" : Number(assign.quarter) === 2 ? "Second (2)" : Number(assign.quarter) === 3 ? "Third (3)" : Number(assign.quarter) === 4 ? "Fourth (4)" : ""}</td>
                              <td className="px-3 py-3">{assign.status}</td>
                           </tr>
                         ))
