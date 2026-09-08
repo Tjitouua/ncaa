@@ -216,13 +216,22 @@ const EmployeesPart = () => {
          params.append("search", searchStaff.trim());
       }
 
+      if (filters.function) {
+         params.append("function", filters.function)
+      }
+
       if (filters.department) {
          params.append("department", filters.department);
       }
 
-      if (filters.role) {
-         params.append("role", filters.role);
+      if (filters.division) {
+         params.append("division", filters.division)
       }
+
+      if (filters.job_category) {
+         params.append("job_category", filters.job_category)
+      }
+
 
       if (filters.disadvantaged) {
          params.append("disadvantaged", filters.disadvantaged);
@@ -292,9 +301,9 @@ const EmployeesPart = () => {
             employee.job_category === filters.job_category;
 
 
-         const matchesRole =
-             !filters.role ||
-             employee.role === filters.role;
+         // const matchesRole =
+         //     !filters.role ||
+         //     employee.role === filters.role;
 
 
          const matchesDisadvantaged =
@@ -319,7 +328,7 @@ const EmployeesPart = () => {
            matchesDepartment &&
            matchesDivision &&
            matchesAA &&
-           matchesRole &&
+         //   matchesRole &&
            matchesDisadvantaged &&
            matchesDisability &&
            matchesGender

@@ -10,7 +10,7 @@
     $output = fopen("php://output", "w");
 
     fputcsv($output, [
-        "Staff ID",
+        "Staff No",
         "Staff Name",
         "Last Name",
         "Gender",
@@ -31,7 +31,10 @@
 
 
     $search = $_GET["search"] ?? "";
+    $function = $_GET["function"] ?? "";
     $department = $_GET["department"] ?? "";
+    $division = $_GET["division"] ?? "";
+    $job_category = $_GET["job_category"] ?? "";
     $role = $_GET["role"] ?? "";
     $disadvantaged = $_GET["disadvantaged"] ?? "";
     $disability = $_GET["disability"] ?? "";
@@ -49,7 +52,7 @@
     // Search 
     if ($search !== "") {
       $query .= " AND (
-             staff_id LIKE ?
+             staff_no LIKE ?
              OR first_name LIKE ?
              OR last_name LIKE ?
              OR gender LIKE ?
@@ -78,6 +81,14 @@
     }
 
 
+   //  Function 
+   if ($function !== "") {
+      $query .= " AND function = ?";
+      $params[] = $function;
+      $types .= "s";
+   }
+
+
 
 
     // Department 
@@ -86,6 +97,23 @@
        $params[] = $department;
        $types .= "s";
     }
+
+
+   //  Division 
+   if ($division !== "") {
+      $query .= " AND division = ?";
+      $params[] = $division;
+      $types .= "s";
+   }
+
+
+
+   // Job/AA Category 
+   if ($job_category !== "") {
+      $query .= " AND job_category = ?";
+      $params[] = $job_category;
+      $types .= "s";
+   }
 
 
 
@@ -145,7 +173,7 @@
 
     while ($row = $result->fetch_assoc()) {
       fputcsv($output, [
-         $row["staff_id"],
+         $row["staff_no"],
          $row["first_name"],
          $row["last_name"],
          $row["gender"],

@@ -110,13 +110,15 @@ const TrainingHistoryPart = () => {
       // trainer_status: "",
       category: "",
       training_type: "",
-      // quarter: "",
+      quarter: "",
       method: "",
       status: "",
       disadvantaged: "",
       disability: "",
       gender: "",
-      year: ""
+      year: "",
+      region: "",
+      acceptance: ""
    });
 
 
@@ -206,16 +208,16 @@ const TrainingHistoryPart = () => {
             "Industrial workshop / conference / Seminar",
          ]
       },
-      // {
-      //    name: "quarter",
-      //    label: "Quarter",
-      //    options: [
-      //       "First (1)",
-      //       "Second (2)",
-      //       "Third (3)",
-      //       "Fourth (4)"
-      //    ]
-      // },
+      {
+         name: "quarter",
+         label: "Quarter",
+         options: [
+            "1",
+            "2",
+            "3",
+            "4"
+         ]
+      },
       {
          name: "method",
          label: "Method",
@@ -279,6 +281,23 @@ const TrainingHistoryPart = () => {
             "2031",
             "2032"
          ]
+      },
+      {
+         name: "region",
+         label: "Region",
+         options: [
+            "Namibia",
+            "Africa",
+            "International"
+         ]
+      },
+      {
+         name: "acceptance",
+         label: "Acceptance",
+         options: [
+            "Accepted",
+            "Rejected"
+         ]
       }
    ];
 
@@ -306,8 +325,8 @@ const TrainingHistoryPart = () => {
            training.last_name?.toLowerCase().includes(search) ||
            training.training_name?.toLowerCase().includes(search) ||
            training.duration?.toLowerCase().includes(search) ||
-           training.assigned_date?.toLowerCase().includes(search) ||
-           training.scheduled_date?.toLowerCase().includes(search) ||
+           training.year?.toLowerCase().includes(search) ||
+           training.quarter?.toLowerCase().includes(search) ||
            training.status?.toLowerCase().includes(search) ||
            `${training.first_name} ${training.last_name}`.toLowerCase().includes(search);
 
@@ -362,7 +381,15 @@ const TrainingHistoryPart = () => {
 
        const matchesYear =
            !filters.year ||
-           training.scheduled_date?.slice(0, 4) === filters.year;
+           training.year === filters.year;
+
+       const matchesRegion =
+           !filters.region ||
+           training.region === filters.region;
+
+       const matchesAcceptance =
+           !filters.acceptance ||
+           training.acceptance === filters.acceptance;
 
        return (
           matchesSearch && 
@@ -378,7 +405,9 @@ const TrainingHistoryPart = () => {
           matchesDisadvantaged &&
           matchesDisability &&
           matchesGender &&
-          matchesYear
+          matchesYear &&
+          matchesRegion &&
+          matchesAcceptance
        );
    })
 
@@ -446,6 +475,14 @@ const TrainingHistoryPart = () => {
          params.append("year", filters.year);
       }
 
+      if (filters.region) {
+         params.append("region", filters.region);
+      }
+
+      if (filters.acceptance) {
+         params.append("acceptance", filters.acceptance);
+      }
+
 
 
 
@@ -474,7 +511,10 @@ const TrainingHistoryPart = () => {
          method: "",
          disadvantaged: "",
          disability: "",
-         gender: ""
+         gender: "",
+         year: "",
+         region: "",
+         acceptance: ""
       });
    };
 

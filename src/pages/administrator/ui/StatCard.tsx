@@ -18,7 +18,7 @@ const StatCard: React.FC<Props> = ({ icon: Icon, name, stat, desc }) => {
                   <label className="text-sm font-bold">{name}</label>
                </div>
            {/* Stat Part */}
-           <label className="text-2xl font-bold text-secondary/90">{stat}</label>
+           <label className="text-xl font-bold text-secondary/90">{stat}</label>
            <label className="text-xs">{desc}</label>
         </div>
     )

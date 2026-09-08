@@ -9,6 +9,7 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import { MdGridOn } from "react-icons/md";
 import { LuInbox } from "react-icons/lu";
+import { BsGraphUp } from "react-icons/bs";
 
 
 
@@ -53,11 +54,6 @@ const menuItems = [
       path: "/admin/training_history",
       icon: <FaClockRotateLeft />
    },
-   // {
-   //    name: "Certifications",
-   //    path: "/admin/certifications",
-   //    icon: <PiCertificateBold />
-   // },
    {
       name: "Notifications",
       path: "/admin/notifications",

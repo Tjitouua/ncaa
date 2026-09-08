@@ -343,13 +343,23 @@ const EmployeeAdd = () => {
                              <option value="Aerodromes and Ground Aids (AGA)">Aerodromes and Ground Aids (AGA)</option>
                              <option value="Aviation Security (AvSec)">Aviation Security (AvSec)</option>
                              <option value="Air Navigation Services Safety Oversight (ANSSO)">Air Navigation Services Safety Oversight (ANSSO)</option>
-                             <option value="Safety Promotion and Quality (SPG)">Safety Promotion and Quality (SPG)</option>
-                             <option value="Compliance and Regulatory Risk (CRR)">Compliance and Regulatory Risk (CRR)</option>
-                             <option value="Finance and Administration">Finance and Administration</option>
-                             <option value="Human Resources">Human Resources</option>
+                             <option value="Safety, Security, Promotion and Quality (SSPQ)">Safety, Security, Promotion and Quality (SSPQ)</option>
+                             <option value="Human Capital & Transactional Services">Human Capital & Transactional Services</option>
                              <option value="Procurement">Procurement</option>
-                             <option value="Legal">Legal</option>
+                             <option value="Legal Compliance">Legal Compliance</option>
                              <option value="ICTP">ICTP</option>
+                             <option value="Records Management">Records Management</option>
+                             <option value="Finance">Finance</option>
+                             <option value="Security & Safety Compliance">Security & Safety Compliance</option>
+                             <option value="Talent & Organisational Development (OD)">Talent & Organisational Development (OD)</option>
+                             <option value="Strategy">Strategy</option>
+                             <option value="Stakeholder Relations & Communications">Stakeholder Relations & Communications</option>
+                             <option value="Wellness">Wellness</option>
+                             <option value="Communication Navigation Surveillance (CNS)">Communication Navigation Surveillance (CNS)</option>
+                             <option value="Aeronautical Information Management (AIM">Aeronautical Information Management (AIM)</option>
+                             <option value="Safety & Quality Assurance (SQA)">Safety & Quality Assurance (SQA)</option>
+                             <option value="Air Traffic Services (ATS)">Air Traffic Services (ATS)</option>
+                             <option value="Projects">Projects</option>
                           </SelectInputs>
 
                           <SelectInputs

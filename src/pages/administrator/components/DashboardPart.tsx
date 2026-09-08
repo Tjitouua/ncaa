@@ -4,18 +4,29 @@ import { PiGraduationCap } from "react-icons/pi";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { TbFileCertificate } from "react-icons/tb";
 import { MdOutlineWarningAmber } from "react-icons/md";
-import ComplianceGraph from "../ui/ComplianceGraph";
-import MonthsGraph from "../ui/MonthsGraph";
-import CertificationGraph from "../ui/CertificationGraph";
 import EmployeesGraph from "../ui/EmployeesGraph";
 import { useEffect, useState } from "react";
+import DepartmentsGraph from "../ui/DepartmentsGraph";
+import DivisionsGraph from "../ui/DivisionsGraph";
+import AAGraph from "../ui/AAGraph";
+import FunctionGraph from "../ui/FunctionGraph";
+import CategoryGraph from "../ui/CategoryGraph";
+import QuarterGraph from "../ui/QuarterGraph";
+import TrainingTypeGraph from "../ui/TrainingTypeGraph";
+import MethodGraph from "../ui/MethodGraph";
+import RegionGraph from "../ui/RegionGraph";
+import CostsGraph from "../ui/CostsGraph";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
+import { CgSandClock } from "react-icons/cg";
 
 
 
 
 const DashboardPart = () => {
 
-    const [stats, setStats] = useState<any>(null);
+   const [stats, setStats] = useState<any>(null);
+   
 
     useEffect(() => {
         fetch("http://localhost/ncaa/dashboard/admin.php")
@@ -49,21 +60,23 @@ const DashboardPart = () => {
         //     desc: "Finished trainings"
         // },
         {
-            icon: MdOutlinePendingActions,
-            name: "Pending",
-            stat: stats?.pending ?? 0,
-            desc: "Awaiting completion"
+            icon: FaRegMoneyBillAlt,
+            name: "Total Cost",
+            stat: `N$ ${Number(stats?.total_cost ?? 0).toLocaleString("fr-FR", {
+                   minimumFractionDigits: 2,
+                   })}`,
+            desc: "Overall training cost"
         },
         {
-            icon: MdOutlineWarningAmber,
-            name: "Overdue",
-            stat: stats?.overdue ?? 0,
+            icon: RxCross2,
+            name: "Rejected",
+            stat: stats?.rejected ?? 0,
             desc: "Missed deadlines"
         },
         {
-            icon: TbFileCertificate,
-            name: "Certification Alerts",
-            stat: stats?.alerts ?? 0,
+            icon: CgSandClock,
+            name: "Pending",
+            stat: stats?.pending ?? 0,
             desc: "Expiring or expired"
         },
     ]
@@ -93,10 +106,16 @@ const DashboardPart = () => {
             </div>
             {/* Graphs Div  */}
             <div className="w-full py-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComplianceGraph />
-                <MonthsGraph />
-                <CertificationGraph />
-                <EmployeesGraph />
+                <FunctionGraph />
+                <DepartmentsGraph />
+                <DivisionsGraph />
+                <AAGraph />
+                <CategoryGraph />
+                <QuarterGraph />
+                <TrainingTypeGraph />
+                <MethodGraph />
+                <RegionGraph />
+                <CostsGraph />
             </div>
         </div>
      );

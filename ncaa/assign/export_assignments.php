@@ -19,14 +19,17 @@
         "Disability",
         "Training Name",
         "Development Gap",
-        "Type",
+        "Training Type",
         "Duration", 
-        "Assigned Date",
-        "Scheduled Date",
+        "Year",
+        "Quarter",
+        "Start Date",
         "End Date",
-        "Status",
         "Provider",
         "Location",
+        "Region",
+        "Acceptance",
+        "Status",
         "Total Cost"
     ]);
 
@@ -41,20 +44,19 @@
     $job_category = $_GET["job_category"] ?? "";
     $category = $_GET["category"] ?? "";
     $training_type = $_GET["training_type"] ?? "";
-    // $quarter = $_GET["quarter"] ?? "";
+    $quarter = $_GET["quarter"] ?? "";
     $method = $_GET["method"] ?? "";
     $disadvantaged = $_GET["disadvantaged"] ?? "";
     $disability = $_GET["disability"] ?? "";
     $gender = $_GET["gender"] ?? "";
     $year = $_GET["year"] ?? "";
+    $region = $_GET["region"] ?? "";
+    $acceptance = $_GET["acceptance"] ?? "";
 
 
     $query = "SELECT
                 a.id,
                 a.assigned_date,
-                a.scheduled_date,
-                a.end_date,
-                a.type,
                 a.status,
 
                 s.staff_no,
@@ -66,12 +68,7 @@
                 s.disadvantaged,
                 s.disability,
 
-                t.training_name,
-                t.reason,
-                t.duration,
-                t.provider,
-                t.location,
-                t.total_cost
+                t.*
                 FROM training_assignments a
                 LEFT JOIN staff s ON s.id = a.staff_id
                 LEFT JOIN training_programs t ON t.id = a.program_id
@@ -97,15 +94,15 @@
 
                OR t.training_name LIKE ?
                OR t.reason LIKE ?
+               OR t.training_type LIKE ?
                OR t.duration LIKE ?
                OR t.provider LIKE ?
                OR t.location LIKE ?
+               OR t.start_date LIKE ?
+               OR t.end_date LIKE ?
 
-               OR a.assigned_date LIKE ?
-               OR a.scheduled_date LIKE ?
-               OR a.end_date LIKE ?
-               OR t.status LIKE ?
-               OR a.type LIKE ?
+               OR a.status LIKE ?
+
 
                OR CONCAT(s.first_name, ' ' , s.last_name) LIKE ?
            )
@@ -113,7 +110,7 @@
 
         $searchValue = "%" . $search . "%";
 
-        for ($i = 0; $i < 19; $i++) {
+        for ($i = 0; $i < 18; $i++) {
             $params[] = $searchValue;
             $types .= "s";
         }
@@ -159,7 +156,7 @@
 
     // Category 
     if ($category !== "") {
-        $query .= " AND s.category = ?";
+        $query .= " AND t.category = ?";
         $params[] = $category;
         $types .= "s";
     }
@@ -169,6 +166,14 @@
     if ($training_type !== "") {
         $query .= " AND t.training_type = ?";
         $params[] = $training_type;
+        $types .= "s";
+    }
+
+
+    // Quarter 
+    if ($quarter !== "") {
+        $query .= " AND t.quarter = ?";
+        $params[] = $quarter;
         $types .= "s";
     }
 
@@ -222,8 +227,27 @@
 
     // Year 
     if ($year !== "") {
-        $query .= " AND YEAR(a.scheduled_date) = ?";
-        $params[] = $year;
+        $query .= " AND t.year = ?";
+        $params[] = (int)$year;
+        $types .= "i";
+    }
+
+
+
+    // Region 
+    if ($region !== "") {
+        $query .= " AND t.region = ?";
+        $params[] = $region;
+        $types .= "s";
+    }
+
+
+
+
+    // Acceptance 
+    if ($acceptance !== "") {
+        $query .= " AND t.acceptance = ?";
+        $params[] = $acceptance;
         $types .= "s";
     }
 
@@ -269,14 +293,17 @@
             $row["disability"],
             $row["training_name"],
             $row["reason"],
-            $row["type"],
+            $row["training_type"],
             $row["duration"],
-            $row["assigned_date"],
-            $row["scheduled_date"],
+            $row["year"],
+            $row["quarter"],
+            $row["start_date"],
             $row["end_date"],
-            $row["status"],
             $row["provider"],
             $row["location"],
+            $row["region"],
+            $row["acceptance"],
+            $row["status"],
             number_format((float)$row["total_cost"], 2, ".", " ")
         ]);
     } 
@@ -286,6 +313,9 @@
 
     // Total 
     fputcsv($output, [
+       "",
+       "",
+       "",
        "",
        "",
        "",

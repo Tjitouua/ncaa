@@ -24,18 +24,29 @@
     $response["trainings"] = mysqli_fetch_assoc($trainingResult)["trainings"];
 
 
-    // Pending 
-    $pendingSql = "SELECT COUNT(*) pending FROM training_assignments WHERE status = 'Pending';";
-    $pendingResult = mysqli_query($conn, $pendingSql);
+    // Total Cost
+    $totalCostSql = "SELECT COALESCE(SUM(tp.total_cost), 0) AS total_cost
+                     FROM training_assignments ta
+                     INNER JOIN training_programs tp ON tp.id = ta.program_id
+                     WHERE ta.status = 'Completed'
+    ";
+    $totalCostResult = mysqli_query($conn, $totalCostSql);
+    $response["total_cost"] = mysqli_fetch_assoc($totalCostResult)["total_cost"];
 
-    $response["pending"] = mysqli_fetch_assoc($pendingResult)["pending"];
 
-
-    // Overdue 
-    $overdueSql = "SELECT COUNT(*) overdue FROM training_assignments WHERE status = 'Overdue';";
+    // Rejected 
+    $overdueSql = "SELECT COUNT(*) rejected FROM training_assignments WHERE status = 'Rejected';";
     $overdueResult = mysqli_query($conn, $overdueSql);
 
-    $response["overdue"] = mysqli_fetch_assoc($overdueResult)["overdue"];
+    $response["rejected"] = mysqli_fetch_assoc($overdueResult)["rejected"];
+
+
+
+    // Pending
+    $overdueSql = "SELECT COUNT(*) pending FROM training_assignments WHERE status = 'Pending';";
+    $overdueResult = mysqli_query($conn, $overdueSql);
+
+    $response["pending"] = mysqli_fetch_assoc($overdueResult)["pending"];
 
     
     // Certs Alerts 
