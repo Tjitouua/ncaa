@@ -10,6 +10,8 @@ import {
     ResponsiveContainer,
   } from "recharts";
 import SelectInputs from "../../../ui/SelectInputs";
+import autoTable from "jspdf-autotable";
+import jsPDF from "jspdf";
 
 
 
@@ -50,6 +52,287 @@ const QuarterGraph = () => {
 
 
 
+
+
+
+
+
+   
+   
+    // PDF Report 
+    const downloadPDF = () => {
+      const doc = new jsPDF;
+
+      // Colors 
+      // const darkBlue = "#193B63";
+      // const darkBlue = "#3E5DE6";
+      const darkBlue = "#3451D1";
+      const lightBlue = "#E9EEF5";
+      const textGray = "#555555";
+      const lightGray = "#F7FBFC";
+
+
+      // Header 
+      // doc.setFillColor(255, 255, 255);
+      // doc.rect(0, 0, 210, 35, "S");
+
+      const logo = new Image();
+      logo.src = "/images/ncaa_logo3.jpeg";
+
+      logo.onload = () => {
+
+      doc.addImage(logo, "JPEG", 92.5, 10, 30, 30);
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+          "Private Bag 12003 Windhoek Namibia | (Tel) +264 83 235 2100 | (Web) https://ncaa.com.na/",
+          105,
+          50,
+          { align: "center" }
+      );
+      
+      
+
+
+      // Top Part 
+      // doc.setFillColor(255, 255, 155);
+      // doc.rect(0, 0, 210, 35, "S");
+
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+          "Trainings per Quarter",
+          10,
+          80
+      )
+
+
+      const financialYear = selectedYear
+            ? `Year: ${selectedYear}/${String(Number(selectedYear) + 1).slice(-2)} - Trainings undertaken in Q1-Q4 with the cost per quarter.`
+            : "All Financial Years";
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+          financialYear,
+          10,
+          87
+      )
+
+
+
+      // doc.setFontSize(10);
+      // doc.setFont("helvetica", "normal");
+      // doc.text(
+      //     "Regulatory, Support and Service Provider totals including overall cost.",
+      //     10,
+      //     92
+      // )
+
+
+
+      const generatedDate = new Date().toLocaleString();
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+          `Generated: ${generatedDate}`,
+          10,
+          92
+      )
+
+
+
+
+      // Table data 
+      const tableData = data.map((item: any) => [
+          `Quarter ${item.name}`,
+          item.trainings,
+          item.staff,
+         //  item.cost,
+          `N$ ${Number(item.cost).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+          })}`,
+      ]);
+
+
+
+
+
+      // Total 
+      const totalTrainings = data.reduce(
+          (total: number, item: any) =>
+               total + Number(item.trainings || 0),
+          0
+      );
+
+
+      const totalStaff = data.reduce(
+          (total: number, item: any) =>
+               total + Number(item.staff || 0),
+          0
+      );
+
+
+      const totalCost = data.reduce(
+          (total: number, item: any) =>
+               total + Number(item.cost || 0),
+          0
+      );
+
+
+
+
+
+      // Total row 
+      tableData.push([
+          "TOTAL",
+          totalTrainings,
+          totalStaff,
+          `N$ ${totalCost.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+          })}`,
+      ]);
+
+
+
+
+      // Create table 
+      autoTable(doc, {
+          startY: 100,
+
+          margin: {
+             left: 10,
+             right: 10
+          },
+
+          head: [
+              [
+                 "Quarter",
+                 "Trainings Attended",
+                 "Staff",
+                 "Total Cost",
+              ],
+          ],
+
+          body: tableData,
+
+          theme: "plain",
+
+          headStyles: {
+              fillColor: darkBlue,
+              textColor: 255,
+              fontStyle: "bold",
+              fontSize: 9,
+          },
+
+          bodyStyles: {
+              fontSize: 9,
+              textColor: [80, 80, 80],
+          },
+
+          alternateRowStyles: {
+              fillColor: lightGray,
+          },
+
+          columnStyles: {
+              0: {
+                  cellWidth: 56,
+              },
+              1: {
+                  cellWidth: 45,
+                  halign: "left",
+              },
+              2: {
+                  cellWidth: 45,
+                  halign: "left",
+              },
+              3: {
+                  cellWidth: 45,
+                  halign: "left",
+              },
+          },
+
+
+          styles: {
+              cellPadding: 5,
+              lineWidth: 0,
+          },
+
+          didParseCell: (hookData) => {
+              // Total row bold 
+              if (
+                  hookData.row.index === tableData.length - 1
+              ) {
+                  hookData.cell.styles.fontStyle = "bold";
+              }
+          },
+
+      });
+
+
+
+
+
+
+      const fileName = selectedYear
+            ? `ncaa_trainings_per_quarter_${selectedYear}.pdf`
+            : "ncaa_trainings_per_quarter";
+
+
+
+
+
+
+      logo.onerror = () => {
+          console.error("Logo failed to load");
+      };
+
+
+
+
+
+      const boardMembers =
+            "Board Members: Ms. Loide Shaparara (Chairperson), Ms. Martha Hitenanye (Deputy Chairperson), Mr. Edward N Kafita, Dr. John Shimaneni, Mr. Edson E Isaaks, Mr. Sam H Nekaro, Mr. Onesmus L. Kaukungwa Ms. Toska Sem (Executive Director)";
+
+      
+      const wrappedBoardMembers = doc.splitTextToSize(boardMembers, 160);
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+          wrappedBoardMembers,
+          105,
+          doc.internal.pageSize.getHeight() - 20,
+          { align: "center" }
+      )
+
+
+
+
+
+      doc.save(fileName);
+
+      };
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
      return (
         <div className="p-6 flex flex-col bg-white shadow-xs shadow-secondary/20 h-[55vh]">
            <div className="w-full flex items-start justify-between">
@@ -70,7 +353,7 @@ const QuarterGraph = () => {
                               <option key={year} value={year}>{year}</option>
                             ))}
                  </SelectInputs>
-                 <TbDownload className="font-bold cursor-pointer hover:text-primary" />
+                 <TbDownload onClick={downloadPDF} className="font-bold cursor-pointer hover:text-primary" />
               </div>
            </div>
 

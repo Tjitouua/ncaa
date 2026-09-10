@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS staff 
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    staff_no VARCHAR (50) NOT NULL UNIQUE,
+    staff_no CHAR (4) NOT NULL UNIQUE,
     first_name VARCHAR (250) NOT NULL,
     last_name VARCHAR (250) NOT NULL,
     gender VARCHAR (250) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS training_programs
     method VARCHAR (250) NOT NULL,
     validity VARCHAR (250) NOT NULL,
     provider VARCHAR (250) NOT NULL,
-    trainer VARCHAR (250) NOT NULL,
+    trainer VARCHAR (250) NULL,
     trainer_status VARCHAR (250) NOT NULL,
     location VARCHAR (250) NOT NULL,
     contact_no VARCHAR (250) NULL,
@@ -84,6 +84,14 @@ CREATE TABLE IF NOT EXISTS training_programs
     end_date DATE NULL,
     region VARCHAR (250) NOT NULL,
     acceptance VARCHAR (250) NOT NULL,
+    reject_reason TEXT NULL,
+
+    UNIQUE KEY unique_training_program (
+        staff_id,
+        training_name,
+        year,
+        quarter
+    ),
 
     CONSTRAINT chk_contact_or_email
     CHECK(contact_no IS NOT NULL OR email IS NOT NULL),
@@ -120,7 +128,7 @@ CREATE TABLE certificates
     staff_email VARCHAR (250) NOT NULL,
     certificate_no VARCHAR (250) NOT NULL,
     issued_date DATE NOT NULL,
-    expiry_date DATE NOT NULL,
+    expiry_date DATE NULL,
     file VARCHAR(250) NOT NULL,
     
     FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE

@@ -56,12 +56,13 @@ const ProgramAdd = () => {
       start_date: "",
       end_date: "",
       region: "",
-      acceptance: ""
+      acceptance: "",
+      rejectReason: ""
    });
 
 
    const [errors, setErrors] = useState<any>({});
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       setForm({ ...form, [e.target.name]: e.target.value})
    };
 
@@ -75,6 +76,7 @@ const ProgramAdd = () => {
         if (
             key !== "contactNo" &&
             key !== "email" &&
+            key !== "trainer" &&
             key !== "start_date" &&
             key !== "end_date" &&
             key !== "trainingCost" &&
@@ -82,6 +84,7 @@ const ProgramAdd = () => {
             key !== "sntCost" &&
             key !== "flightCost" &&
             key !== "otherCosts" &&
+            key !== "rejectReason" &&
             !form[key as keyof typeof form]
         ) {
            newErrors[key] = "This field is required";
@@ -89,11 +92,16 @@ const ProgramAdd = () => {
       });
 
 
-
       if (!form.contactNo.trim() && !form.email.trim()) {
         alert("Please enter either a contact number or an email address...");
         return false;
       }
+
+
+      if (form.acceptance === "Rejected" && !form.rejectReason.trim()) {
+         newErrors.rejectReason = "Please provide a reason for rejection";
+      }
+
 
 
       setErrors(newErrors);
@@ -287,7 +295,7 @@ const ProgramAdd = () => {
                             name="trainer"
                             value={form.trainer}
                             onChange={handleChange}
-                            error={errors.location}
+                            // error={errors.location}
                             placeholder="Enter program location"
                           />
 
@@ -454,6 +462,17 @@ const ProgramAdd = () => {
 
 
                       </div>
+
+                      
+                      {form.acceptance === "Rejected" && (
+                        <div className="w-full mb-6 flex flex-col text-secondary/60 gap-1 text-xs">
+                           <label className="font-bold">Reason</label>
+                           <textarea name="rejectReason" value={form.rejectReason} onChange={handleChange}  rows={4} className="text-xs p-3 border border-secondary/40 rounded-sm focus:outline-none focus:ring-0" placeholder="Reason for rejection"></textarea>
+                           <label className="text-red-600">{errors.rejectReason}</label>
+                        </div>
+                      )}
+
+
                       <PrimaryButt 
                       disabled={loading}
                       onClick={handleSubmit} className="w-full">

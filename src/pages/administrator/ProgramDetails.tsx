@@ -169,6 +169,10 @@ const ProgramDetails = () => {
                                   <option value="Africa">International</option>
                               </DetailsSelect>
                            </div>
+                           {/* <div className="w-full mt-5 flex flex-col text-secondary/60 gap-2 text-xs">
+                              <label className="font-bold">Reason</label>
+                              <textarea name="reject_reason" value={program.reject_reason} onChange={handleChange}  rows={4} className="text-xs p-3 rounded-sm focus:outline-secondary/20 focus:ring-0" placeholder="Reason for rejection"></textarea>
+                           </div> */}
                         </div>
                     </div>
 

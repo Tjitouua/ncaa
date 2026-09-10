@@ -159,6 +159,7 @@ const EmployeeAdd = () => {
                             label="Employee Number"
                             name="employeeNo"
                             value={form.employeeNo}
+                            MaxLength={4}
                             onChange={handleChange}
                             error={errors.employeeNo}
                             placeholder="Enter the employee Number"
@@ -347,7 +348,7 @@ const EmployeeAdd = () => {
                              <option value="Human Capital & Transactional Services">Human Capital & Transactional Services</option>
                              <option value="Procurement">Procurement</option>
                              <option value="Legal Compliance">Legal Compliance</option>
-                             <option value="ICTP">ICTP</option>
+                             <option value="ICT">ICT</option>
                              <option value="Records Management">Records Management</option>
                              <option value="Finance">Finance</option>
                              <option value="Security & Safety Compliance">Security & Safety Compliance</option>
@@ -387,14 +388,12 @@ const EmployeeAdd = () => {
                             error = {errors.jobGrade}
                           >
                              <option value="">Select Job Grade</option>
-                             <option value="Grade 1">Grade 1 — Entry-level / Junior</option>
-                             <option value="Grade 2">Grade 2 — Junior</option>
-                             <option value="Grade 3">Grade 3 — Officer</option>
-                             <option value="Grade 4">Grade 4 — Senior Officer</option>
-                             <option value="Grade 5">Grade 5 — Supervisor</option>
-                             <option value="Grade 6">Grade 6 — Manager</option>
-                             <option value="Grade 7">Grade 7 — Senior Manager</option>
-                             <option value="Grade 8">Grade 8 — Director</option>
+                             <option value="A">A - Unskilled / Basic Entry-Level</option>
+                             <option value="B">B - Semi-Skilled / Operational</option>
+                             <option value="C">C - Skilled / Technical / Specialist</option>
+                             <option value="D">D - Professional / Management</option>
+                             <option value="E">E - Senior Management</option>
+                             <option value="F">F - Executive / Corporate Leadership</option>
                           </SelectInputs>
 
                           <SelectInputs

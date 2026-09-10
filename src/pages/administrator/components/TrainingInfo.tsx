@@ -179,7 +179,7 @@ const TrainingInfo = () => {
         {
             icon: FiUser,
             label: "Trainer",
-            value: trainingInfoList2?.trainer
+            value: trainingInfoList2?.trainer || "N/A"
         },
         {
             icon: BiCategory,
@@ -189,13 +189,13 @@ const TrainingInfo = () => {
         {
             icon: MdOutlineContactMail,
             label: "Email",
-            value: trainingInfoList2?.email
+            value: trainingInfoList2?.email || "N/A"
         },
         ,
         {
             icon: MdOutlineContactMail,
             label: "Contact",
-            value: trainingInfoList2?.contact_no
+            value: trainingInfoList2?.contact_no || "N/A"
         },
     ];
 

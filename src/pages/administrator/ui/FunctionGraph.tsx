@@ -107,7 +107,7 @@ const FunctionGraph = () => {
         doc.setFontSize(11);
         doc.setFont("helvetica", "normal");
         doc.text(
-            "Training by Main Function",
+            "Trainings by Main Function",
             10,
             80
         )
@@ -155,7 +155,7 @@ const FunctionGraph = () => {
             item.name,
             item.trainings,
             item.staff,
-            item.cost,
+            // item.cost,
             `N$ ${Number(item.cost).toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
@@ -284,8 +284,8 @@ const FunctionGraph = () => {
 
 
         const fileName = selectedYear
-              ? `Trainings_by_Main_Functions_${selectedYear}.pdf`
-              : "Trainings_by_Main_Functions";
+              ? `ncaa_trainings_per_function_${selectedYear}.pdf`
+              : "ncaa_trainings_per_function";
 
 
 
@@ -365,7 +365,7 @@ const FunctionGraph = () => {
            <div className="flex-1 w-full text-xs">
                <ResponsiveContainer width="100%" height="100%">
                        <PieChart>
-                           <Pie data={data} dataKey="trainings" nameKey="name" cx="50%" cy="50%" outerRadius={120} label>
+                           <Pie data={data} dataKey="trainings" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
                                {data.map((entry, index) => (
                                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}  />
                                ))}

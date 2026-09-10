@@ -63,7 +63,7 @@
 
 
     $sql = "INSERT INTO training_assignments (staff_id, program_id, assigned_date, status)
-                   VALUES (?, ?, NOW(), 'Pending')
+                   VALUES (?, ?, NOW(), ?)
            ";
     
     $stmt = $conn->prepare($sql);
@@ -78,7 +78,7 @@
 
     foreach ($program_ids as $program_id) {
         // Get training 
-        $programSql = "SELECT training_name, training_type, year, quarter FROM training_programs WHERE id = ?";
+        $programSql = "SELECT training_name, training_type, year, quarter, acceptance, reject_reason FROM training_programs WHERE id = ?";
         $programStmt = $conn->prepare($programSql);
         $programStmt->bind_param("i", $program_id);
         $programStmt->execute();
@@ -95,8 +95,14 @@
         $trainingName = $program["training_name"];
         $year = $program["year"];
         $quarter = $program["quarter"];
-
         $type = $program["training_type"];
+        $acceptance = $program["acceptance"];
+        $rejectReason = $program["reject_reason"];
+
+        $assignment_status = ($acceptance === "Accepted") ? "Pending" : "Rejected";
+        // $assignment_status = "Rejected";
+
+
 
         $checkSql = "SELECT
                        id
@@ -120,9 +126,10 @@
 
 
 
-        $stmt->bind_param("ii",
+        $stmt->bind_param("iis",
                            $staff_id,
                            $program_id,
+                           $assignment_status
         );
 
 
@@ -132,10 +139,15 @@
         $assignment_id = $conn->insert_id;
 
 
-        $title = "New training assigned";
-        
+        $currentYear = date("Y");
 
-        $message = "You have been assigned $trainingName. The training runs/ran in the $quarter quarter of $year.";
+        if ($year >= $currentYear) {
+           $title = "New training assigned";
+           $message = "You have been assigned $trainingName. The training runs/ran in the $quarter quarter of $year.";
+        } else {
+           $title = "Training record added";
+           $message = "A training record for $trainingName has been added to your training history. The training was recorded for the $quarter quarter of $year.";
+        }
 
         $status = "Unread";
         $notificationType = "Training Assignment";
@@ -153,14 +165,34 @@
 
         $notifStmt->execute();
 
-
-        sendAssignmentEmail(
-            $staff["email"],
-            $staff["first_name"],
-            $trainingName,
-            $quarter,
-            $year
-        );
+        if ($acceptance === "Accepted") {
+            if ($year >= $currentYear) {
+              sendAcceptedEmail(
+                $staff["email"],
+                $staff["first_name"],
+                $trainingName,
+                $quarter,
+                $year
+            );
+            } else {
+                sendHistoryEmail(
+                    $staff["email"],
+                    $staff["first_name"],
+                    $trainingName,
+                    $quarter,
+                    $year
+                );
+            }
+        } elseif ($acceptance === "Rejected") {
+            sendRejectedEmail(
+                $staff["email"],
+                $staff["first_name"],
+                $trainingName,
+                $quarter,
+                $year,
+                $rejectReason
+            );
+        }
 
     }
 

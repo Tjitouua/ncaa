@@ -9,11 +9,6 @@
 
      $today = date("Y-m-d");
 
-     $conn->query("
-          UPDATE training_assignments
-          SET status = 'Pending'
-          WHERE status != 'Completed';
-     ");
 
      $sql = "SELECT
                s.*,

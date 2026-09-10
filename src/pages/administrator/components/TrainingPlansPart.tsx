@@ -67,6 +67,15 @@ const TrainingPlansPart = () => {
 
 
 
+   const handleExport = () => {
+   window.open(
+      `http://localhost/ncaa/program/export_program.php?staff_id=${id}&year=${selectedYear}`,
+      "_blank"
+   );
+   };
+
+
+
 
 
 
@@ -85,7 +94,7 @@ const TrainingPlansPart = () => {
                     <label className="text-xs text-secondary/60">Total: <span className="font-bold text-primary">N$ {totalCost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(",", ".")}</span></label>
                  </div>
                  <div className="flex items-center gap-3">
-                    <SecondaryButt>
+                    <SecondaryButt onClick={handleExport}>
                           <LuDownload />
                           Export
                       </SecondaryButt>
@@ -106,7 +115,7 @@ const TrainingPlansPart = () => {
 
 
                       <div className="flex gap-3 items-end">
-                          <SecondaryButt><LuFilter /> Filter</SecondaryButt>
+                          {/* <SecondaryButt><LuFilter /> Filter</SecondaryButt> */}
                           <div className="flex flex-col gap-1">
                              <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                                 <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">

@@ -23,11 +23,11 @@
    $email = $data["email"];
 
    $sql = " SELECT
+               t.*,
                a.id,
                s.first_name,
                s.last_name,
                s.department,
-               t.*,
                a.status
                FROM training_assignments a
                LEFT JOIN staff s ON a.staff_id = s.id

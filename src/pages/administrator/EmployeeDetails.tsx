@@ -152,7 +152,7 @@ const EmployeeDetails = () => {
    const getStatusColor = (status) => {
       if (status === "Pending") return "bg-orange-300";
       if (status === "Completed") return "bg-green-200";
-      if (status === "Overdue") return "bg-red-200";
+      if (status === "Rejected") return "bg-red-200";
       return "bg-grey-200";
    }
 
@@ -246,7 +246,7 @@ const EmployeeDetails = () => {
                                  <option value="Human Resources">Human Resources</option>
                                  <option value="Procurement">Procurement</option>
                                  <option value="Legal">Legal</option>
-                                 <option value="ICTP">ICTP</option>
+                                 <option value="ICT">ICT</option>
                               </DetailsSelect>
                               <DetailsSelect label="Job/AA Category" name="job_category" onChange={handleChange} value={employee.job_category || ""}>
                                  <option value="">Select AA Category</option>
@@ -260,14 +260,13 @@ const EmployeeDetails = () => {
                               </DetailsSelect>
                               <DetailsSelect label="Job Grade" name="job_grade" onChange={handleChange} value={employee.job_grade || ""}>
                                  <option value="">Select Job Grade</option>
-                                 <option value="Grade 1">Grade 1 — Entry-level / Junior</option>
-                                 <option value="Grade 2">Grade 2 — Junior</option>
-                                 <option value="Grade 3">Grade 3 — Officer</option>
-                                 <option value="Grade 4">Grade 4 — Senior Officer</option>
-                                 <option value="Grade 5">Grade 5 — Supervisor</option>
-                                 <option value="Grade 6">Grade 6 — Manager</option>
-                                 <option value="Grade 7">Grade 7 — Senior Manager</option>
-                                 <option value="Grade 8">Grade 8 — Director</option>
+                                 <option value="">Select Job Grade</option>
+                                 <option value="A">A - Unskilled / Basic Entry-Level</option>
+                                 <option value="B">B - Semi-Skilled / Operational</option>
+                                 <option value="C">C - Skilled / Technical / Specialist</option>
+                                 <option value="D">D - Professional / Management</option>
+                                 <option value="E">E - Senior Management</option>
+                                 <option value="F">F - Executive / Corporate Leadership</option>
                               </DetailsSelect>
                               <DetailsSelect label="Ethnicity" name="ethnicity" onChange={handleChange} value={employee.ethnicity || ""}>
                                  <option value="">Select Ethnicity</option>

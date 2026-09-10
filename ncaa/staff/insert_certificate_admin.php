@@ -41,7 +41,7 @@
 
 
 
-   if (!$training_id || !$issued_date || !$expiry_date) {
+   if (!$training_id || !$issued_date) {
       echo json_encode([
         "success" => false,
         "message" => "Missing required field"

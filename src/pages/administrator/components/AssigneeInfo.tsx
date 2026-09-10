@@ -45,8 +45,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 //    Updating the status of the training 
    const getNextStatus = (current: string) => {
     if (current === "Pending") return "Completed";
-    if (current === "Completed") return "Overdue";
-    if (current === "Overdue") return "Pending";
+    if (current === "Completed") return "Pending";
+   //  if (current === "Overdue") return "Pending";
     return "Pending";
    }
 
@@ -96,7 +96,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
          return;
       }
 
-      if (!issuedDate || !expiryDate || !certificateFile) {
+      if (!issuedDate || !certificateFile) {
         alert("Please fill all required fields");
         return;
       }
@@ -214,7 +214,14 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         },
         {
             label: "Expiry",
-            value: trainingInfoList2?.expiry_date
+            value: !trainingInfoList2?.expiry_date ||
+                   trainingInfoList2?.expiry_date === "0000-00-00"
+                   ? "No Expiry"
+                   : new Date(trainingInfoList2?.expiry_date).toLocaleDateString("en-GB", {
+                   day: "numeric",
+                   month: "long",
+                   year: "numeric"
+     })
         }
     ]
 
@@ -240,6 +247,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
 
+           {trainingInfoList2.acceptance !== "Rejected" && (
+            <>
            {/* Certificate not there message  */}
            {!hasCertificate && (
            <div className="w-full py-6 pb-6 px-5 flex flex-col gap-3 bg-white shadow-sm shadow-secondary/30">
@@ -318,6 +327,21 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
               <SecondaryButt onClick={cycleStatus}  className="!bg-secondaryy">Mark {getNextStatus(trainingInfoList2?.status)}</SecondaryButt>
            </div>
            )} 
+
+           </>
+           )}
+
+
+
+
+
+           {/* Rejected Div  */}
+           {trainingInfoList2?.acceptance === "Rejected" && (
+           <div className="w-full py-16 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
+               <label className="font-bold text-sm mb-2">Reason for rejection</label>
+               <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label>
+           </div>
+           )}
 
 
 

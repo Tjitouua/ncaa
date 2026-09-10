@@ -69,32 +69,35 @@ const TrainingInfo = () => {
         {
             icon: VscPieChart,
             label: "Quarter",
-            value: "First (1)"
+            value: Number(trainingInfoList2?.quarter) === 1 ? "First (1)" : Number(trainingInfoList2?.quarter) === 2 ? "Second (2)" : Number(trainingInfoList2?.quarter) === 3 ? "Third (3)" : Number(trainingInfoList2?.quarter) === 4 ? "Fourth (4)" : ""
           },
         {
           icon: MdDateRange,
           label: "Start Date",
-          value: new Date(trainingInfoList2?.scheduled_date).toLocaleDateString("en-GB", {
+          value: trainingInfoList2?.start_date && trainingInfoList2?.start_date !== "0000-00-00"
+          ? new Date(trainingInfoList2?.start_date).toLocaleDateString("en-GB", {
             day: "numeric",
             month: "long",
             year: "numeric"
-         })
+            })
+           : "TBD"
         },
         {
             icon: MdDateRange,
             label: "End Date",
-            value: new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
-               day: "numeric",
-               month: "long",
-               year: "numeric"
-            })
+            value: trainingInfoList2?.end_date && trainingInfoList2?.end_date !== "0000-00-00"
+            ? new Date(trainingInfoList2?.end_date).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+              })
+              : "TBD"
         },
         {
             icon: IoLocationOutline,
             label: "Venue/Location",
             value: trainingInfoList2?.location
         },
-        ,
         {
             icon: IoLocationOutline,
             label: "Method",
@@ -190,7 +193,7 @@ const TrainingInfo = () => {
         {
             icon: FiUser,
             label: "Trainer",
-            value: trainingInfoList2?.trainer
+            value: trainingInfoList2?.trainer || "N/A"
         },
         {
             icon: BiCategory,
@@ -200,9 +203,8 @@ const TrainingInfo = () => {
         {
             icon: MdOutlineContactMail,
             label: "Email",
-            value: trainingInfoList2?.email
+            value: trainingInfoList2?.email || "N/A"
         },
-        ,
         {
             icon: MdOutlineContactMail,
             label: "Contact",

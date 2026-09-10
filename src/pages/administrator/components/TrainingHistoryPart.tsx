@@ -27,8 +27,8 @@ const TrainingHistoryPart = () => {
    
    const getNextStatus = (current) => {
       if (current === "Pending") return "Completed";
-      if (current === "Completed") return "Overdue";
-      if (current === "Overdue") return "Pending";
+      if (current === "Completed") return "Pending";
+      if (current === "Rejected") return "Rejected";
       return "Pending";
    }
 
@@ -36,7 +36,7 @@ const TrainingHistoryPart = () => {
    const getStatusColor = (status) => {
       if (status === "Pending") return "bg-orange-200";
       if (status === "Completed") return "bg-green-200";
-      if (status === "Overdue") return "bg-red-200";
+      if (status === "Rejected") return "bg-red-200";
       return "bg-grey-200";
    }
 

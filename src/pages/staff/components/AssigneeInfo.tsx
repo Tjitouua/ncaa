@@ -41,7 +41,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    // Adding certficate to database 
    const handleSubmitCertificate = async () => {
       if (!id) return alert("Missing training ID");
-      if (!issuedDate || !expiryDate || !certificateFile) {
+      if (!issuedDate || !certificateFile) {
          return alert("Please fill all required fields");
       }
 
@@ -167,10 +167,13 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
         },
         {
             label: "Expiry",
-            value: new Date(trainingInfoList2?.expiry_date).toLocaleDateString("en-GB", {
-               day: "numeric",
-               month: "long",
-               year: "numeric"
+            value: !trainingInfoList2?.expiry_date ||
+                   trainingInfoList2?.expiry_date === "0000-00-00"
+                   ? "No Expiry"
+                   : new Date(trainingInfoList2?.expiry_date).toLocaleDateString("en-GB", {
+                     day: "numeric",
+                     month: "long",
+                     year: "numeric"
             })
         }
     ]
@@ -197,7 +200,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
 
-
+           {trainingInfoList2.acceptance !== "Rejected" && (
+            <>
            {/* Certificate  */}
            {!hasCertificate && (
            <div className="w-full py-6 pb-6 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
@@ -216,7 +220,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                  </div>
                  <div className="w-full flex flex-col gap-2">
                    <label className="text-xs font-bold text-secondary/80">Expiry *</label>
-                   <input value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                   <input value={expiryDate } onChange={(e) => setExpiryDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
                  </div>
               </div>
               {/* Certificate File  */}
@@ -225,7 +229,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                  <input onChange={(e) => setCertificateFile(e.target.files ? e.target.files[0] : null)} type="file" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
               </div>
               <label className="text-[11px] text-secondary/50 mb-5">No file selected - max 5 MB</label>
-              <PrimaryButt className="mb-3" onClick={handleSubmitCertificate}>{loading ? "Submitting..." : "Submit Replacement"}</PrimaryButt>
+              <PrimaryButt className="mb-3" onClick={handleSubmitCertificate}>{loading ? "Submitting..." : "Submit Certificate"}</PrimaryButt>
               {/* <SecondaryButt>Cancel</SecondaryButt> */}
            </div>
            )}
@@ -289,6 +293,20 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
               
            </div>
            )} 
+           </>
+           )}
+
+
+
+
+
+           {/* Rejected Div  */}
+           {trainingInfoList2?.acceptance === "Rejected" && (
+           <div className="w-full py-16 px-8 flex flex-col bg-white shadow-sm shadow-secondary/30">
+               <label className="font-bold text-sm mb-2">Reason for rejection</label>
+               <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label>
+           </div>
+           )}
 
 
 

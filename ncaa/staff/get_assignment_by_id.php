@@ -47,6 +47,7 @@
               t.end_date,
               t.region,
               t.acceptance,
+              t.reject_reason,
               s.first_name,
               s.last_name,
               s.department,
