@@ -1,7 +1,21 @@
-import { FaCheck } from "react-icons/fa";
 import NotificationUI from "../ui/NotificationUI";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+
+
+
+
+
+interface Notification {
+    id: number;
+    title: string;
+    message: string;
+    sent_date: string;
+    training_id: number;
+}
+
+
+
 
 
 
@@ -10,16 +24,16 @@ const NotificationsPart = () => {
 
 
     const navigate = useNavigate();
-    const [showUnread, setShowUnread] = useState(true);
+    // const [showUnread, setShowUnread] = useState(true);
     const [activeTab, setActiveTab] = useState("New Upload");
 
-    const [newUpload, setNewUpload] = useState([]);
-    const [trainingOverdue, setTrainingOverdue] = useState([]);
-    const [certificateExpiring, setCertificateExpiring] = useState([]);
-    const [expiredCertificate, setExpiredCertificate] = useState([]);
-    const [all, setAll] = useState([]);
+    const [newUpload, setNewUpload] = useState<Notification[]>([]);
+    const [trainingOverdue, setTrainingOverdue] = useState<Notification[]>([]);
+    const [certificateExpiring, setCertificateExpiring] = useState<Notification[]>([]);
+    const [expiredCertificate, setExpiredCertificate] = useState<Notification[]>([]);
+    const [all, setAll] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
-    const [notifCount, setNotifCount] = useState(0);
+    // const [notifCount, setNotifCount] = useState(0);
 
     // const [counts, setCounts] = useState({newUpload: 0, expiring: 0, expired: 0, overdue: 0, all: 0});
 
@@ -29,7 +43,7 @@ const NotificationsPart = () => {
 
 
 
-    const markTabAsRead = async (tab) => {
+    const markTabAsRead = async (tab: string) => {
          let url = "";
 
          switch (tab) {

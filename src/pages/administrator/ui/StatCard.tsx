@@ -1,6 +1,5 @@
 import type React from "react";
-import type { FC } from "react";
-import { FiUsers } from "react-icons/fi";
+
 
 interface Props {
     icon: React.ElementType;

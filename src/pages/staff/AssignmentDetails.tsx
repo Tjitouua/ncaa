@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import TrainingInfo from "./components/TrainingInfo";
 import AssigneeInfo from "./components/AssigneeInfo";
-import { RxCross1 } from "react-icons/rx";
 import { ImCross } from "react-icons/im";
 
 

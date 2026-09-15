@@ -1,15 +1,11 @@
 import { RxDashboard } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
-import { FiUserCheck, FiUsers } from "react-icons/fi";
-import { PiGraduationCap } from "react-icons/pi";
+import { FiUsers } from "react-icons/fi";
 import { FaRegFileAlt } from "react-icons/fa";
-import { PiCertificateBold } from "react-icons/pi";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { MdOutlinePersonAddAlt } from "react-icons/md";
-import { MdGridOn } from "react-icons/md";
-import { LuInbox } from "react-icons/lu";
-import { BsGraphUp } from "react-icons/bs";
+import type React from "react";
+
 
 
 
@@ -24,31 +20,12 @@ const menuItems = [
       path: "/admin/employees",
       icon: <FiUsers />
    },
-   // {
-   //    name: "Training Programs",
-   //    path: "/admin/training_programs",
-   //    icon: <PiGraduationCap />
-   // },
-   // {
-   //    name: "Training Matrix",
-   //    path: "/admin/training_matrix",
-   //    icon: <MdGridOn />
-   // },
-   // {
-   //    name: "Training Requests",
-   //    path: "/admin/training_requests",
-   //    icon: <LuInbox />
-   // },
+
    {
       name: "Assign Training",
       path: "/admin/assign_training",
       icon: <FaRegFileAlt />
    },
-   // {
-   //    name: "Staff Compliance",
-   //    path: "/admin/staff_compliance",
-   //    icon: <FiUserCheck />
-   // },
    {
       name: "Training History",
       path: "/admin/training_history",
@@ -60,11 +37,18 @@ const menuItems = [
       icon: <IoNotificationsOutline />
    },
    
-]
+];
 
 
 
-const Menu = ({ showMenu, setShowMenu }) => {
+interface MenuProps {
+   showMenu: boolean;
+   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+
+
+const Menu = ({ showMenu, setShowMenu }: MenuProps) => {
    return (
     <>
      {showMenu && (

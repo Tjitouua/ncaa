@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+
+
+interface Assignment {
+   id: number;
+   first_name: string;
+   last_name: string;
+   training_name: string;
+   year: string;
+   quarter: string;
+   status: string;
+}
 
  
 
@@ -11,9 +22,9 @@ const RecentAssignments = () => {
 
 
 
-   const navigate = useNavigate();
+   // const navigate = useNavigate();
 
-   const [assignments, setAssignments] = useState([]);
+   const [assignments, setAssignments] = useState<Assignment[]>([]);
    const [loading, setLoading] = useState(true);
 
    useEffect(() => {
@@ -70,7 +81,7 @@ const RecentAssignments = () => {
                               </td>
                            </tr>
                         ) : (
-                        assignments.slice(0, 11).map((assign, index) => (
+                        assignments.slice(0, 11).map((assign) => (
                           <tr key={assign.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>

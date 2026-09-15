@@ -1,9 +1,5 @@
-import { BsFillCalendarDateFill } from "react-icons/bs";
 import TrainingInfoUi from "../ui/TrainingInfoUi";
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import { IoLocation } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
-import { MdOutlineAccessTime } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { PiGraduationCap } from "react-icons/pi";
 import { BiCategory } from "react-icons/bi";

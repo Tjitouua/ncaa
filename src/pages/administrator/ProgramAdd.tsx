@@ -154,7 +154,7 @@ const ProgramAdd = () => {
        <div className="w-full min-h-screen flex">
           <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
-             <TopMenu setShowMenu={setShowMenu} title="Employees" />
+             <TopMenu setShowMenu={setShowMenu} title="Training Plans" />
              <div className="w-full min-h-screen flex flex-col gap-5 px-2 py-9 md:px-6">
                 <label onClick={() => navigate(-1)}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
 

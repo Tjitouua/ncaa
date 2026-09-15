@@ -6,7 +6,7 @@ import { IoArrowBack } from "react-icons/io5";
 import PrimaryButt from "../../ui/PrimaryButt";
 import { GrEdit } from "react-icons/gr";
 import DetailsInput from "./ui/DetailsInput";
-import SecondaryButt from "../../ui/SecondaryButt";
+// import SecondaryButt from "../../ui/SecondaryButt";
 import DetailsSelect from "./ui/DetailsSelect";
 import DetailsDate from "./ui/DetailsDate";
 

@@ -1,14 +1,9 @@
-import { FiUsers } from "react-icons/fi";
-import { MdOutlinePendingActions, MdOutlineWarningAmber } from "react-icons/md";
 import { PiGraduationCap } from "react-icons/pi";
 import StatCard from "../ui/StatCard";
-import { FaRegCheckCircle } from "react-icons/fa";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { TbFileCertificate } from "react-icons/tb";
-import { BsFileEarmarkCheck } from "react-icons/bs";
 import { GrCertificate } from "react-icons/gr";
-import PrimaryButt from "../../../ui/PrimaryButt";
 import { IoSettingsOutline } from "react-icons/io5";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificationsCard from "../ui/CertificationsCard";

@@ -1,5 +1,4 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { MdDateRange, MdOutlineAccessTime } from "react-icons/md";
+import { MdDateRange } from "react-icons/md";
 import TrainingInfoUi from "../ui/TrainingInfoUi";
 import { FiUser } from "react-icons/fi";
 import { LiaBuildingSolid } from "react-icons/lia";
@@ -7,9 +6,7 @@ import { PiGraduationCap } from "react-icons/pi";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificateUi from "../ui/CertificateUi";
-import { LuDownload } from "react-icons/lu";
 import { FiEye } from "react-icons/fi";
-import { MdOutlineFindReplace } from "react-icons/md";
 import { TbZoomReplace } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";

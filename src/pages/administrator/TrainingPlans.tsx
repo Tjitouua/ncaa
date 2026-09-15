@@ -1,4 +1,3 @@
-import EmployeesPart from "./components/EmployeesPart";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
 import { useState } from "react";

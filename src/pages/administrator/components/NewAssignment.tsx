@@ -3,9 +3,74 @@ import { BsFileEarmarkCheck } from "react-icons/bs";
 import { IoSearchSharp } from "react-icons/io5";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-// import { preview } from "vite";
+
+
+
+
+interface Staff {
+    id: number;
+    staff_no: string;
+    first_name: string;
+    last_name: string;
+    gender: string;
+    email: string;
+    dob: string;
+    national_id: string;
+    phone_no: string;
+    city: string;
+    disadvantaged: string;
+    disability: string;
+    function: string;
+    department: string;
+    division: string;
+    job_category: string;
+    job_grade: string;
+    ethnicity: string;
+    role: string;
+    employment_type: string;
+    doj: string;
+    employment_status: string;
+    created_at: string;
+    updated_at: string;
+ };
+
+
+
+
+
+ interface Programs {
+    id: number;
+    staff_id: number;
+    training_name: string;
+    reason: string;
+    duration: string;
+    category: string;
+    training_type: string;
+    method: string;
+    validity: string;
+    provider: string;
+    trainer: string;
+    trainer_status: string;
+    location: string;
+    contact_no: string;
+    email: string;
+    training_cost: string;
+    accommodation_cost: string;
+    snt_cost: string;
+    flight_cost: string;
+    other_costs: string;
+    total_cost: string;
+    approved: string;
+    year: string;
+    quarter: string;
+    start_date: string;
+    end_date: string;
+    region: string;
+    acceptance: string;
+    reject_reason: string;
+ }
+
 
 
 
@@ -13,11 +78,11 @@ import Select from "react-select";
 const NewAssignment = () => {
 
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
-    const [staff, setStaff] = useState([]);
-    const [program, setProgram] = useState([]);
+    const [staff, setStaff] = useState<Staff[]>([]);
+    const [program, setProgram] = useState<Programs[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState("");
     const [searchTraining, setSearchTraining] = useState("");
@@ -197,7 +262,7 @@ const NewAssignment = () => {
                        placeholder="Search or select staff..."
                        isSearchable
                        onChange={(selected) => {
-                          setSelectedStaff(selected?.value || "");
+                          setSelectedStaff(selected?.value ? String(selected.value) : "");
                           setSelectedProgram([]);
                        }}
                     />

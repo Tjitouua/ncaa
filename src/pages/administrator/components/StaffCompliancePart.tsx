@@ -1,8 +1,4 @@
-import { FiUsers } from "react-icons/fi";
-import type StaffCompliance from "../StaffCompliance"
-import { PiCertificateBold, PiGraduationCap } from "react-icons/pi";
-import { MdOutlinePendingActions, MdOutlineWarningAmber } from "react-icons/md";
-import { TbFileCertificate } from "react-icons/tb";
+import { PiCertificateBold } from "react-icons/pi";
 import StatCard from "../ui/StatCard";
 import { BsFileEarmarkCheck } from "react-icons/bs";
 import { IoAlarmOutline } from "react-icons/io5";

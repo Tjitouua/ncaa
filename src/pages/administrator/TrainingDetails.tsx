@@ -3,7 +3,6 @@ import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
 import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { RxCross1 } from "react-icons/rx";
 import { ImCross } from "react-icons/im";
 import TrainingInfo from "./components/TrainingInfo";
 import AssigneeInfo from "./components/AssigneeInfo";

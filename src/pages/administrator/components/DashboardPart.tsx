@@ -1,10 +1,6 @@
 import StatCard from "../ui/StatCard";
 import { FiUsers } from "react-icons/fi";
 import { PiGraduationCap } from "react-icons/pi";
-import { MdOutlinePendingActions } from "react-icons/md";
-import { TbFileCertificate } from "react-icons/tb";
-import { MdOutlineWarningAmber } from "react-icons/md";
-import EmployeesGraph from "../ui/EmployeesGraph";
 import { useEffect, useState } from "react";
 import DepartmentsGraph from "../ui/DepartmentsGraph";
 import DivisionsGraph from "../ui/DivisionsGraph";

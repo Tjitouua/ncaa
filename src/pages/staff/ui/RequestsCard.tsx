@@ -1,7 +1,6 @@
 import { FaGraduationCap, FaRegClock } from "react-icons/fa6";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type React from "react";
 import { useNavigate } from "react-router-dom";

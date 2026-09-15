@@ -2,7 +2,7 @@ import PrimaryButt from "../../../ui/PrimaryButt";
 import { IoSearchSharp } from "react-icons/io5";
 import { LuDownload, LuFilter } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SecondaryButt from "../../../ui/SecondaryButt";
 
 

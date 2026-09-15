@@ -2,12 +2,12 @@ import type React from "react";
 
 
 interface Props {
-    label: string;
+    label?: string;
     name?: string;
     value?: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type?: string;
-    placeholder: string;
+    placeholder?: string;
     error?: string;
     disabled?: boolean;
     MaxLength?: number; 

@@ -1,16 +1,12 @@
-import PrimaryButt from "../../ui/PrimaryButt";
-import SecondaryButt from "../../ui/SecondaryButt";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
 import { useEffect, useState } from "react";
 
 import { FiEye } from "react-icons/fi";
-import { LuEye } from "react-icons/lu";
-import { FiDownload } from "react-icons/fi";
 import { GrCertificate } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { ImCross } from "react-icons/im";
-// import { Certificate } from "crypto";
+
 
 
 

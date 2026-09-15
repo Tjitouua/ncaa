@@ -1,7 +1,4 @@
-import { BsFillCalendarDateFill } from "react-icons/bs";
 import TrainingInfoUi from "../ui/TrainingInfoUi";
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import { IoLocation } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
@@ -12,9 +9,7 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LiaBuildingSolid } from "react-icons/lia";
-import SecondaryButt from "../../../ui/SecondaryButt";
 import PrimaryButt from "../../../ui/PrimaryButt";
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { LuCircleX } from "react-icons/lu";
 

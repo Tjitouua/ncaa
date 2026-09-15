@@ -1,6 +1,5 @@
-import { IoMdAdd } from "react-icons/io";
 import { RiAddLargeLine } from "react-icons/ri";
-import { LuFilter, LuUpload } from "react-icons/lu";
+import { LuFilter } from "react-icons/lu";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import { IoSearchSharp } from "react-icons/io5";
@@ -13,14 +12,57 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 
+
+
+
+interface Staff {
+   id: number;
+   staff_no: string;
+   first_name: string;
+   last_name: string;
+   gender: string;
+   email: string;
+   dob: string;
+   national_id: string;
+   phone_no: string;
+   city: string;
+   disadvantaged: string;
+   disability: string;
+   function: string;
+   department: string;
+   division: string;
+   job_category: string;
+   job_grade: string;
+   ethnicity: string;
+   role: string;
+   employment_type: string;
+   doj: string;
+   employment_status: string;
+   created_at: string;
+   updated_at: string;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const EmployeesPart = () => {
 
 
 
    const navigate = useNavigate();
    
-   const [staff, setStaff] = useState([]);
-   const[roles, setRoles] = useState([]);
+   const [staff, setStaff] = useState<Staff[]>([]);
+   // const[roles, setRoles] = useState([]);
    const [loading, setLoading] = useState(true);
 
    const [searchStaff, setSearchStaff] = useState("");
@@ -32,18 +74,18 @@ const EmployeesPart = () => {
 
 
    // Getting roles 
-   useEffect(() => {
-      fetch("http://localhost/ncaa/roles/get_roles.php")
-      .then((response) => response.json())
-      .then((data) => {
-         if (data.success) {
-            setRoles(data.data);
-         }
-      })
-      .catch((error) => {
-         console.error("Error fetching roles: ", error);
-      });
-   }, []);
+   // useEffect(() => {
+   //    fetch("http://localhost/ncaa/roles/get_roles.php")
+   //    .then((response) => response.json())
+   //    .then((data) => {
+   //       if (data.success) {
+   //          setRoles(data.data);
+   //       }
+   //    })
+   //    .catch((error) => {
+   //       console.error("Error fetching roles: ", error);
+   //    });
+   // }, []);
 
 
 
@@ -64,8 +106,23 @@ const EmployeesPart = () => {
 
 
 
+   type filterName =
+      | "function"
+      | "department"
+      | "division"
+      | "job_category"
+      | "disadvantaged"
+      | "disability"
+      | "gender";
 
-   const filterOptions = [
+
+
+
+   const filterOptions: {
+      name: filterName;
+      label: String;
+      options: string[];
+   }[] = [
       {
          name: "function",
          label: "Function",
@@ -148,7 +205,7 @@ const EmployeesPart = () => {
 
 
 
-   const handleFilterChange = (name, value) => {
+   const handleFilterChange = (name: string, value: string) => {
       setFilters((prev) => ({
          ...prev,
          [name]: value
@@ -182,7 +239,7 @@ const EmployeesPart = () => {
    
 
    // Delete 
-   const handleDelete = (id) => {
+   const handleDelete = (id: number) => {
        if (!window.confirm("Are you sure you want to delete this staff?")) return;
 
        fetch("http://localhost/ncaa/staff/delete_staff.php", {
@@ -261,7 +318,7 @@ const EmployeesPart = () => {
        const search = searchStaff.toLowerCase().trim();
 
        const matchesSearch =
-          employee.staff_id?.toLowerCase().includes(search) ||
+          employee.staff_no?.toLowerCase().includes(search) ||
           employee.first_name?.toLowerCase().includes(search) ||
           employee.last_name?.toLowerCase().includes(search) ||
           employee.gender?.toLowerCase().includes(search) ||
@@ -270,8 +327,6 @@ const EmployeesPart = () => {
           employee.national_id?.toLowerCase().includes(search) ||
           employee.phone_no?.toLowerCase().includes(search) ||
           employee.city?.toLowerCase().includes(search) ||
-          employee.address?.toLowerCase().includes(search) ||
-          employee.postal_address?.toLowerCase().includes(search) ||
           employee.department?.toLowerCase().includes(search) ||
           employee.role?.toLowerCase().includes(search) ||
           employee.employment_type?.toLowerCase().includes(search) ||
@@ -340,15 +395,17 @@ const EmployeesPart = () => {
 
 
 
-   const resetFilters = () => {
-      setFilters({
-         department: "",
-         role: "",
-         disadvantaged: "",
-         disability: "",
-         gender: ""
-      });
-   };
+   // const resetFilters = () => {
+   //    setFilters({
+   //       function: "",
+   //       department: "",
+   //       division: "",
+   //       job_category: "",
+   //       disadvantaged: "",
+   //       disability: "",
+   //       gender: ""
+   //    });
+   // };
 
 
 
@@ -449,7 +506,7 @@ const EmployeesPart = () => {
                                 </td>
                              </tr>
                        ) : (
-                        filteredStaff.map((employee, index) => (
+                        filteredStaff.map((employee) => (
                           <tr key={employee.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-2">{employee.staff_no}</td>
                              <td className="px-3 py-2">{employee.first_name} {employee.last_name}</td>

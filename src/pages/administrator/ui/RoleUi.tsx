@@ -3,7 +3,7 @@ import type { IconType } from "react-icons";
 import { BsFillPersonVcardFill, BsFillRouterFill } from "react-icons/bs";
 import { FaPlaneDeparture, FaWrench } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa6";
-import { HiBuildingOffice2, HiComputerDesktop } from "react-icons/hi2";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 import { RiComputerFill } from "react-icons/ri";
 import { SiSpringsecurity } from "react-icons/si";
 

@@ -1,4 +1,3 @@
-import { RiAddLargeLine } from "react-icons/ri";
 import PrimaryButt from "../../ui/PrimaryButt";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";
