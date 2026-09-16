@@ -10,7 +10,7 @@ interface Props {
 };
 
 
-const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value, valueClassName=""} ) => {
+const TrainingInfoUi: React.FC<Props> = ( {label, value, valueClassName=""} ) => {
     return (
         <div className="flex gap-3 items-center">
             {/* <Icon className="text-md"/> */}
@@ -23,3 +23,6 @@ const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value, valueClassN
 }
 
 export default TrainingInfoUi;
+
+
+// icon: Icon,

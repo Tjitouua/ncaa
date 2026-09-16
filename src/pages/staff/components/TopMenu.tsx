@@ -5,10 +5,27 @@ import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 
-const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
+interface MenuProps {
+    setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    title?: string;
+};
+
+
+
+interface User {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    position: string;
+    division: string;
+}
+
+
+const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
 
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [notifications, setNotifications] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [notifCount, setNotifCount] = useState(0);
@@ -36,7 +53,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
             fetchNotifications(data.user.email);
         }
 
-        const fetchNotifications = async (email) => {
+        const fetchNotifications = async (email: string) => {
             try {
                 const response = await fetch(
                     "http://localhost/ncaa/staff/unread_notifications.php",
@@ -98,17 +115,17 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
 
     // Logout 
     const [showPopup, setShowPop] = useState(false);
-    const popupRef = useRef(null);
+    const popupRef = useRef<HTMLDivElement | null>(null);
 
 
 
 
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: MouseEvent) => {
             if(
                 popupRef.current &&
-                !popupRef.current.contains(event.target)
+                !popupRef.current.contains(event.target as Node)
             ) {
                 setShowPop(false);
             }
@@ -126,13 +143,13 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }) => {
     // Notifications 
     const [showPopup2, setShowPop2] = useState(false);
 
-    const popupRef2 = useRef(null);
+    const popupRef2 = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: MouseEvent) => {
             if(
-                popupRef.current &&
-                !popupRef.current.contains(event.target)
+                popupRef2.current &&
+                !popupRef2.current.contains(event.target as Node)
             ) {
                 setShowPop2(false);
             }

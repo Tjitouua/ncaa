@@ -25,7 +25,7 @@ const CostsGraph = () => {
 
 
 
-   const [data, setData] = useState([]);
+   const [data, setData] = useState<any[]>([]);
    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
    const startYear = 2016;
@@ -86,11 +86,7 @@ const CostsGraph = () => {
         const doc = new jsPDF;
   
         // Colors 
-        // const darkBlue = "#193B63";
-        // const darkBlue = "#3E5DE6";
         const darkBlue = "#3451D1";
-        const lightBlue = "#E9EEF5";
-        const textGray = "#555555";
         const lightGray = "#F7FBFC";
   
   
@@ -465,7 +461,7 @@ const CostsGraph = () => {
                <ResponsiveContainer width="100%" height="100%">
                        <PieChart>
                            <Pie data={costData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                               {costData.map((entry, index) => (
+                               {costData.map((_, index) => (
                                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}  />
                                ))}
                            </Pie>

@@ -9,7 +9,7 @@ interface Props {
 };
 
 
-const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value} ) => {
+const TrainingInfoUi: React.FC<Props> = ( {label, value} ) => {
     return (
         <div className="flex gap-5 items-end">
             {/* <Icon className="text-xl"/> */}
@@ -22,3 +22,6 @@ const TrainingInfoUi: React.FC<Props> = ( {icon: Icon, label, value} ) => {
 }
 
 export default TrainingInfoUi;
+
+
+// icon: Icon, 

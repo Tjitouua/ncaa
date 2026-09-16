@@ -30,12 +30,12 @@ const TrainingInfo = () => {
          });
       }, [id]);
 
-      const handleChange = (e: any) => {
-         setTrainingInfoList2({
-            ...trainingInfoList2,
-            [e.target.name]: e.target.value
-         });
-      }
+    //   const handleChange = (e: any) => {
+    //      setTrainingInfoList2({
+    //         ...trainingInfoList2,
+    //         [e.target.name]: e.target.value
+    //      });
+    //   }
 
 
 
@@ -94,7 +94,6 @@ const TrainingInfo = () => {
             label: "Venue/Location",
             value: trainingInfoList2?.location
         },
-        ,
         {
             icon: IoLocationOutline,
             label: "Method",
@@ -187,7 +186,6 @@ const TrainingInfo = () => {
             label: "Email",
             value: trainingInfoList2?.email || "N/A"
         },
-        ,
         {
             icon: MdOutlineContactMail,
             label: "Contact",

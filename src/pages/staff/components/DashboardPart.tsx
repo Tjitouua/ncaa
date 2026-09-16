@@ -13,6 +13,18 @@ import { useEffect, useState } from "react";
 
 
 
+interface Dash {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    position: string;
+    division: string;
+}
+
+
+
+
 
 const DashboardPart = () => {
 
@@ -49,7 +61,7 @@ const DashboardPart = () => {
 
 
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<Dash | null>(null);
     const [certificates, setCertificates] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -77,7 +89,7 @@ const DashboardPart = () => {
  
  
  
-    const fetchCertificates = async (email) => {
+    const fetchCertificates = async (email: string) => {
         try {
            const response = await fetch(
              "http://localhost/ncaa/staff/my_certificates.php",

@@ -29,15 +29,15 @@ const AssignmentDetails = () => {
          });
       }, [id]);
 
-      const handleChange = (e: any) => {
-         setTrainingInfoList({
-            ...trainingInfoList,
-            [e.target.name]: e.target.value
-         });
-      };
+      // const handleChange = (e: any) => {
+      //    setTrainingInfoList({
+      //       ...trainingInfoList,
+      //       [e.target.name]: e.target.value
+      //    });
+      // };
 
 
-      const getStatusColor = (status) => {
+      const getStatusColor = (status: string) => {
          if (status === "Pending") return "bg-orange-300";
          if (status === "Completed") return "bg-green-300";
          if (status === "Rejected") return "bg-red-300";

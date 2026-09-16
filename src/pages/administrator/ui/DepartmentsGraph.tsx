@@ -62,11 +62,7 @@ const DepartmentsGraph = () => {
       const doc = new jsPDF;
 
       // Colors 
-      // const darkBlue = "#193B63";
-      // const darkBlue = "#3E5DE6";
       const darkBlue = "#3451D1";
-      const lightBlue = "#E9EEF5";
-      const textGray = "#555555";
       const lightGray = "#F7FBFC";
 
 

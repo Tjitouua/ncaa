@@ -69,11 +69,7 @@ const TrainingTypeGraph = () => {
         const doc = new jsPDF;
   
         // Colors 
-        // const darkBlue = "#193B63";
-        // const darkBlue = "#3E5DE6";
         const darkBlue = "#3451D1";
-        const lightBlue = "#E9EEF5";
-        const textGray = "#555555";
         const lightGray = "#F7FBFC";
   
   
@@ -364,7 +360,7 @@ const TrainingTypeGraph = () => {
                <ResponsiveContainer width="100%" height="100%">
                        <PieChart>
                            <Pie data={data} dataKey="trainings" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                               {data.map((entry, index) => (
+                               {data.map((_, index) => (
                                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}  />
                                ))}
                            </Pie>

@@ -23,7 +23,7 @@ const ProgramDetails = () => {
 
    const [program, setProgram] = useState<any>(null);
 
-   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+   // const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
    const startYear = 2016;
    const currentYear = new Date().getFullYear();
 

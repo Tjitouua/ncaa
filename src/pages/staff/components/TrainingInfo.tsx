@@ -30,12 +30,12 @@ const TrainingInfo = () => {
          });
       }, [id]);
 
-      const handleChange = (e: any) => {
-         setTrainingInfoList2({
-            ...trainingInfoList2,
-            [e.target.name]: e.target.value
-         });
-      }
+    //   const handleChange = (e: any) => {
+    //      setTrainingInfoList2({
+    //         ...trainingInfoList2,
+    //         [e.target.name]: e.target.value
+    //      });
+    //   }
 
 
 

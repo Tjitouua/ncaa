@@ -20,7 +20,7 @@ const ProgramAdd = () => {
    const { id } = useParams();
    const [loading, setLoading] = useState(false);
 
-   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+  //  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
    const startYear = 2016;
    const currentYear = new Date().getFullYear();

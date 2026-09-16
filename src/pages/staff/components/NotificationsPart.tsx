@@ -105,7 +105,7 @@ const NotificationsPart = () => {
             fetchNotifications2(data.user.email);
         }
 
-        const fetchNotifications2 = async (email) => {
+        const fetchNotifications2 = async (email: string) => {
             try {
                 const response = await fetch(
                     "http://localhost/ncaa/staff/read_notifications.php",

@@ -44,7 +44,7 @@ const MyTrainingHistory = () => {
 
 
 
-      const fetchAssignments = async (email) => {
+      const fetchAssignments = async (email: string) => {
             try {
             const response = await fetch(
                "http://localhost/ncaa/staff/my_assignments.php",
@@ -77,7 +77,7 @@ const MyTrainingHistory = () => {
 
 
 
-   const getStatusColor = (status) => {
+   const getStatusColor = (status: string) => {
        if (status === "Pending") return "bg-orange-300";
        if (status === "Completed") return "bg-green-300";
        if (status === "Rejected") return "bg-red-200";

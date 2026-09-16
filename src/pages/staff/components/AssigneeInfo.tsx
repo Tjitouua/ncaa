@@ -27,7 +27,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
    const [certificateNo, setCertificateNo] = useState("");
    const [issuedDate, setIssuedDate] = useState("");
-   const [trainingName, setTrainingName] = useState("");
+   // const [trainingName, setTrainingName] = useState("");
    const [expiryDate, setExpiryDate] = useState("");
    const [certificateFile, setCertificateFile] = useState<File | null>(null);
    const [loading, setLoading] = useState(false);
@@ -112,12 +112,12 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
          });
       }, [id]);
 
-      const handleChange = (e: any) => {
-         setTrainingInfoList2({
-            ...trainingInfoList2,
-            [e.target.name]: e.target.value
-         });
-      }
+      // const handleChange = (e: any) => {
+      //    setTrainingInfoList2({
+      //       ...trainingInfoList2,
+      //       [e.target.name]: e.target.value
+      //    });
+      // }
 
 
    //  Assignee Info 

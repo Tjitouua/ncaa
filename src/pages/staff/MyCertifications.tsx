@@ -13,16 +13,16 @@ import { ImCross } from "react-icons/im";
 
 
 
-const assignment = [
-    {
-       training: "Runway Safety & Incursion Prevention",
-       certNo: "RWY-2024-077",
-       issued: "2025-12-04",
-       expires: "2026-05-18",
-       status: "Valid",
-       document: "icao_english_shipanga.pdf"
-    },
- ]
+// const assignment = [
+//     {
+//        training: "Runway Safety & Incursion Prevention",
+//        certNo: "RWY-2024-077",
+//        issued: "2025-12-04",
+//        expires: "2026-05-18",
+//        status: "Valid",
+//        document: "icao_english_shipanga.pdf"
+//     },
+//  ]
  
 
 
@@ -67,7 +67,7 @@ const MyCertifications = () => {
 
 
 
-   const fetchCertificates = async (email) => {
+   const fetchCertificates = async (email: string) => {
        try {
           const response = await fetch(
             "http://localhost/ncaa/staff/my_certificates.php",

@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/login/Login'
 import Dashboard from './pages/administrator/Dashboard'
 import Employees from './pages/administrator/Employees'
-import Programs from './pages/administrator/Programs'
 import Assign from './pages/administrator/Assign'
 import TrainingHistory from './pages/administrator/TrainingHistory'
 import Notifications from './pages/administrator/Notifications'
@@ -20,7 +19,6 @@ import AssignmentDetails from './pages/staff/AssignmentDetails'
 import TrainingDetails from './pages/administrator/TrainingDetails'
 import NotificationsStaff from './pages/staff/NotificationsStaff'
 import Home from './pages/Home'
-import StaffCompliance from './pages/administrator/StaffCompliance'
 import StaffProgramAdd from './pages/staff/ProgramAdd'
 import TrainingPlans from './pages/administrator/TrainingPlans'
 
@@ -41,14 +39,12 @@ function App() {
           <Route path="/admin/employees" element={<Employees />} />
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
           <Route path="/admin/employees/employee_details/:id" element={<EmployeeDetails />} />
-          <Route path="/admin/training_programs/" element={<Programs />} />
           <Route path="/admin/training_programs/program_add/:id" element={<ProgramAdd />} />
           <Route path="/admin/training_programs/program_details/:id" element={<ProgramDetails />} />
           <Route path="/admin/assign_training" element={<Assign />} />
           <Route path="/admin/training_details/:id" element={<TrainingDetails />} />
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
-          <Route path="/admin/staff_compliance" element={<StaffCompliance />} />
           <Route path="/admin/training_plans/:id" element={<TrainingPlans />} />
 
 

@@ -1,6 +1,4 @@
-import { IoMdAdd } from "react-icons/io";
 import { RiAddLargeLine } from "react-icons/ri";
-import { LuFilter, LuUpload } from "react-icons/lu";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import { IoSearchSharp } from "react-icons/io5";
@@ -20,12 +18,12 @@ const TrainingPlansPart = () => {
    const navigate = useNavigate();
    const { id } = useParams();
    
-   const [staff, setStaff] = useState([]);
-   const[roles, setRoles] = useState([]);
+   // const [staff, setStaff] = useState([]);
+   // const[roles, setRoles] = useState([]);
    const [loading, setLoading] = useState(true);
 
    const [searchStaff, setSearchStaff] = useState("");
-   const [showFilters, setShowFilters] = useState(false);
+   const [, setShowFilters] = useState(false);
 
    const [trainings, setTrainings] = useState<any[]>([]);
 

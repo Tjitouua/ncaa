@@ -10,6 +10,94 @@ import SecondaryButt from "../../../ui/SecondaryButt";
 
 
 
+interface Assignment {
+      id: number,
+      staff_no: string,
+      first_name: string,
+      last_name: string,
+      gender: string,
+      email: string,
+      dob: string,
+      national_id: string,
+      phone_no: string,
+      city: string,
+      disadvantaged: string,
+      disability: string,
+      function: string,
+      department: string,
+      division: string,
+      job_category: string,
+      job_grade: string,
+      ethnicity: string,
+      role: string,
+      employment_type: string,
+      doj: string,
+      employment_status: string,
+      created_at: string,
+      updated_at: string,
+      staff_id: string,
+      program_id: string,
+      assigned_date: string,
+      status: string,
+      training_name: string,
+      reason: string,
+      duration: string,
+      category: string,
+      training_type: string,
+      method: string,
+      validity: string,
+      provider: string,
+      trainer: string,
+      trainer_status: string,
+      location: string,
+      contact_no: string,
+      training_cost: string,
+      accommodation_cost: string,
+      snt_cost: string,
+      flight_cost: string,
+      other_costs: string,
+      total_cost: string,
+      approved: string,
+      year: string,
+      quarter: string,
+      start_date: string,
+      end_date: string,
+      region: string,
+      acceptance: string
+};
+
+
+
+
+
+
+
+const initialFilters = {
+      function: "",
+      department: "",
+      division: "",
+      job_category: "",
+      category: "",
+      training_type: "",
+      quarter: "",
+      method: "",
+      status: "",
+      disadvantaged: "",
+      disability: "",
+      gender: "",
+      year: "",
+      region: "",
+      acceptance: ""
+};
+
+
+type FilterName = keyof typeof initialFilters;
+
+
+
+
+
+
 
 
 
@@ -19,21 +107,21 @@ const TrainingHistoryPart = () => {
    const navigate = useNavigate();
    
   
-   const [assignments, setAssignments] = useState([]);
+   const [assignments, setAssignments] = useState<Assignment[]>([]);
    const [loading, setLoading] = useState(true);
-   const [selectedStatus, setSelectedStatus] = useState("All status");
+   // const [selectedStatus, setSelectedStatus] = useState("All status");
    const [searchTraining, setSearchTraining] = useState("");
    const [showFilters, setShowFilters] = useState(false);
    
-   const getNextStatus = (current) => {
-      if (current === "Pending") return "Completed";
-      if (current === "Completed") return "Pending";
-      if (current === "Rejected") return "Rejected";
-      return "Pending";
-   }
+   // const getNextStatus = (current: string) => {
+   //    if (current === "Pending") return "Completed";
+   //    if (current === "Completed") return "Pending";
+   //    if (current === "Rejected") return "Rejected";
+   //    return "Pending";
+   // }
 
 
-   const getStatusColor = (status) => {
+   const getStatusColor = (status: string) => {
       if (status === "Pending") return "bg-orange-200";
       if (status === "Completed") return "bg-green-200";
       if (status === "Rejected") return "bg-red-200";
@@ -63,37 +151,37 @@ const TrainingHistoryPart = () => {
 
 
    // Changing the status of a record
-   const cycleStatus = async (assign) => {
+   // const cycleStatus = async (assign: Assignment) => {
       
-         const next = getNextStatus(assign.status);
+   //       const next = getNextStatus(assign.status);
 
-         try {
-            const res = await fetch ("http://localhost/ncaa/assign/update_assignment_status.php", {
-               method: "POST",
-               headers: {
-                  "Content-Type": "application/json"
-               },
-               body: JSON.stringify({
-                  id: assign.id,
-                  status: next
-               })
-            });
+   //       try {
+   //          const res = await fetch ("http://localhost/ncaa/assign/update_assignment_status.php", {
+   //             method: "POST",
+   //             headers: {
+   //                "Content-Type": "application/json"
+   //             },
+   //             body: JSON.stringify({
+   //                id: assign.id,
+   //                status: next
+   //             })
+   //          });
 
-            const data = await res.json();
+   //          const data = await res.json();
 
-            if (data.success) {
-               setAssignments((prev) => 
-                  prev.map((a) => 
-                     a.id === assign.id ? { ...a, status: next } : a
-                  )
-               );
-            } else {
-               console.error(data.message);
-            }
-         } catch (error) {
-            console.error("Error updating status: ", error);
-         }
-   };
+   //          if (data.success) {
+   //             setAssignments((prev) => 
+   //                prev.map((a) => 
+   //                   a.id === assign.id ? { ...a, status: next } : a
+   //                )
+   //             );
+   //          } else {
+   //             console.error(data.message);
+   //          }
+   //       } catch (error) {
+   //          console.error("Error updating status: ", error);
+   //       }
+   // };
 
 
 
@@ -102,29 +190,36 @@ const TrainingHistoryPart = () => {
 
    // Filtering 
    
-   const [filters, setFilters] = useState({
-      function: "",
-      department: "",
-      division: "",
-      job_category: "",
-      // trainer_status: "",
-      category: "",
-      training_type: "",
-      quarter: "",
-      method: "",
-      status: "",
-      disadvantaged: "",
-      disability: "",
-      gender: "",
-      year: "",
-      region: "",
-      acceptance: ""
-   });
+   // const [filters, setFilters] = useState({
+   //    function: "",
+   //    department: "",
+   //    division: "",
+   //    job_category: "",
+   //    // trainer_status: "",
+   //    category: "",
+   //    training_type: "",
+   //    quarter: "",
+   //    method: "",
+   //    status: "",
+   //    disadvantaged: "",
+   //    disability: "",
+   //    gender: "",
+   //    year: "",
+   //    region: "",
+   //    acceptance: ""
+   // });
+
+
+   const [filters, setFilters] = useState(initialFilters);
 
 
 
 
-   const filterOptions = [
+   const filterOptions: {
+      name: FilterName;
+      label: string;
+      options: string[];
+   }[] = [
       {
          name: "function",
          label: "Function",
@@ -304,7 +399,7 @@ const TrainingHistoryPart = () => {
 
 
 
-   const handleFilterChange = (name, value) => {
+   const handleFilterChange = (name: string, value: string) => {
       setFilters((prev) => ({
          ...prev,
          [name]: value
@@ -498,25 +593,25 @@ const TrainingHistoryPart = () => {
 
 
    // Filtering 
-   const resetFilters = () => {
-      setFilters({
-         function: "",
-         department: "",
-         division: "",
-         job_category: "",
-      // trainer_status: "",
-         category: "",
-         training_type: "",
-         quarter: "",
-         method: "",
-         disadvantaged: "",
-         disability: "",
-         gender: "",
-         year: "",
-         region: "",
-         acceptance: ""
-      });
-   };
+   // const resetFilters = () => {
+   //    setFilters({
+   //       function: "",
+   //       department: "",
+   //       division: "",
+   //       job_category: "",
+   //    // trainer_status: "",
+   //       category: "",
+   //       training_type: "",
+   //       quarter: "",
+   //       method: "",
+   //       disadvantaged: "",
+   //       disability: "",
+   //       gender: "",
+   //       year: "",
+   //       region: "",
+   //       acceptance: ""
+   //    });
+   // };
 
 
 

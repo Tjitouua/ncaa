@@ -33,11 +33,17 @@ const menuItems = [
       path: "/staff/notifications",
       icon: <GrNotification />
    },
-]
+];
+
+
+interface MenuProps {
+   showMenu: boolean;
+   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 
 
-const Menu = ({ showMenu, setShowMenu }) => {
+const Menu = ({ showMenu, setShowMenu }: MenuProps) => {
    return (
     <>
      {showMenu && (

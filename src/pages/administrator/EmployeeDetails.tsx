@@ -9,8 +9,6 @@ import DetailsInput from "./ui/DetailsInput";
 import SecondaryButt from "../../ui/SecondaryButt";
 import DetailsSelect from "./ui/DetailsSelect";
 import DetailsDate from "./ui/DetailsDate";
-import { LiaGraduationCapSolid } from "react-icons/lia";
-import { PiGraduationCap } from "react-icons/pi";
 import { LuGraduationCap } from "react-icons/lu";
 
 
@@ -149,7 +147,7 @@ const EmployeeDetails = () => {
 
 
 
-   const getStatusColor = (status) => {
+   const getStatusColor = (status: string) => {
       if (status === "Pending") return "bg-orange-300";
       if (status === "Completed") return "bg-green-200";
       if (status === "Rejected") return "bg-red-200";

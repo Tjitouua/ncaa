@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TopMenu from "./components/TopMenu";
 import Menu from "./components/Menu";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const EmployeeAdd = () => {
    const [loading, setLoading] = useState(false);
 
    const navigate = useNavigate();
-   const [roles, setRoles] = useState([]);
+   // const [roles, setRoles] = useState([]);
    
 
    // Getting roles from the database 
