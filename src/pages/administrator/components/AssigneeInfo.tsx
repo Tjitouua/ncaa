@@ -35,6 +35,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
    const hasCertificate = trainingInfoList2?.certificate_no && trainingInfoList2?.file;
 
+   const [updatingStatus, setUpdatingStatus] = useState(false);
+
 
 
   
@@ -52,6 +54,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
        if (!trainingInfoList2?.id) return;
 
        const next = getNextStatus(trainingInfoList2.status);
+
+       setUpdatingStatus(true);
 
        try {
           const res = await fetch("http://localhost/ncaa/assign/update_assignment_status.php", {
@@ -320,7 +324,13 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                   <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
                   <SecondaryButt className="!border !border-secondary/30"><MdOutlineCancel /> Reject</SecondaryButt>
               </div>
-              <SecondaryButt onClick={cycleStatus}  className="!bg-secondaryy">Mark {getNextStatus(trainingInfoList2?.status)}</SecondaryButt>
+              <SecondaryButt onClick={cycleStatus} disabled={updatingStatus} className="!bg-secondaryy">
+                    {updatingStatus ? (
+                       <span className="w-4 h-4 border-2 border-secondary/30 border-t-secondary rounded-full animate-spin"></span>
+                    ) : (
+                       `Mark ${getNextStatus(trainingInfoList2?.status)}`
+                    )}
+              </SecondaryButt>
            </div>
            )} 
 

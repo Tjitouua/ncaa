@@ -92,7 +92,8 @@ const NewAssignment = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [quarter, setQuarter] = useState("");
-    const [loading2, setLoading2] = useState(false);
+    // const [loading2, setLoading2] = useState(false);
+    const [assigning, setAssigning] = useState(false);
 
 
     // Staff 
@@ -109,6 +110,7 @@ const NewAssignment = () => {
         })
         .finally(() => {
             setLoading(false)
+            setAssigning(false);
         });
     }, []);
 
@@ -128,6 +130,7 @@ const NewAssignment = () => {
         })
         .finally(() => {
             setLoading(false);
+            setAssigning(false);
         });
     }, []);
 
@@ -190,7 +193,8 @@ const NewAssignment = () => {
 
         console.log("Sending assignment: ", payload);
 
-        setLoading2(true);
+        // setLoading2(true);
+        setAssigning(true);
 
         try {
             const res = await fetch("http://localhost/ncaa/assign/create_assignment.php", {
@@ -235,9 +239,19 @@ const NewAssignment = () => {
             console.error("Error creating assignment", err);
             alert("Could not create assignment");
         } finally {
-            setLoading2(false);
+            // setLoading2(false);
+            setAssigning(false);
         }
-    }
+    };
+
+
+
+
+    const allSelected =
+        filteredPrograms.length > 0 &&
+        filteredPrograms.every((program) =>
+            selectedProgram.includes(String(program.id))
+        );
 
 
 
@@ -274,6 +288,15 @@ const NewAssignment = () => {
                           <LuUsers className="text-xs font-bold text-secondary/60" />
                           <label className="text-xs font-bold text-secondary/60">Trainings ({filteredPrograms.length})</label>
                        </div>
+                       <label 
+                       onClick={() => {
+                           if (allSelected) {
+                              setSelectedProgram([]);
+                           } else {
+                              setSelectedProgram(filteredPrograms.map((program) => String(program.id)));
+                           }
+                       }} 
+                       className="text-xs cursor-pointer hover:underline text-primary">{allSelected ? "Clear" : "Select all"}</label>
                     </div>
                     <div className="w-full flex items-center text-xs gap-2 border px-3 border-secondary/30 bg-secondaryy/30 rounded-md">
                       <IoSearchSharp />
@@ -355,11 +378,13 @@ const NewAssignment = () => {
                 
 
                 <PrimaryButt 
-                disabled={loading2}
+                disabled={assigning}
                 onClick={handleAssign} 
                 className="mt-2">
-                    {loading2 ? "Assigning training ..." : (
-                       <>Assign to Employee (s)</>
+                    {assigning ? (
+                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    ) : (
+                        <>Assign to Employee (s)</>
                     )}
                 </PrimaryButt>
 
@@ -369,6 +394,20 @@ const NewAssignment = () => {
 }
 
 export default NewAssignment;
+
+
+
+
+
+
+{/* <PrimaryButt 
+                disabled={loading2}
+                onClick={handleAssign} 
+                className="mt-2">
+                    {loading2 ? "Assigning training ..." : (
+                       <>Assign to Employee (s)</>
+                    )}
+                </PrimaryButt> */}
 
 
 
