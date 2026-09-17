@@ -18,7 +18,8 @@ const ProgramAdd = () => {
 
    const navigate = useNavigate();
    const { id } = useParams();
-   const [loading, setLoading] = useState(false);
+  //  const [loading, setLoading] = useState(false);
+   const [adding, setAdding] = useState(false);
 
   //  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
@@ -114,7 +115,7 @@ const ProgramAdd = () => {
    const handleSubmit = async () => {
       if (!validate()) return;
 
-      setLoading(true);
+      setAdding(true);
 
       try {
         const response = await fetch(
@@ -143,7 +144,7 @@ const ProgramAdd = () => {
           console.error(error);
           alert("Failed to connect to server");
       } finally {
-        setLoading(false);
+        setAdding(false);
       }
 
    }
@@ -474,11 +475,13 @@ const ProgramAdd = () => {
 
 
                       <PrimaryButt 
-                      disabled={loading}
-                      onClick={handleSubmit} className="w-full">
-                        {loading ? "Adding program..." : (
-                        <><RiAddLargeLine /> Add Training Program</>
-                        )}
+                          disabled={adding}
+                          onClick={handleSubmit} className="w-full">
+                          {adding ? (
+                              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                          ) : (
+                            <><RiAddLargeLine /> Add Training Program</>
+                          )}
                       </PrimaryButt>
                    </div>
                 </div>

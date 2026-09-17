@@ -1,14 +1,14 @@
 import { PiGraduationCap } from "react-icons/pi";
 import StatCard from "../ui/StatCard";
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { TbFileCertificate } from "react-icons/tb";
 import { GrCertificate } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificationsCard from "../ui/CertificationsCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import { LuAlarmClockCheck } from "react-icons/lu";
 
 
 
@@ -28,31 +28,46 @@ interface Dash {
 
 const DashboardPart = () => {
 
+    const [stats, setStats] = useState<any>(null);
+
+    useEffect(() => {
+        fetch("http://localhost/ncaa/dashboard/staff.php", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                setStats(data.stats);
+            }
+        });
+    }, []);
+
 
     const Stats = [
         {
             icon: PiGraduationCap,
             name: "My Trainings",
-            stat: 2,
+            stat: stats?.trainings ?? 0,
             desc: "Assigned to me"
         },
         {
-            icon: FaRegCircleCheck,
+            icon: LuAlarmClockCheck,
             name: "Completed",
-            stat: 1,
+            stat: stats?.completed ?? 0,
             desc: "Available programs"
         },
         {
             icon: AiOutlineClockCircle,
             name: "Pending",
-            stat: 1,
+            stat: stats?.pending ?? 0,
             desc: "Awaiting completion"
         },
         {
-            icon: TbFileCertificate,
-            name: "Certification Alerts",
-            stat: 0,
-            desc: "Missed deadlines"
+            icon: RxCross2,
+            name: "Rejected",
+            stat: stats?.rejected ?? 0,
+            desc: "Not approved"
         }
     ];
 

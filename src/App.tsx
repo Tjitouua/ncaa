@@ -21,6 +21,8 @@ import NotificationsStaff from './pages/staff/NotificationsStaff'
 import Home from './pages/Home'
 import StaffProgramAdd from './pages/staff/ProgramAdd'
 import TrainingPlans from './pages/administrator/TrainingPlans'
+import ProtectedRoute from './ui/ProtectedRoute'
+import Forgot from './pages/login/Forgot'
 
 
 
@@ -31,10 +33,14 @@ function App() {
      <ScrollToTop />
       <Routes>
 
-        {/* Admin pages  */}
+          {/* Public pages  */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/password" element={<Password />} />
+          <Route path="/forgot" element={<Forgot />} />
+
+          {/* Admin pages  */}
+          <Route element={<ProtectedRoute allowedRole='admin' />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/employees" element={<Employees />} />
           <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
@@ -46,15 +52,18 @@ function App() {
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
           <Route path="/admin/training_plans/:id" element={<TrainingPlans />} />
+          </Route>
 
 
           {/* Staff pages  */}
+          <Route element={<ProtectedRoute allowedRole='staff' />}>
           <Route path="/staff/dashboard" element={<Dashboard2 />} />
           <Route path="/staff/my_certifications" element={<MyCertifications />} />
           <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />
           <Route path="/staff/assignment_details/:id" element={<AssignmentDetails />} />
           <Route path="/staff/notifications" element={<NotificationsStaff />} />
           <Route path="/staff/programs/program_add" element={<StaffProgramAdd />} />
+          </Route>
 
 
       </Routes>

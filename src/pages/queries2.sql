@@ -136,20 +136,6 @@ CREATE TABLE certificates
 
 
 
--- INSERT INTO staff (staff_id, first_name, last_name, email, department, role)
--- VALUES
--- (
---     "EMP-001",
---     "Tjitouua",
---     "Mapoha",
---     "mapohaT@ncaa.na",
---     "ICT",
---     "Software Developer"
--- );
-
-
-
-
 
 
 -- Staff Notifications table 
@@ -168,7 +154,9 @@ CREATE TABLE staff_notifications
         staff_email,
         training_id,
         notification_type
-    )
+    ),
+
+    FOREIGN KEY (training_id) REFERENCES training_assignments(id) ON DELETE CASCADE
 );
 
 
@@ -193,7 +181,9 @@ CREATE TABLE admin_notifications
         staff_email,
         training_id,
         notification_type
-    )
+    ),
+
+    FOREIGN KEY (training_id) REFERENCES training_assignments(id) ON DELETE CASCADE
 );
 
 

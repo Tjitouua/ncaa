@@ -86,7 +86,7 @@
         $mail->Body = "
               <p>Hello $name,</p>
               <br>
-              <p>Unfortunately, your training plan has been <strong>rejected</strong></p>
+              <p>Unfortunately, your training has been <strong>rejected</strong></p>
               <p><strong style='margin-right: 5px;'>Training: </strong>$training</p>
               <p><strong style='margin-right: 5px;'>Quarter: </strong>$quarter</p>
               <p><strong style='margin-right: 5px;'>Year: </strong>$year</p>

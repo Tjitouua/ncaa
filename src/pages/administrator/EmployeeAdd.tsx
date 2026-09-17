@@ -15,7 +15,8 @@ import DateInputs from "../../ui/DateInputs";
 const EmployeeAdd = () => {
 
    const [showMenu, setShowMenu] = useState(false);
-   const [loading, setLoading] = useState(false);
+   // const [loading, setLoading] = useState(false);
+   const [adding, setAdding] = useState(false);
 
    const navigate = useNavigate();
    // const [roles, setRoles] = useState([]);
@@ -94,7 +95,8 @@ const EmployeeAdd = () => {
    const handleSubmit = async () => {
       if (!validate()) return;
 
-      setLoading(true);
+      // setLoading(true);
+      setAdding(true);
 
       try {
          const response = await fetch(
@@ -121,7 +123,7 @@ const EmployeeAdd = () => {
         console.error(error);
         alert("Failed to connect to server")
       } finally {
-         setLoading(false);
+         setAdding(false);
       }
 
 
@@ -438,10 +440,12 @@ const EmployeeAdd = () => {
 
                       </div>
                       <PrimaryButt 
-                      disabled={loading} 
-                      onClick={handleSubmit} 
-                      className="w-full">
-                        {loading ? "Adding Staff ..." : (
+                         disabled={adding} 
+                         onClick={handleSubmit} 
+                         className="w-full">
+                        {adding ? (
+                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                         ) : (
                           <><RiAddLargeLine /> Add Employee</>
                         )}
                       </PrimaryButt>

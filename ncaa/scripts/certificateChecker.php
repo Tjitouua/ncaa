@@ -42,7 +42,7 @@
 
             $formattedExpiry = date("d F Y", strtotime($expiry));
 
-            if ($expiry > $today && $expiry <= $expiringDate) {
+            if ($expiry !== '0000-00-00' && $expiry > $today && $expiry <= $expiringDate) {
                 $checkSql = "SELECT
                              id
                              FROM admin_notifications
@@ -89,7 +89,7 @@
               }
             }
 
-            if ($expiry < $today) {
+            if ($expiry !== '0000-00-00' && $expiry < $today) {
                 $checkSql = "SELECT
                              id
                              FROM admin_notifications
