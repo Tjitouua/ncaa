@@ -17,6 +17,17 @@ const MyTrainingHistory = () => {
    const [assignments, setAssignments] = useState<any[]>([]);
    const [loading, setLoading] = useState(true);
    const navigate = useNavigate();
+   const [email, setEmail] = useState("");
+   const [selectedStatus, setSelectedStatus] = useState("All Statuses");
+
+
+
+
+
+   const filteredAssignments = selectedStatus === "All Statuses"
+         ? assignments
+         : assignments.filter((assign) => assign.status === selectedStatus);
+
 
 
    
@@ -35,16 +46,18 @@ const MyTrainingHistory = () => {
          if (!data.success) {
             navigate("/");
             return;
-         }
+         };
    
-         fetchAssignments(data.user.email);
+         setEmail(data.user.email);
+         fetchAssignments(data.user.email, selectedStatus);
       };
 
 
 
 
 
-      const fetchAssignments = async (email: string) => {
+
+      const fetchAssignments = async (email: string, status: string) => {
             try {
             const response = await fetch(
                "http://localhost/ncaa/staff/my_assignments.php",
@@ -53,7 +66,7 @@ const MyTrainingHistory = () => {
                   headers: {
                      "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ email }),
+                  body: JSON.stringify({ email, status }),
                }
             );
 
@@ -82,7 +95,19 @@ const MyTrainingHistory = () => {
        if (status === "Completed") return "bg-green-300";
        if (status === "Rejected") return "bg-red-200";
        return "bg-grey-200";
-   }
+   };
+
+
+
+
+   const handleExport = () => {
+      window.open(
+         `http://localhost/ncaa/staff/export_my_training_histrory.php?email=${encodeURIComponent(email)}&status=${encodeURIComponent(selectedStatus)}`,
+         "_blank"
+      );
+   };
+
+
 
 
 
@@ -103,14 +128,14 @@ const MyTrainingHistory = () => {
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="pr-3 border border-secondary/50 rounded-md">
-                          <select className="py-2 text-sm flex px-3 focus:outline-none cursor-pointer">
+                          <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="py-2 text-sm flex px-3 focus:outline-none cursor-pointer">
                               <option>All Statuses</option>
                               <option>Completed</option>
                               <option>Pending</option>
-                              <option>Overdue</option>
+                              <option>Rejected</option>
                           </select>
                        </div>
-                       <PrimaryButt><FiDownload /> Export CSV</PrimaryButt>
+                       <PrimaryButt onClick={handleExport}><FiDownload /> Export CSV</PrimaryButt>
                     </div>
                  </div>
                  {/* Training Records Table  */}
@@ -133,13 +158,13 @@ const MyTrainingHistory = () => {
                            <tr>
                               <td colSpan={6} className="py-5 text-center">Loading assignments...</td>
                            </tr>
-                        ) : assignments.length === 0 ? (
+                        ) : filteredAssignments.length === 0 ? (
                            <tr>
                               <td colSpan={6} className="text-center py-5">No training assignments found</td>
                            </tr>
                         ) : (
 
-                        assignments.map((assign) => (
+                        filteredAssignments.map((assign) => (
                           <tr key={assign.id} onClick={() => navigate(`/staff/assignment_details/${assign.id}`)} className="border-t cursor-pointer hover:bg-white/20 border-secondary/20 bg-white/60">
                              <td className="px-3 py-3">{assign.training_name}</td>
                              <td className="px-3 py-3">{assign.reason}</td>

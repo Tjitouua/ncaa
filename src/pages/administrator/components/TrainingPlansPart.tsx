@@ -64,6 +64,31 @@ const TrainingPlansPart = () => {
    );
 
 
+   // Deleting 
+   const handleDelete = (id: number) => {
+      if (!window.confirm("Are you sure you want to reomve this training from your training plan?")) return;
+
+      fetch("http://localhost/ncaa/program/delete_program.php", {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json"
+         },
+         body: JSON.stringify({ id }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+         if (data.success) {
+            setTrainings((prev) => prev.filter((emp) => emp.id !== id));
+         } else {
+            alert(data.message || "Failed to delete");
+         }
+      })
+      .catch((err) => {
+         console.error("Delete error ", err);
+      })
+   }
+
+
 
    const handleExport = () => {
    window.open(
@@ -173,7 +198,7 @@ const TrainingPlansPart = () => {
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /></button>
                                      <button 
-                                    //  onClick={() => handleDelete(employee.id)}
+                                     onClick={() => handleDelete(training.id)}
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><RiDeleteBin6Line /></button>
                                  </div>

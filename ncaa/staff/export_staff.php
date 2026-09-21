@@ -9,24 +9,6 @@
 
     $output = fopen("php://output", "w");
 
-    fputcsv($output, [
-        "Staff No",
-        "Staff Name",
-        "Last Name",
-        "Gender",
-        "Role",
-        "D.O.B",
-        "Phone Number",
-        "Email",
-        "National ID",
-        "Department",
-        "Position",
-        "City",
-        "Disadvantaged",
-        "Disability",
-        "D.O.J"
-    ]);
-
 
 
 
@@ -171,25 +153,24 @@
 
     $result = $stmt->get_result();
 
-    while ($row = $result->fetch_assoc()) {
-      fputcsv($output, [
-         $row["staff_no"],
-         $row["first_name"],
-         $row["last_name"],
-         $row["gender"],
-         $row["role"],
-         $row["dob"],
-         $row["phone_no"],
-         $row["email"],
-         $row["national_id"],
-         $row["department"],
-         $row["role"],
-         $row["city"],
-         $row["disadvantaged"],
-         $row["disability"],
-         $row["doj"]
-      ]);
+
+
+    $fields = $result->fetch_fields();
+
+    $headers = [];
+
+    foreach($fields as $field) {
+        $headers[] = $field->name;
     }
+
+
+    fputcsv($output, $headers);
+
+    while ($row = $result->fetch_row()) {
+        fputcsv($output, $row);
+    }
+
+
 
     fclose($output);
     $stmt->close();

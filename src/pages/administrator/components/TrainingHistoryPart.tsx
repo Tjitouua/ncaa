@@ -109,16 +109,9 @@ const TrainingHistoryPart = () => {
   
    const [assignments, setAssignments] = useState<Assignment[]>([]);
    const [loading, setLoading] = useState(true);
-   // const [selectedStatus, setSelectedStatus] = useState("All status");
    const [searchTraining, setSearchTraining] = useState("");
    const [showFilters, setShowFilters] = useState(false);
    
-   // const getNextStatus = (current: string) => {
-   //    if (current === "Pending") return "Completed";
-   //    if (current === "Completed") return "Pending";
-   //    if (current === "Rejected") return "Rejected";
-   //    return "Pending";
-   // }
 
 
    const getStatusColor = (status: string) => {
@@ -150,65 +143,10 @@ const TrainingHistoryPart = () => {
 
 
 
-   // Changing the status of a record
-   // const cycleStatus = async (assign: Assignment) => {
-      
-   //       const next = getNextStatus(assign.status);
-
-   //       try {
-   //          const res = await fetch ("http://localhost/ncaa/assign/update_assignment_status.php", {
-   //             method: "POST",
-   //             headers: {
-   //                "Content-Type": "application/json"
-   //             },
-   //             body: JSON.stringify({
-   //                id: assign.id,
-   //                status: next
-   //             })
-   //          });
-
-   //          const data = await res.json();
-
-   //          if (data.success) {
-   //             setAssignments((prev) => 
-   //                prev.map((a) => 
-   //                   a.id === assign.id ? { ...a, status: next } : a
-   //                )
-   //             );
-   //          } else {
-   //             console.error(data.message);
-   //          }
-   //       } catch (error) {
-   //          console.error("Error updating status: ", error);
-   //       }
-   // };
 
 
 
-
-
-
-   // Filtering 
-   
-   // const [filters, setFilters] = useState({
-   //    function: "",
-   //    department: "",
-   //    division: "",
-   //    job_category: "",
-   //    // trainer_status: "",
-   //    category: "",
-   //    training_type: "",
-   //    quarter: "",
-   //    method: "",
-   //    status: "",
-   //    disadvantaged: "",
-   //    disability: "",
-   //    gender: "",
-   //    year: "",
-   //    region: "",
-   //    acceptance: ""
-   // });
-
+  
 
    const [filters, setFilters] = useState(initialFilters);
 
@@ -273,14 +211,6 @@ const TrainingHistoryPart = () => {
             "Unskilled"
          ]
       },
-      // {
-      //    name: "trainer_status",
-      //    label: "Trainer Status",
-      //    options: [
-      //       "Qualified",
-      //       "Not Qualified"
-      //    ]
-      // },
       {
          name: "category",
          label: "Category",
@@ -589,29 +519,6 @@ const TrainingHistoryPart = () => {
 
 
 
-
-
-
-   // Filtering 
-   // const resetFilters = () => {
-   //    setFilters({
-   //       function: "",
-   //       department: "",
-   //       division: "",
-   //       job_category: "",
-   //    // trainer_status: "",
-   //       category: "",
-   //       training_type: "",
-   //       quarter: "",
-   //       method: "",
-   //       disadvantaged: "",
-   //       disability: "",
-   //       gender: "",
-   //       year: "",
-   //       region: "",
-   //       acceptance: ""
-   //    });
-   // };
 
 
 

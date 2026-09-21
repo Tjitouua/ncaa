@@ -8,31 +8,6 @@
 
     $output = fopen("php://output", "w");
 
-    fputcsv($output, [
-        "Staff_No",
-        "First Name",
-        "Last Name",
-        "Gender",
-        "Department",
-        "Role",
-        "Disadvantaged",
-        "Disability",
-        "Training Name",
-        "Development Gap",
-        "Training Type",
-        "Duration", 
-        "Year",
-        "Quarter",
-        "Start Date",
-        "End Date",
-        "Provider",
-        "Location",
-        "Region",
-        "Acceptance",
-        "Status",
-        "Total Cost"
-    ]);
-
 
 
 
@@ -55,7 +30,7 @@
 
 
     $query = "SELECT
-                a.id,
+                a.id AS assignment_id,
                 a.assigned_date,
                 a.status,
 
@@ -271,71 +246,47 @@
 
     $result = $stmt->get_result();
 
+    $fields = $result->fetch_fields();
+
+    $headers = [];
+
+    $totalCostIndex = -1;
+
+
+    foreach ($fields as $index => $field) {
+        $headers[] = $field->name;
+        if ($field->name === "total_cost") {
+            $totalCostIndex = $index;
+        }
+    }
+
+    fputcsv($output, $headers);
+
     $totalCost = 0;
 
 
+    while ($row = $result->fetch_row()) {
+        if ($totalCostIndex !== -1) {
+           $totalCost += (float) $row[$totalCostIndex];
+        }
 
 
-    while ($row = $result->fetch_assoc()) {
-
-
-        $totalCost += (float) $row["total_cost"];
-
-
-        fputcsv($output, [
-            $row["staff_no"],
-            $row["first_name"],
-            $row["last_name"],
-            $row["gender"],
-            $row["department"],
-            $row["role"],
-            $row["disadvantaged"],
-            $row["disability"],
-            $row["training_name"],
-            $row["reason"],
-            $row["training_type"],
-            $row["duration"],
-            $row["year"],
-            $row["quarter"],
-            $row["start_date"],
-            $row["end_date"],
-            $row["provider"],
-            $row["location"],
-            $row["region"],
-            $row["acceptance"],
-            $row["status"],
-            number_format((float)$row["total_cost"], 2, ".", " ")
-        ]);
+        fputcsv($output, $row);
     } 
+
+
+
+    $totalRow = array_fill(0, count($headers), "");
+
+
+    $totalRow[$totalCostIndex - 1] = "TOTAL COST";
+    $totalRow[$totalCostIndex] = number_format($totalCost, 2, ".", " ");
 
 
 
 
     // Total 
-    fputcsv($output, [
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "TOTAL COST",
-       number_format($totalCost, 2, ".", " ")
-    ]);
+    fputcsv($output, $totalRow);
 
 
 
