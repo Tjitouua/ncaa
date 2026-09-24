@@ -1,6 +1,6 @@
 import NotificationUI from "../ui/NotificationUI";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -37,56 +37,36 @@ const NotificationsPart = () => {
 
     // const [counts, setCounts] = useState({newUpload: 0, expiring: 0, expired: 0, overdue: 0, all: 0});
 
-    const prevTabRef = useRef(activeTab);
 
 
+    // Marking notification as read 
+    const markAsRead = async (notificationId: number) => {
 
+        const formData = new FormData();
 
+        formData.append("notification_id", notificationId.toString());
 
-    const markTabAsRead = async (tab: string) => {
-         let url = "";
+        try {
 
-         switch (tab) {
-            case "New Upload":
-                url = "http://localhost/ncaa/notifications/admin/mark_new_upload_read.php";
-                break;
+            const response = await fetch(
+                "http://localhost/ncaa/notifications/admin/mark_read.php",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
 
-            case "Certification Expiring":
-                url = "http://localhost/ncaa/notifications/admin/mark_certificate_expiring_read.php";
-                break;
+            const data = await response.json();
 
-            case "Expired Certification":
-                url = "http://localhost/ncaa/notifications/admin/mark_expired_certificate_read.php";
-                break;
-
-            case "Overdue Training":
-                url = "http://localhost/ncaa/notifications/admin/mark_training_overdue_read.php";
-                break;
-
-            // case "All":
-            //     url = "http://localhost/ncaa/notifications/admin/all.php";
-            //     break;
-
-            default:
-                return; 
-         }
-
-         await fetch(url, { method: "POST" });
+            if (!data.success) {
+                console.error("Failed to mark notification as read:", data.message);
+            }
+        } catch (error) {
+            console.error("Error marking notification as read", error);
+        }
     }
 
 
-
-    useEffect(() => {
-        const prevTab = prevTabRef.current;
-        const currentTab = activeTab;
-
-        if (prevTab !== currentTab) {
-            markTabAsRead(prevTab);
-        }
-
-        prevTabRef.current = currentTab;
-
-    }, [activeTab]);
 
 
 
@@ -109,25 +89,6 @@ const NotificationsPart = () => {
     }, []);
 
 
-
-
-    // Training Overdue 
-    useEffect(() => {
-        fetch("http://localhost/ncaa/notifications/admin/training_overdue.php")
-        .then((response) => response.json())
-        .then((data) => {
-            if(data.success) {
-                setTrainingOverdue(data.data);
-                // setNotifCount(data.data.length);
-            }
-        })
-        .catch((error) => {
-            console.error("Error fetching new upload notifications: ", error);
-        })
-        .finally(() => {
-            setLoading(false);
-        });
-    }, []);
 
 
 
@@ -213,7 +174,6 @@ const NotificationsPart = () => {
                     <label onClick={() => setActiveTab("New Upload")} className={`cursor-pointer ${activeTab === "New Upload" ? "text-primary underline underline-offset-4 decoration-2" : "hover:underline"}`}>New Upload ({newUpload.length})</label>
                     <label onClick={() => setActiveTab("Certification Expiring")} className={`cursor-pointer ${activeTab === "Certification Expiring" ? "text-primary underline underline-offset-4 decoration-2" : "hover:underline"}`}>Certification Expiring ({certificateExpiring.length})</label>
                     <label onClick={() => setActiveTab("Expired Certification")} className={`cursor-pointer ${activeTab === "Expired Certification" ? "text-primary underline underline-offset-4 decoration-2" : "hover:underline"}`}>Expired Certifications ({expiredCertificate.length})</label>
-                    <label onClick={() => setActiveTab("Overdue Training")} className={`cursor-pointer ${activeTab === "Overdue Training" ? "text-primary underline underline-offset-4 decoration-2" : "hover:underline"}`}>Overdue Training ({trainingOverdue.length})</label>
                     <label onClick={() => setActiveTab("All")} className={`cursor-pointer ${activeTab === "All" ? "text-primary underline underline-offset-4 decoration-2" : "hover:underline"}`}>All</label>
                 </div>
                 {/* <label className="text-primary flex items-center gap-2 cursor-pointer hover:underline"><FaCheck /> Mark all as read</label> */}
@@ -240,7 +200,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/admin/training_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/admin/training_details/${notification.training_id}`);
+                  }}
                />
                ))
                )}
@@ -268,7 +231,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/admin/training_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/admin/training_details/${notification.training_id}`);
+                  }}
                />
                ))
                )}
@@ -296,7 +262,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/admin/training_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/admin/training_details/${notification.training_id}`);
+                  }}
                />
                ))
                )}
@@ -325,7 +294,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/admin/training_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/admin/training_details/${notification.training_id}`);
+                  }}
                />
                ))
                )}
@@ -353,7 +325,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/admin/training_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/admin/training_details/${notification.training_id}`);
+                  }}
                />
                ))
                )}

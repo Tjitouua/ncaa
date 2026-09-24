@@ -1,7 +1,7 @@
 import { FaCheck } from "react-icons/fa";
 import NotificationUI from "../ui/NotificationUI";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -15,17 +15,34 @@ const NotificationsPart = () => {
     const [notifications2, setNotifications2] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [notifCount, setNotifCount] = useState(0);
-    const emailRef = useRef<string | null>(null);
 
 
 
-    const markAsRead = async (email: string) => {
-        await fetch("http://localhost/ncaa/staff/mark_notification_read.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email })
-        });
-    };
+    const markAsRead = async (notificationId: number) => {
+
+        const formData = new FormData();
+
+        formData.append("notification_id", notificationId.toString());
+
+        try {
+            
+            const response = await fetch(
+                "http://localhost/ncaa/staff/mark_notification_read.php",
+                {
+                   method: "POST",
+                   body: formData
+                }
+            );
+
+            const data = await response.json();
+
+            if (!data.success) {
+                console.error("Failed to mark notification as read", data.message);
+            }
+        } catch (error) {
+            console.error("Error marking notification as read", error)
+        }
+    }
 
 
     // Not read 
@@ -44,9 +61,6 @@ const NotificationsPart = () => {
                return;
             }
 
-            // await markAsRead(data.user.email);
-
-            emailRef.current = data.user.email;
 
             fetchNotifications(data.user.email);
         }
@@ -138,17 +152,6 @@ const NotificationsPart = () => {
 
 
 
-    useEffect(() => {
-        return () => {
-            if (emailRef.current) {
-                markAsRead(emailRef.current);
-            }
-        }
-    }, []);
-
-
-
-
 
 
 
@@ -187,7 +190,10 @@ const NotificationsPart = () => {
                   title = {notification.title}
                   desc = {notification.message}
                   date = {notification.sent_date}
-                  onClick = {() => navigate(`/staff/assignment_details/${notification.training_id}`)}
+                  onClick={async () => {
+                    await markAsRead(notification.id);
+                    navigate(`/staff/assignment_details/${notification.training_id}`);
+                  }} 
                />
                ))
                )}
