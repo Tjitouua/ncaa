@@ -7,23 +7,23 @@
      header("Access-Control-Allow-Methods: POST");
      header("Content-Type: application/json");
 
-     include "../database.php";
+     include "../../database.php";
 
      $notification_id = $_POST["notification_id"] ?? null;
 
      if (!$notification_id) {
-       echo json_encode([
-          "success" => false,
-          "message" => "Notification ID is required"
-       ]);
-       exit;
+        echo json_encode([
+            "success" => false,
+            "message" => "Notification ID is required"
+        ]);
+        exit;
      }
 
-     $sql = "UPDATE 
-             staff_notifications
+     $sql = "UPDATE
+             admin_notifications
              SET status = 'Read'
              WHERE id = ?
-             AND status = 'Unread';
+             AND status = 'Unread'
      ";
 
      $stmt = $conn->prepare($sql);
@@ -31,21 +31,20 @@
 
      if ($stmt->execute()) {
         echo json_encode([
-          "success" => true,
-          "message" => "Notification marked as read"
+            "success" => true,
+            "message" => "Notification marked as read"
         ]);
+        exit;
      } else {
         echo json_encode([
-           "success" => false,
-           "message" => "Failed to mark notification as read"
+            "success" => false,
+            "message" => "Failed to mark notification as read"
         ]);
      }
 
 
      $stmt->close();
      $conn->close();
-
-
 
 
 

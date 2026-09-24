@@ -141,7 +141,10 @@
 
         $currentYear = date("Y");
 
-        if ($year >= $currentYear) {
+        if ($acceptance === "Rejected") {
+           $title = "Training plan rejected";
+           $message = "Your training plan for $trainingName has been rejected. The training was for the $quarter quarter of $year. Reason: $rejectReason.";
+        } elseif ($year >= $currentYear) {
            $title = "New training assigned";
            $message = "You have been assigned $trainingName. The training runs/ran in the $quarter quarter of $year.";
         } else {
