@@ -23,6 +23,7 @@ import StaffProgramAdd from './pages/staff/ProgramAdd'
 import TrainingPlans from './pages/administrator/TrainingPlans'
 import ProtectedRoute from './ui/ProtectedRoute'
 import Forgot from './pages/login/Forgot'
+import AdminPassword from './pages/administrator/AdminPassword'
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/admin/training_history" element={<TrainingHistory />} />
           <Route path="/admin/notifications" element={<Notifications />} />
           <Route path="/admin/training_plans/:id" element={<TrainingPlans />} />
+          <Route path="/admin/password" element={<AdminPassword />} />
           </Route>
 
 
