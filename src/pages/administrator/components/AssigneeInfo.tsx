@@ -53,7 +53,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    const cycleStatus = async () => {
        if (!trainingInfoList2?.id) return;
 
-       const next = getNextStatus(trainingInfoList2.status);
+       const next = getNextStatus(trainingInfoList2?.status);
 
        setUpdatingStatus(true);
 
@@ -84,6 +84,69 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
           console.error("Error updating status: ", error);
        }
    };
+
+
+
+
+
+
+
+   // Rejecting Certificate 
+   const rejectCertificate = async () => {
+
+      if (!trainingInfoList2.id) {
+         alert("Missing training ID");
+         return;
+      }
+
+      const confirmed = window.confirm(
+         "Are you sure you want to reject this certificate?"
+      );
+
+      if (!confirmed) {
+         return;
+      }
+
+
+      try {
+
+         const response = await fetch(
+            "http://localhost/ncaa/staff/reject_certificate.php",
+            {
+               method: "POST",
+               credentials: "include",
+               headers: {
+                  "Content-Type": "application/json"
+               },
+               body: JSON.stringify({
+                  training_id: trainingInfoList2.id
+               })
+            }
+         );
+
+         const data = await response.json();
+
+         if (data.success) {
+            alert("Certificate rejected successfully");
+            window.location.reload();
+         } else {
+            alert(data.message || "Failed to reject certificate");
+         }
+      } catch (error) {
+         console.error("Error rejecting certificate:", error);
+
+         alert("Server error");
+      }
+
+
+
+   };
+
+
+
+
+
+
 
 
 
@@ -322,7 +385,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
               </div>
               <div className="w-full mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
                   <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
-                  <SecondaryButt className="!border !border-secondary/30"><MdOutlineCancel /> Reject</SecondaryButt>
+                  <SecondaryButt onClick={rejectCertificate} className="!border !border-secondary/30"><MdOutlineCancel /> Reject</SecondaryButt>
               </div>
               <SecondaryButt onClick={cycleStatus} disabled={updatingStatus} className="!bg-secondaryy">
                     {updatingStatus ? (
