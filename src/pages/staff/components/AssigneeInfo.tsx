@@ -7,9 +7,9 @@ import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificateUi from "../ui/CertificateUi";
 import { FiEye } from "react-icons/fi";
-import { TbZoomReplace } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 
@@ -85,6 +85,62 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
       } finally {
          setLoading(false);
       }
+
+
+   };
+
+
+
+
+
+
+
+
+   const handleDeleteCertificate = async () => {
+
+       if (!id) {
+         alert("Missing training ID");
+         return;
+       }
+
+
+       const confirmDelete = window.confirm(
+          "Are you sure you want to delete this certificate?"
+       );
+
+       if(!confirmDelete) {
+          return;
+       }
+
+
+       try {
+
+          const formData = new FormData();
+          formData.append("training_id", id);
+
+          const res = await fetch(
+             "http://localhost/ncaa/staff/delete_certificate.php",
+             {
+               method: "POST",
+               credentials: "include",
+               body: formData,
+             }
+          );
+
+          const data = await res.json();
+
+          if (data.success) {
+             alert("Certificate deleted successfully");
+             window.location.reload();
+          } else {
+             alert(data.message || "Failed to delete certificate");
+          }
+
+       } catch (error) {
+           console.error(error);
+           alert("Server error");
+       }
+
 
 
    };
@@ -285,7 +341,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                   <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
                   {/* <SecondaryButt className="!border !border-secondary/30"><LuDownload /> Download
                   </SecondaryButt> */}
-                  <SecondaryButt className="!border !border-secondary/30"><TbZoomReplace /> Replace</SecondaryButt>
+                  <SecondaryButt onClick={handleDeleteCertificate} className="!border !border-secondary/30"><RiDeleteBin6Line /> Delete</SecondaryButt>
               </div>
               
            </div>
