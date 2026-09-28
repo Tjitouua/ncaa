@@ -30,6 +30,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    // const [trainingName, setTrainingName] = useState("");
    const [expiryDate, setExpiryDate] = useState("");
    const [certificateFile, setCertificateFile] = useState<File | null>(null);
+   const [startDate, setStartDate] = useState("");
+   const [endDate, setEndDate] = useState("");
    const [loading, setLoading] = useState(false);
 
    const hasCertificate = trainingInfoList2?.certificate_no && trainingInfoList2?.file;
@@ -38,7 +40,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    // Adding certficate to database 
    const handleSubmitCertificate = async () => {
       if (!id) return alert("Missing training ID");
-      if (!issuedDate || !certificateFile) {
+      if (!issuedDate || !certificateFile || !startDate || !endDate) {
          return alert("Please fill all required fields");
       }
 
@@ -49,6 +51,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
       formData.append("issued_date", issuedDate);
       formData.append("expiry_date", expiryDate);
       formData.append("file", certificateFile);
+      formData.append("start_date", startDate);
+      formData.append("end_date", endDate);
 
       try {
          setLoading(true);
@@ -67,6 +71,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
             setIssuedDate("");
             setExpiryDate("");
             setCertificateFile(null);
+            setStartDate("");
+            setEndDate("");
 
             // const response = await fetch(`http://localhost/ncaa/staff/get_assignment_by_id.php?id=${id}`);
             // const assignment = await response.json();
@@ -260,12 +266,23 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
            <div className="w-full py-6 pb-6 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
               <label className="font-bold text-sm mb-2">Certificate</label>
               <label className="text-xs text-secondary/50 mb-3">Once you complete this training, upload your certificate here. An admin will review it and mark the training as completed.</label>
+              {/* Training Dates  */}
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+                 <div className="w-full flex flex-col gap-2">
+                   <label className="text-xs font-bold text-secondary/80">Training start date *</label>
+                   <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                 </div>
+                 <div className="w-full flex flex-col gap-2">
+                   <label className="text-xs font-bold text-secondary/80">Training end date *</label>
+                   <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                 </div>
+              </div>
               {/* Certificate No  */}
               <div className="w-full flex flex-col gap-2 mb-3">
                  <label className="text-xs font-bold text-secondary/80">Certificate No</label>
                  <input value={certificateNo} onChange={(e) => setCertificateNo(e.target.value)} type="text" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" placeholder="Auto-generated if empty" />
               </div>
-              {/* Dates  */}
+              {/* Certificate Dates  */}
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
                  <div className="w-full flex flex-col gap-2">
                    <label className="text-xs font-bold text-secondary/80">Issued</label>

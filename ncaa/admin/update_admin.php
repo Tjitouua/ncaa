@@ -49,7 +49,7 @@
 
 
 
-    $staffSql = "SELECT id FROM users WHERE email = ?";
+    $staffSql = "SELECT id FROM users WHERE email = ? AND role != 'admin'";
 
     $staffStmt = $conn->prepare($staffSql);
     $staffStmt->bind_param("s", $email);

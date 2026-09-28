@@ -39,6 +39,8 @@
      $certificate_no = $_POST["certificate_no"] ?? null;
      $issued_date = $_POST["issued_date"] ?? null;
      $expiry_date = $_POST["expiry_date"] ?? null;
+     $start_date = $_POST["start_date"] ?? null;
+     $end_date = $_POST["end_date"] ?? null;
 
      $training_name = $_POST["training_name"] ?? null;
 
@@ -110,7 +112,36 @@
      $stmt = $conn->prepare($sql);
      $stmt->bind_param("isssss", $training_id, $staff_email, $certificate_no, $issued_date, $expiry_date, $filePath);
 
+
+     $programSql = "SELECT program_id FROM training_assignments WHERE id = ?";
+     $programStmt = $conn->prepare($programSql);
+     $programStmt->bind_param("i", $training_id);
+     $programStmt->execute();
+
+     $programResult = $programStmt->get_result();
+     $program = $programResult->fetch_assoc();
+
+     $programStmt->close();
+
+     if (!$program) {
+        echo json_encode([
+           "success" => false,
+           "message" => "Training assignment not found"
+        ]);
+        exit;
+     }
+
+     $program_id = $program["program_id"];
+
+     $datesSql = "UPDATE training_programs SET start_date = ?, end_date = ? WHERE id = ?";
+     $datesStmt = $conn->prepare($datesSql);
+     $datesStmt->bind_param("ssi", $start_date, $end_date, $program_id);
+
+
+
      if ($stmt->execute()) {
+
+       $datesStmt->execute();
 
        $title = "New certificate upload";
        $message = "$staff_first_name $staff_last_name has uploaded a certificate for $training_name. Please review and verify the document.";
