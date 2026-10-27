@@ -111,9 +111,10 @@ const TrainingPlansPart = () => {
 
              <div className="flex flex-col">
                {/* Top Part  */}
-               <div className="flex items-center justify-between border-b border-secondary/30 pb-5">
+               <div className="flex items-end justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
-                    <label className="text-lg">Training Plan for {selectedYear}</label>
+                    <label className="text-lg text-secondary/80 mb-2">Trainings Approved for {selectedYear}</label>
+                    <label className="text-xs text-secondary/60">Staff: <span className="font-bold">Tjitouua Mapoha</span></label>
                     <label className="text-xs text-secondary/60">Total: <span className="font-bold text-primary">N$ {totalCost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(",", ".")}</span></label>
                  </div>
                  <div className="flex items-center gap-3">
@@ -138,8 +139,13 @@ const TrainingPlansPart = () => {
 
 
                       <div className="flex gap-3 items-end">
-                          {/* <SecondaryButt><LuFilter /> Filter</SecondaryButt> */}
-                          <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-2">
+                            <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
+                                <select className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                                    <option value="Approved">Approved</option>
+                                    <option value="Not Approved">Not Approved</option>
+                                </select>
+                             </div>
                              <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                                 <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                                   {years.map((year) => (

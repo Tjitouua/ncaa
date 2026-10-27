@@ -11,17 +11,21 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import { RxCrossCircled } from "react-icons/rx";
+import { FaRegFileAlt } from "react-icons/fa";
+import { LuFileCheck } from "react-icons/lu"; 
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 
 interface Props {
    setShowCertificate: React.Dispatch<React.SetStateAction<boolean>>
+   setSelectedDocument: React.Dispatch<React.SetStateAction<"certificate" | "report">>
 }
 
 
 
 
-const AssigneeInfo = ({ setShowCertificate }: Props) => {
+const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
 
    const { id } = useParams();
    const [trainingInfoList2, setTrainingInfoList2] = useState<any>({});
@@ -30,8 +34,11 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
    const [issuedDate, setIssuedDate] = useState("");
    const [expiryDate, setExpiryDate] = useState("");
    const [certificateFile, setCertificateFile] = useState<File | null>(null);
+   const [reportFile, setReportFile] = useState<File | null>(null);
    const [loading, setLoading] = useState(false);
    const [showAddCertificate, setShowAddCertificate] = useState(false);
+   const [startDate, setStartDate] = useState("");
+   const [endDate, setEndDate] = useState("");
 
    const hasCertificate = trainingInfoList2?.certificate_no && trainingInfoList2?.file;
 
@@ -100,7 +107,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
       }
 
       const confirmed = window.confirm(
-         "Are you sure you want to reject this certificate?"
+         "Are you sure you want to reject the certificate and report? Both documents will be removed, and the employee will need to upload them again."
       );
 
       if (!confirmed) {
@@ -127,7 +134,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
          const data = await response.json();
 
          if (data.success) {
-            alert("Certificate rejected successfully");
+            alert("Certificate and report rejected successfully");
             window.location.reload();
          } else {
             alert(data.message || "Failed to reject certificate");
@@ -148,6 +155,63 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
 
 
+      // Rejecting Certificate 
+      const deleteCertificate = async () => {
+
+         if (!trainingInfoList2.id) {
+            alert("Missing training ID");
+            return;
+         }
+   
+         const confirmed = window.confirm(
+            "Are you sure you want to delete the certificate and report? Both documents will be removed, and the employee will need to upload them again."
+         );
+   
+         if (!confirmed) {
+            return;
+         }
+   
+   
+         try {
+   
+            const response = await fetch(
+               "http://localhost/ncaa/staff/delete_certificate_admin.php",
+               {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                     "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                     training_id: trainingInfoList2.id
+                  })
+               }
+            );
+   
+            const data = await response.json();
+   
+            if (data.success) {
+               alert("Certificate and report deleted successfully");
+               window.location.reload();
+            } else {
+               alert(data.message || "Failed to delete certificate");
+            }
+         } catch (error) {
+            console.error("Error deleting certificate:", error);
+   
+            alert("Server error");
+         }
+   
+   
+   
+      };
+
+
+
+
+
+
+
 
 
 
@@ -159,7 +223,7 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
          return;
       }
 
-      if (!issuedDate || !certificateFile) {
+      if (!issuedDate || !certificateFile || !reportFile || !(startDate || trainingInfoList2?.start_date) || !(endDate || trainingInfoList2?.end_date)) {
         alert("Please fill all required fields");
         return;
       }
@@ -171,6 +235,9 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
       formData.append("issued_date", issuedDate);
       formData.append("expiry_date", expiryDate);
       formData.append("file", certificateFile);
+      formData.append("report_file", reportFile);
+      formData.append("start_date", startDate || trainingInfoList2?.start_date);
+      formData.append("end_date", endDate || trainingInfoList2?.end_date);
 
       try {
          setLoading(true);
@@ -187,13 +254,14 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
          const data = await res.json();
 
          if(data.success) {
-            alert("Certificated uploaded successfully");
+            alert("Certificated and report uploaded successfully");
 
             setCertificateNo("");
             setIssuedDate("");
             setExpiryDate("");
             setCertificateFile(null);
             setShowAddCertificate(false);
+            setReportFile(null);
 
             window.location.reload();
          } else {
@@ -272,8 +340,12 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
             value: trainingInfoList2?.certificate_no
         },
         {
-            label: "File",
+            label: "Certificate",
             value: trainingInfoList2?.file?.split("_").pop()            
+        },
+        {
+         label: "Report",
+         value: trainingInfoList2?.report_file?.split("_").pop()            
         },
         {
             label: "Expiry",
@@ -332,12 +404,23 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
 
            {/* Certificate  */}
            {showAddCertificate && (
-           <div className="w-full py-6 pb-6 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
+           <div className="w-full py-8 pb-7 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
               <div className="w-full flex justify-between">
-                <label className="font-bold text-sm mb-2">Certificate</label>
+                <label className="font-bold text-sm mb-2">Certificate and Report</label>
                 <RxCrossCircled onClick={() => setShowAddCertificate(false)} className="cursor-pointer hover:text-red-500" />
               </div>
-              <label className="text-xs text-secondary/50 mb-3">Upload the employee's certificate for this training. Admins can upload certificates on behalf of employees, especially for historical records.</label>
+              <label className="text-xs text-secondary/50 mb-3">Upload the employee's certificate and report for this training. Admins/HR can upload documents on behalf of employees, especially for historical records.</label>
+              {/* Training Dates  */}
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+                 <div className="w-full flex flex-col gap-2">
+                   <label className="text-xs font-bold text-secondary/80">Training start date *</label>
+                   <input value={startDate || trainingInfoList2?.start_date} onChange={(e) => setStartDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                 </div>
+                 <div className="w-full flex flex-col gap-2">
+                   <label className="text-xs font-bold text-secondary/80">Training end date *</label>
+                   <input value={endDate || trainingInfoList2?.end_date} onChange={(e) => setEndDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                 </div>
+              </div>
               {/* Certificate No  */}
               <div className="w-full flex flex-col gap-2 mb-3">
                  <label className="text-xs font-bold text-secondary/80">Certificate No</label>
@@ -346,20 +429,26 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
               {/* Dates  */}
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
                  <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Issued</label>
+                   <label className="text-xs font-bold text-secondary/80">Issued *</label>
                    <input value={issuedDate} onChange={(e) => setIssuedDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
                  </div>
                  <div className="w-full flex flex-col gap-2">
-                   <label className="text-xs font-bold text-secondary/80">Expiry *</label>
+                   <label className="text-xs font-bold text-secondary/80">Expiry </label>
                    <input value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} type="date" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
                  </div>
               </div>
               {/* Certificate File  */}
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-3 mt-1">
               <div className="w-full flex flex-col gap-2 mb-1">
                  <label className="text-xs font-bold text-secondary/80">Certificate File *</label>
-                 <input onChange={(e) => setCertificateFile(e.target.files ? e.target.files[0] : null)} type="file" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none" />
+                 <input onChange={(e) => setCertificateFile(e.target.files ? e.target.files[0] : null)} type="file" className="w-full py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none file:hidden" />
               </div>
-              <label className="text-[11px] text-secondary/50 mb-5">No file selected - max 5 MB</label>
+              <div className="w-full flex flex-col gap-2 mb-1">
+                 <label className="text-xs font-bold text-secondary/80">Report File *</label>
+                 <input onChange={(e) => setReportFile(e.target.files ? e.target.files[0] : null)}  type="file" className="py-2 px-2 rounded-sm border border-secondary/40 text-xs focus:border-none file:hidden" />
+              </div>
+              </div>
+              <label className="text-[11px] text-secondary/50 mb-5">Accepted format: PDF · Up to 5 MB</label>
               <PrimaryButt onClick={handleSubmitCertificate} className="mb-3">{loading ? "Submitting..." : "Submit Certificate"}</PrimaryButt>
               {/* <SecondaryButt>Cancel</SecondaryButt> */}
            </div>
@@ -373,8 +462,14 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
            {/* Submitted Certificated  */}
            {hasCertificate && (
            <div className="w-full py-6 pb-8 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
-              <label className="font-bold text-sm mb-2">Certificate</label>
-              <div className="bg-secondaryy w-full px-1 flex flex-col gap-1">
+              <div className="w-full flex items-center justify-between">
+                 <label className="font-bold text-sm mb-2">Certificate and Report</label>
+                 <div className="flex gap-3 items-center">
+                    <RiDeleteBin6Line onClick={deleteCertificate} title="Delete the document without sending an email. Use this when the admin/HR entered the document themselves." className="cursor-pointer hover:text-red-500" />
+                    <MdOutlineCancel onClick={rejectCertificate} title="Reject the document and notify the staff member by email to resubmit it. Use this when the staff member submitted the document." className="cursor-pointer hover:text-red-500" />
+                 </div>
+              </div>
+              <div className="bg-secondaryy w-full px-1 mt-3 flex flex-col gap-1">
                 {certificate.map((certificate, index) => (
                  <CertificateUi 
                     key = {index}
@@ -384,8 +479,8 @@ const AssigneeInfo = ({ setShowCertificate }: Props) => {
                 ))}
               </div>
               <div className="w-full mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <SecondaryButt onClick={() => setShowCertificate(true)} className="!border !border-secondary/30"><FiEye /> View</SecondaryButt>
-                  <SecondaryButt onClick={rejectCertificate} className="!border !border-secondary/30"><MdOutlineCancel /> Reject</SecondaryButt>
+                  <SecondaryButt onClick={() => {setSelectedDocument("certificate"); setShowCertificate(true);}} className="!border !border-secondary/30"><LuFileCheck /> Certificate</SecondaryButt>
+                  <SecondaryButt onClick={() => {setSelectedDocument("report"); setShowCertificate(true);}} className="!border !border-secondary/30"><FaRegFileAlt /> Report</SecondaryButt>
               </div>
               <SecondaryButt onClick={cycleStatus} disabled={updatingStatus} className="!bg-secondaryy">
                     {updatingStatus ? (

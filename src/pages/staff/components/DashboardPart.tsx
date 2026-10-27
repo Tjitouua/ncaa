@@ -142,7 +142,15 @@ const DashboardPart = () => {
  
  
  
-   const getCertificateStatus = (expiryDate: string) => {
+   const getCertificateStatus = (expiryDate: string | null) => {
+
+       if (!expiryDate) {
+        return {
+            text: "Valid",
+            className: "border-green-600 bg-green-600/30"
+         };
+       }
+
        const today = new Date();
        const expiry = new Date(expiryDate);
  

@@ -384,18 +384,6 @@ const ProgramAdd = () => {
                             placeholder="Enter Other Costs (N$)"
                           />
 
-                          <SelectInputs
-                            label = "Plan Approved"
-                            name = "approved"
-                            value = {form.approved}
-                            onChange = {handleChange}
-                            error = {errors.approved}
-                          >
-                            <option value="">Part of approved Training Plan</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                          </SelectInputs>
-
 
                           <SelectInputs
                             label = "Year"
@@ -459,6 +447,21 @@ const ProgramAdd = () => {
                             <option value="">Select status</option>
                             <option value="Accepted">Accepted</option>
                             <option value="Rejected">Rejected</option>
+                          </SelectInputs>
+
+
+
+                          
+                          <SelectInputs
+                            label = "Plan Approved"
+                            name = "approved"
+                            value = {form.approved}
+                            onChange = {handleChange}
+                            error = {errors.approved}
+                          >
+                            <option value="">Part of approved Training Plan</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                           </SelectInputs>
 
 

@@ -186,7 +186,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
                    all.slice(0,2).map((all) => (
                    <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
                       <label className="font-bold text-sm">{all.title}</label>
-                      <label className="text-xs hover:underline">{all.message.split(".")[0]}</label>
+                      <label onClick={() => navigate("/admin/notifications")} className="text-xs hover:underline">{all.message.split(".")[0]}</label>
                       <label className="text-[10px]">{all.sent_date}</label>
                    </div>
                    ))

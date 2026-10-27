@@ -620,6 +620,7 @@ const TrainingHistoryPart = () => {
                              <th className="text-left p-3">Development gap</th>
                              <th className="text-left p-3">Training type</th>
                              <th className="text-left p-3">Duration</th>
+                             <th className="text-left p-3">Date</th>
                              <th className="text-left p-3">Total cost (N$)</th>
                              <th className="text-left p-3">Status</th>
                              {/* <th className="text-right p-3">Action</th> */}
@@ -647,6 +648,7 @@ const TrainingHistoryPart = () => {
                              <td className="px-3 py-3">{assign.reason}</td>
                              <td className="px-3 py-3">{assign.training_type}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
+                             <td className="px-3 py-3">{assign.start_date}</td>
                              <td className="px-3 py-3">{Number(assign.total_cost).toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                              <td className="px-3 py-3">
                                   <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-20`}>

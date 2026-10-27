@@ -17,6 +17,7 @@ const AssignmentDetails = () => {
    const { id } = useParams();
    const [trainingInfoList, setTrainingInfoList] = useState<any>(null);
    const [showCertificate, setShowCertificate] = useState(false);
+   const [selectedDocument, setSelectedDocument] = useState<"certificate" | "report">("certificate");
 
 
       useEffect(() => {
@@ -62,7 +63,7 @@ const AssignmentDetails = () => {
            {/* <Middle Div  */}
            <div className="w-full flex flex-col md:flex-row items-start gap-5 justify-between mb-6 ">
               <TrainingInfo />
-              <AssigneeInfo setShowCertificate={setShowCertificate} />
+              <AssigneeInfo setShowCertificate={setShowCertificate} setSelectedDocument={setSelectedDocument} />
            </div>
 
            {/* Certificate Div  */}
@@ -72,7 +73,7 @@ const AssignmentDetails = () => {
               <div className="w-full lg:w-6/7 flex justify-center py-5">
                   {/* Certificate  */}
                   <div className="h-270 bg-white w-full lg:w-4/5">
-                     <iframe className="w-full bg-white h-full" src={`http://localhost/ncaa/staff/${encodeURI(trainingInfoList?.file || "")}`} />
+                     <iframe className="w-full bg-white h-full" src={`http://localhost/ncaa/staff/${encodeURI(selectedDocument === "certificate" ? trainingInfoList?.file || "" : trainingInfoList?.report_file || "")}`} />
                   </div>
               </div>
            </div>

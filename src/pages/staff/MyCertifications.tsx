@@ -108,7 +108,15 @@ const MyCertifications = () => {
 
 
 
-  const getCertificateStatus = (expiryDate: string) => {
+  const getCertificateStatus = (expiryDate: string | null) => {
+
+      if (!expiryDate) {
+         return {
+            text: "Valid",
+            className: "border-green-600 bg-green-600/30"
+         };
+      }
+
       const today = new Date();
       const expiry = new Date(expiryDate);
 
@@ -210,7 +218,7 @@ const MyCertifications = () => {
                              <td className="px-3 py-4">{certificate.training_name}</td>
                              <td className="px-3 py-4">{certificate.certificate_no}</td>
                              <td className="px-3 py-4">{certificate.issued_date}</td>
-                             <td className="px-3 py-4 text-xs">{certificate.expiry_date}</td>
+                             <td className="px-3 py-4 text-xs">{certificate.expiry_date == null || certificate.expiry_date === "" || certificate === "0000-00-00" ? "No Expiry" : certificate.expiry_date}</td>
                              <td className="px-3 py-4"><div className={`py-1 px-2 rounded-sm font-bold inline-flex items-center justify-center gap-2 border ${status.className}`}>● {status.text}</div></td>
                              <td className="text-left px-3 py-4"><div className="flex items-center gap-2"><GrCertificate />{certificate.file?.split("_").pop()}</div></td>
                              <td className="px-3 py-4"><div className="font-bold text-lg flex items-center justify-center gap-6">

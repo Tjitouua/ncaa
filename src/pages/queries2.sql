@@ -138,6 +138,25 @@ CREATE TABLE certificates
 
 
 
+
+-- Reports table 
+CREATE TABLE reports
+( 
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    training_id INT NOT NULL,
+    staff_email VARCHAR (250) NOT NULL,
+    file VARCHAR(250) NOT NULL,
+    
+    FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+
 -- Staff Notifications table 
 CREATE TABLE staff_notifications
 (

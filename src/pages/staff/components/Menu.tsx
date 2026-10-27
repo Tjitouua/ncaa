@@ -62,7 +62,7 @@ const Menu = ({ showMenu, setShowMenu }: MenuProps) => {
           <div className="w-full py-3 flex gap-4 text-secondary/80 justify-between border-b-2">
              {/* <div className="w-[40%] h-15 bg-[url('images/ncaa_logo2.png')] bg-cover bg-center"></div> */}
              <div className="flex flex-col">
-                <label className="font-bold">NCAA</label>
+                <label className="font-bold">CORE</label>
                 <label className="text-xs">Training Record</label>
                 <label className="text-xs">Management System</label>
              </div>

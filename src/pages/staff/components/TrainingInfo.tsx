@@ -220,7 +220,7 @@ const TrainingInfo = () => {
             <label className="text-xs text-secondary/50">{trainingInfoList2?.training_code}</label>
             <label className="font-bold text-lg">{trainingInfoList2?.training_name}</label>
             <label className="text-xs text-secondary/50">{trainingInfoList2?.training_type}</label>
-            <div className="flex items-center gap-3 mt-3">
+            <div className="flex items-center mb-3 gap-3 mt-3">
                 <div className="py-1 px-3 bg-secondary/20 text-xs font-bold rounded-md">
                     <label>{trainingInfoList2?.category}</label>
                 </div>
@@ -235,8 +235,8 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Session Schedule  */}
-            <div className="w-full mt-6 flex flex-col gap-2 px-3 bg-secondaryy/30 py-4 border-t border-t-secondary/30">
-                <label className="font-bold text-sm mb-2">Session Schedule</label> 
+            <div className="w-full mt-6 flex flex-col gap-2 px-3 bg-secondaryy/30 py-4 border-t border-t-secondary/10">
+                <label className="font-bold text-sm mb-2 underline underline-offset-2">Session Schedule</label> 
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
                     {trainingInfoList.map((training, index) => (
                       <TrainingInfoUi 
