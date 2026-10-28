@@ -3,6 +3,7 @@ import { FaRegEye } from "react-icons/fa6";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
+import { ImCross } from "react-icons/im";
 
 
 
@@ -17,6 +18,13 @@ const ChangePassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [showAddHR, setShowAddHR] = useState(false);
+
+
+    const [hrFirstName, setHrFirstName] = useState("");
+    const [hrLastName, setHrLastName] = useState("");
+    const [hrEmail, setHrEmail] = useState("");
+    const [addingHR, setAddingHR] = useState(false);
 
 
 
@@ -83,16 +91,81 @@ const ChangePassword = () => {
 
 
 
+      const handleAddHR = async () => {
+         if (!hrFirstName || !hrLastName || !hrEmail) {
+            alert("Please fill in all fields");
+            return;
+         }
+
+         setAddingHR(true);
+
+         try {
+            const response = await fetch(
+                "http://localhost/ncaa/staff/addHR.php",
+                {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     first_name: hrFirstName.trim(),
+                     last_name: hrLastName.trim(),
+                     email: hrEmail.trim()
+                  }),
+                }
+            );
+
+
+            const data = await response.json();
+
+            if (data.success) {
+               alert("HR member added successfully");
+
+               setHrFirstName("");
+               setHrLastName("");
+               setHrEmail("");
+               setShowAddHR(false);
+            } else {
+               alert(data.message || "Failed to add member");
+
+
+            }
+         } catch (error) {
+           console.error(error);
+           alert("Server error.");
+         } finally {
+           setAddingHR(false);
+         }
+      };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
      return (
+      <div className="min-h-screen w-full flex flex-col">
+
+
+
+
+
+
+
+
+
       <div className="min-h-screen flex justify-between items-start py-5 gap-5 w-full">
 
 
-
-
-
+        {/* Changing Admin details  */}
         <div className="flex flex-col bg-red-400 text-gray-600">
           <div className="flex flex-col gap-2 bg-white min-w-90 text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/20">
             <div className="w-full py-3 bg-primaryy flex pt-6 px-5 xl:px-7 justify-start"><div className="w-50 h-28 mb-5 bg-[url('/images/ncaa-logo.png')] bg-center bg-cover"></div></div>
@@ -151,18 +224,14 @@ const ChangePassword = () => {
 
 
 
-
-
-
-
-
+        {/* HR Members  */}
         <div className="w-full md:w-[70%] py-12 flex flex-col min-h-[40vh] bg-white px-9 pb-8 shadow-sm shadow-secondary/30">
           <div className="w-full flex items-center justify-between">
              <div className="flex flex-col">
                 <label className="font-bold text-lg">HR Team</label>
                 <label className="text-xs text-secondary/60">HR members have full administration access, except managing other HR members.</label>
              </div>
-             <PrimaryButt><IoMdAdd />Add HR Member</PrimaryButt>
+             <PrimaryButt onClick={() => setShowAddHR(true)}><IoMdAdd />Add HR Member</PrimaryButt>
           </div>
 
           {/* Employees Table  */}
@@ -188,6 +257,78 @@ const ChangePassword = () => {
                     </table>
 
        </div>
+
+
+
+       </div>
+
+
+
+
+
+
+
+
+
+
+       {/* Adding HR Members */}
+       {showAddHR && (
+       <div onClick={() => setShowAddHR(false)} className="w-full min-h-screen bg-black/50 -mt-7 overflow-y-auto py-7 left-15 backdrop-blur-lg flex flex-col items-center fixed">
+            <div className="w-[89%] flex justify-end">
+                <ImCross onClick={() => setShowAddHR(false)} className="text-white cursor-pointer hover:text-secondaryy" />
+            </div>
+            {/* Form  */}
+            {/* Changing Admin details  */}
+        <div onClick={(e) => e.stopPropagation()} className="flex flex-col text-gray-600">
+          <div className="flex flex-col gap-2 bg-white min-w-90 text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/20">
+            <div className="w-full py-3 bg-primaryy flex pt-6 px-5 xl:px-7 justify-start"><div className="w-50 h-28 mb-5 bg-[url('/images/ncaa-logo.png')] bg-center bg-cover"></div></div>
+            {/* Form  */}
+            <div className="flex flex-col gap-1 text-secondary/70 px-5 xl:px-8 justify-center pb-10 py-5">
+            <label className="font-extrabold font-serif text-xl">New HR Account</label>
+            <label className="mb-4 text-xs text-gray-400">Add a new HR member.</label>
+
+            {/* First Name  */}
+            <div className="flex flex-col gap-1 mb-2">
+                <label className="font-bold text-xs">First Name</label>
+                <input value={hrFirstName} onChange={(e) => setHrFirstName(e.target.value)} className="w-full py-2 border rounded-sm px-3 border-black/20 text-sm outline-none " type="text" placeholder="John" />
+                <label className="text-xs text-red-600 hidden">Please enter email</label>
+            </div>
+
+            {/* Last Name  */}
+            <div className="flex flex-col gap-1 mb-2">
+                <label className="font-bold text-xs">Last Name</label>
+                <input value={hrLastName} onChange={(e) => setHrLastName(e.target.value)} className="w-full py-2 border rounded-sm px-3 border-black/20 text-sm outline-none " type="text" placeholder="Doe" />
+                <label className="text-xs text-red-600 hidden">Please enter last name</label>
+            </div>
+
+            {/* Username  */}
+            <div className="flex flex-col gap-1 mb-2">
+                <label className="font-bold text-xs">Email</label>
+                <input value={hrEmail} onChange={(e) => setHrEmail(e.target.value)} className="w-full py-2 border rounded-sm px-3 border-black/20 text-sm outline-none " type="text" placeholder="doeJ@ncaa.na" />
+                <label className="text-xs text-red-600 hidden">Please enter email</label>
+            </div>
+
+            <button 
+                onClick={handleAddHR}
+                disabled={addingHR}
+                className="w-full mt-5 text-sm py-2 cursor-pointer flex items-center justify-center rounded-lg bg-primary text-white font-bold hover:bg-primary/70"
+            >
+                {addingHR ? "Adding..." : "Add"}
+            </button>
+            
+
+            <div className="w-full flex items-center justify-center text-xs mt-5">
+              <label>Complete the form to add a new HR member.</label>
+            </div>
+            </div>
+          </div>
+        </div>
+       </div>
+       )}
+
+
+
+
 
 
 
