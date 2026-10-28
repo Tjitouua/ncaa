@@ -38,9 +38,9 @@ const menuItems = [
       icon: <IoNotificationsOutline />
    },
    {
-      name: "Password",
+      name: "User Management",
       path: "/admin/password",
-      icon: <MdLockOutline />
+      icon: <FiUsers />
    },
    
 ];

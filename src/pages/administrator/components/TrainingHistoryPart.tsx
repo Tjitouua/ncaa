@@ -57,13 +57,13 @@ interface Assignment {
       flight_cost: string,
       other_costs: string,
       total_cost: string,
-      approved: string,
+      // approved: string,
       year: string,
       quarter: string,
       start_date: string,
       end_date: string,
       region: string,
-      acceptance: string
+      approved: string
 };
 
 
@@ -87,7 +87,7 @@ const initialFilters = {
       gender: "",
       year: "",
       region: "",
-      acceptance: ""
+      approved: ""
 };
 
 
@@ -117,7 +117,7 @@ const TrainingHistoryPart = () => {
    const getStatusColor = (status: string) => {
       if (status === "Pending") return "bg-orange-200";
       if (status === "Completed") return "bg-green-200";
-      if (status === "Rejected") return "bg-red-200";
+      if (status === "Not Approved") return "bg-red-200";
       return "bg-grey-200";
    }
 
@@ -317,11 +317,11 @@ const TrainingHistoryPart = () => {
          ]
       },
       {
-         name: "acceptance",
-         label: "Acceptance",
+         name: "approved",
+         label: "Approved",
          options: [
-            "Accepted",
-            "Rejected"
+            "Yes",
+            "No"
          ]
       }
    ];
@@ -412,9 +412,9 @@ const TrainingHistoryPart = () => {
            !filters.region ||
            training.region === filters.region;
 
-       const matchesAcceptance =
-           !filters.acceptance ||
-           training.acceptance === filters.acceptance;
+       const matchesApproved =
+           !filters.approved ||
+           training.approved === filters.approved;
 
        return (
           matchesSearch && 
@@ -432,7 +432,7 @@ const TrainingHistoryPart = () => {
           matchesGender &&
           matchesYear &&
           matchesRegion &&
-          matchesAcceptance
+          matchesApproved
        );
    })
 
@@ -504,8 +504,8 @@ const TrainingHistoryPart = () => {
          params.append("region", filters.region);
       }
 
-      if (filters.acceptance) {
-         params.append("acceptance", filters.acceptance);
+      if (filters.approved) {
+         params.append("approved", filters.approved);
       }
 
 
@@ -651,7 +651,7 @@ const TrainingHistoryPart = () => {
                              <td className="px-3 py-3">{assign.start_date}</td>
                              <td className="px-3 py-3">{Number(assign.total_cost).toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                              <td className="px-3 py-3">
-                                  <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-20`}>
+                                  <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-25`}>
                                     {assign.status}
                                   </div>
                              </td>

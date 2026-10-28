@@ -65,9 +65,9 @@ const DashboardPart = () => {
         },
         {
             icon: RxCross2,
-            name: "Rejected",
-            stat: stats?.rejected ?? 0,
-            desc: "Missed deadlines"
+            name: "Not Approved",
+            stat: stats?.not_approved ?? 0,
+            desc: "Training requests declined"
         },
         {
             icon: CgSandClock,

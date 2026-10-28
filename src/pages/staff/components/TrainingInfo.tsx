@@ -114,8 +114,8 @@ const TrainingInfo = () => {
     const costInfoList = [
         {
             icon: FaRegMoneyBillAlt,
-            label: "Training Cost (N$)",
-            value: Number(trainingInfoList2?.training_cost).toLocaleString("fr-FR", {
+            label: "Training Cost",
+            value: "N$ " + Number(trainingInfoList2?.training_cost).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -123,8 +123,8 @@ const TrainingInfo = () => {
         },
         {
             icon: FaRegMoneyBillAlt,
-            label: "Accomodation (N$)",
-            value: Number(trainingInfoList2?.accommodation_cost).toLocaleString("fr-FR", {
+            label: "Accomodation",
+            value: "N$ " + Number(trainingInfoList2?.accommodation_cost).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -132,8 +132,8 @@ const TrainingInfo = () => {
         },
         {
             icon: FaRegMoneyBillAlt,
-            label: "SNT Cost (N$)",
-            value: Number(trainingInfoList2?.snt_cost).toLocaleString("fr-FR", {
+            label: "SNT Cost",
+            value: "N$ " + Number(trainingInfoList2?.snt_cost).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -141,8 +141,8 @@ const TrainingInfo = () => {
         },
         {
             icon: FaRegMoneyBillAlt,
-            label: "Flight Tickets (N$)",
-            value: Number(trainingInfoList2?.flight_cost).toLocaleString("fr-FR", {
+            label: "Flight Tickets",
+            value: "N$ " + Number(trainingInfoList2?.flight_cost).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -150,8 +150,8 @@ const TrainingInfo = () => {
         },
         {
             icon: FaRegMoneyBillAlt,
-            label: "Others Costs (N$)",
-            value: Number(trainingInfoList2?.other_costs).toLocaleString("fr-FR", {
+            label: "Others Costs",
+            value: "N$ " + Number(trainingInfoList2?.other_costs).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -159,8 +159,8 @@ const TrainingInfo = () => {
         },
         {
             icon: FaRegMoneyBillAlt,
-            label: "Total Cost (N$)",
-            value: Number(trainingInfoList2?.total_cost).toLocaleString("fr-FR", {
+            label: "Total Cost",
+            value: "N$ " + Number(trainingInfoList2?.total_cost).toLocaleString("fr-FR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })
@@ -277,7 +277,7 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Notes  */}
-            <div className="w-full mt-2 flex flex-col gap-2 pt-5 pb-2 border-t border-t-secondary/30">
+            <div className="w-full flex flex-col px-3 pt-5 pb-2 border-t border-t-secondary/30">
                <label className="font-bold text-sm mb-2">Notes</label>
                <label className="text-xs">Bring your staff ID, notebook, pen and any prior certificate copies</label>
             </div>

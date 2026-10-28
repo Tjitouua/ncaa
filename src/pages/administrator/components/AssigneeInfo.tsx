@@ -382,7 +382,7 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
 
 
 
-           {trainingInfoList2.acceptance !== "Rejected" && (
+           {trainingInfoList2.approved !== "No" && (
             <>
            {/* Certificate not there message  */}
            {!hasCertificate && (
@@ -500,10 +500,10 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
 
 
            {/* Rejected Div  */}
-           {trainingInfoList2?.acceptance === "Rejected" && (
-           <div className="w-full py-16 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
-               <label className="font-bold text-sm mb-2">Reason for rejection</label>
-               <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label>
+           {trainingInfoList2?.approved === "No" && (
+           <div className="w-full py-20 text-center px-5 flex flex-col items-center justify-center bg-white shadow-sm shadow-secondary/30">
+               <label className="font-bold text-sm mb-2">Training was not approved</label>
+               {/* <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label> */}
            </div>
            )}
 

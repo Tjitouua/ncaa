@@ -78,8 +78,6 @@ CREATE TABLE training_programs
     start_date DATE NULL,
     end_date DATE NULL,
     region VARCHAR (250) NOT NULL,
-    acceptance VARCHAR (250) NOT NULL,
-    reject_reason VARCHAR (MAX) NULL,
     training_cost DECIMAL (10,2) NULL,
     accommodation_cost DECIMAL (10,2) NULL,
     snt_cost DECIMAL (10,2) NULL,
@@ -134,6 +132,20 @@ CREATE TABLE certificates
     [file] VARCHAR(250) NOT NULL,
     
     FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
+);
+
+
+
+
+
+CREATE TABLE reports
+(
+   id INT IDENTITY(1,1) PRIMARY KEY,
+   training_id INT NOT NULL,
+   staff_email VARCHAR(250) NOT NULL,
+   [file] VARCHAR(250) NOT NULL,
+
+   FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
 );
 
 

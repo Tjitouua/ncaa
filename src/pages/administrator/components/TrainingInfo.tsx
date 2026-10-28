@@ -248,7 +248,7 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Cost  */}
-            <div className="w-full flex flex-col pt-4 px-3 mb-3 bg-secondaryy/30 border-t border-t-secondary/10">
+            <div className="w-full flex flex-col pt-4 px-3 pb-5 bg-secondaryy/30 border-t border-t-secondary/10">
                 <label className="font-bold text-sm mb-2  underline underline-offset-2">Cost</label> 
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5">
                     {costInfoList.map((cost, index) => (
@@ -263,7 +263,7 @@ const TrainingInfo = () => {
                 </div>
             </div>
             {/* Notes  */}
-            <div className="w-full flex flex-col gap-2 pt-5 pb-2 border-t border-t-secondary/10">
+            <div className="w-full flex flex-col px-3 pt-4 pb-2 border-t border-t-secondary/10">
                <label className="font-bold text-sm mb-2">Notes</label>
                <label className="text-xs">Review the training details before making changes. Updates will be reflected in the employee's training record.</label>
             </div>

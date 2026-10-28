@@ -91,9 +91,9 @@ const MyTrainingHistory = () => {
 
 
    const getStatusColor = (status: string) => {
-       if (status === "Pending") return "bg-orange-300";
-       if (status === "Completed") return "bg-green-300";
-       if (status === "Rejected") return "bg-red-200";
+       if (status === "Pending") return "bg-orange-200";
+       if (status === "Completed") return "bg-green-200";
+       if (status === "Not Approved") return "bg-red-200";
        return "bg-grey-200";
    };
 

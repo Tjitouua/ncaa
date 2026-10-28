@@ -77,8 +77,6 @@ CREATE TABLE IF NOT EXISTS training_programs
     start_date DATE NULL,
     end_date DATE NULL,
     region VARCHAR (250) NOT NULL,
-    acceptance VARCHAR (250) NOT NULL,
-    reject_reason TEXT NULL,
     training_cost DECIMAL (10,2) NULL,
     accommodation_cost DECIMAL (10,2) NULL,
     snt_cost DECIMAL (10,2) NULL,

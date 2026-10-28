@@ -51,14 +51,12 @@ const ProgramAdd = () => {
       sntCost: "",
       flightCost: "",
       otherCosts: "",
-      approved: "",
+      approved: "Yes",
       year: "",
       quarter: "",
       start_date: "",
       end_date: "",
-      region: "",
-      acceptance: "",
-      rejectReason: ""
+      region: ""
    });
 
 
@@ -85,7 +83,6 @@ const ProgramAdd = () => {
             key !== "sntCost" &&
             key !== "flightCost" &&
             key !== "otherCosts" &&
-            key !== "rejectReason" &&
             !form[key as keyof typeof form]
         ) {
            newErrors[key] = "This field is required";
@@ -99,9 +96,9 @@ const ProgramAdd = () => {
       }
 
 
-      if (form.acceptance === "Rejected" && !form.rejectReason.trim()) {
-         newErrors.rejectReason = "Please provide a reason for rejection";
-      }
+      // if (form.acceptance === "Rejected" && !form.rejectReason.trim()) {
+      //    newErrors.rejectReason = "Please provide a reason for rejection";
+      // }
 
 
 
@@ -437,7 +434,7 @@ const ProgramAdd = () => {
 
 
 
-                          <SelectInputs
+                          {/* <SelectInputs
                             label = "Training Acceptance"
                             name = "acceptance"
                             value = {form.acceptance}
@@ -447,7 +444,7 @@ const ProgramAdd = () => {
                             <option value="">Select status</option>
                             <option value="Accepted">Accepted</option>
                             <option value="Rejected">Rejected</option>
-                          </SelectInputs>
+                          </SelectInputs> */}
 
 
 
@@ -459,7 +456,7 @@ const ProgramAdd = () => {
                             onChange = {handleChange}
                             error = {errors.approved}
                           >
-                            <option value="">Part of approved Training Plan</option>
+                            {/* <option value="">Part of approved Training Plan</option> */}
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                           </SelectInputs>
@@ -468,13 +465,13 @@ const ProgramAdd = () => {
                       </div>
 
                       
-                      {form.acceptance === "Rejected" && (
+                      {/* {form.acceptance === "Rejected" && (
                         <div className="w-full mb-6 flex flex-col text-secondary/60 gap-1 text-xs">
                            <label className="font-bold">Reason</label>
                            <textarea name="rejectReason" value={form.rejectReason} onChange={handleChange}  rows={4} className="text-xs p-3 border border-secondary/40 rounded-sm focus:outline-none focus:ring-0" placeholder="Reason for rejection"></textarea>
                            <label className="text-red-600">{errors.rejectReason}</label>
                         </div>
-                      )}
+                      )} */}
 
 
                       <PrimaryButt 

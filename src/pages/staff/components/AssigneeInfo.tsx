@@ -278,7 +278,7 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
 
 
 
-           {trainingInfoList2.acceptance !== "Rejected" && (
+           {trainingInfoList2.approved !== "No" && (
             <>
            {/* Certificate  */}
            {!hasCertificate && (
@@ -339,7 +339,7 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
            <div className="w-full py-6 pb-8 px-5 flex flex-col bg-white shadow-sm shadow-secondary/30">
               <div className="w-full flex items-center justify-between">
                  <label className="font-bold text-sm mb-2">Certificate and Report</label>
-                 <RiDeleteBin6Line onClick={handleDeleteCertificate} className="cursor-pointer hover:text-red-500" />
+                 <RiDeleteBin6Line onClick={handleDeleteCertificate} title="Please do not delete documents that you did not upload." className="cursor-pointer hover:text-red-500" />
               </div>
               <div className="bg-secondaryy w-full px-1 mt-3 flex flex-col gap-1">
                 {certificate.map((certificate, index) => (
@@ -367,10 +367,10 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
 
 
            {/* Rejected Div  */}
-           {trainingInfoList2?.acceptance === "Rejected" && (
-           <div className="w-full py-16 px-8 flex flex-col bg-white shadow-sm shadow-secondary/30">
+           {trainingInfoList2?.approved === "No" && (
+           <div className="w-full py-20 px-8 flex flex-col items-center justify-center bg-white shadow-sm shadow-secondary/30">
                <label className="font-bold text-sm mb-2">Reason for rejection</label>
-               <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label>
+               {/* <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label> */}
            </div>
            )}
 

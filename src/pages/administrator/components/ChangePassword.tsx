@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { FaRegEye } from "react-icons/fa6";
+import PrimaryButt from "../../../ui/PrimaryButt";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoMdAdd } from "react-icons/io";
 
 
 
@@ -84,8 +87,14 @@ const ChangePassword = () => {
 
 
      return (
-        <div className=" min-h-screen flex flex-col gap-2 text-gray-600 px-5 xl:px-5 3xl:px-30 justify-center py-5">
-          <div className="flex flex-col gap-2 min-w-90 bg-white text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/20">
+      <div className="min-h-screen flex justify-between items-start py-5 gap-5 w-full">
+
+
+
+
+
+        <div className="flex flex-col bg-red-400 text-gray-600">
+          <div className="flex flex-col gap-2 bg-white min-w-90 text-gray-700 3xl:px-30 justify-center shadow-md shadow-black/20">
             <div className="w-full py-3 bg-primaryy flex pt-6 px-5 xl:px-7 justify-start"><div className="w-50 h-28 mb-5 bg-[url('/images/ncaa-logo.png')] bg-center bg-cover"></div></div>
             {/* Form  */}
             <div className="flex flex-col gap-1 text-secondary/70 px-5 xl:px-8 justify-center pb-10 py-5">
@@ -137,6 +146,57 @@ const ChangePassword = () => {
             </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+        <div className="w-full md:w-[70%] py-12 flex flex-col min-h-[40vh] bg-white px-9 pb-8 shadow-sm shadow-secondary/30">
+          <div className="w-full flex items-center justify-between">
+             <div className="flex flex-col">
+                <label className="font-bold text-lg">HR Team</label>
+                <label className="text-xs text-secondary/60">HR members have full administration access, except managing other HR members.</label>
+             </div>
+             <PrimaryButt><IoMdAdd />Add HR Member</PrimaryButt>
+          </div>
+
+          {/* Employees Table  */}
+          <table className="w-full mt-7 border text-xs border-secondary/30">
+                       <thead>
+                          <tr className="bg-secondary/10 border-b border-secondary/20">
+                             <th className="text-left p-3">First Name</th>
+                             <th className="text-left p-3">Last Name</th>
+                             <th className="text-left p-3">Email</th>
+                             <th className="text-left p-3">Role</th>
+                             <th className="text-center p-3">Actions</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          <tr className="border-t border-secondary/20 bg-white/60">
+                             <td className="px-3 py-3">Tjitouua</td>
+                             <td className="px-3 py-3">Mapoha</td>
+                             <td className="px-3 py-3">mapohaT@ncaa.na</td>
+                             <td className="px-3 py-3">HR Member</td>
+                             <td className="px-3 py-3 "><div className="flex items-center justify-center"><RiDeleteBin6Line className="cursor-pointer hover:text-red-600" /></div></td>
+                          </tr>
+                       </tbody>
+                    </table>
+
+       </div>
+
+
+
+
+
+
+
+
+       </div>
      )
 }
 

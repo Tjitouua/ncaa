@@ -146,10 +146,6 @@ const ProgramDetails = () => {
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="flight_cost" label="Flight Cost (N$)" value={program.flight_cost}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} name="other_costs" label="Other Costs (N$)" value={program.other_costs}/>
                               <DetailsInput className="text-secondary/50" onChange={handleChange} disabled={true} name="total_cost" label="total_cost (N$)" value={program.total_cost}/>
-                              <DetailsSelect label="Plan Approved" onChange={handleChange} name="approved" value={program.approved}>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                              </DetailsSelect>
                               <DetailsSelect label="Year" onChange={handleChange} name="year" value={program.year}>
                                   {years.map((year) => (
                                     <option key={year} value={year}>{year}</option>
@@ -167,6 +163,10 @@ const ProgramDetails = () => {
                                   <option value="Namibia">Namibia</option>
                                   <option value="Africa">Africa</option>
                                   <option value="Africa">International</option>
+                              </DetailsSelect>
+                              <DetailsSelect label="Plan Approved" onChange={handleChange} name="approved" value={program.approved}>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                               </DetailsSelect>
                            </div>
                            {/* <div className="w-full mt-5 flex flex-col text-secondary/60 gap-2 text-xs">
