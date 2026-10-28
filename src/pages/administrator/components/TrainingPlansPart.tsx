@@ -29,6 +29,7 @@ const TrainingPlansPart = () => {
 
 
    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+   const [selectedApproval, setSelectedApproval] = useState("Approved");
 
    const startYear = 2016;
    const currentYear = new Date().getFullYear();
@@ -59,7 +60,35 @@ const TrainingPlansPart = () => {
 
 
 
-   const totalCost = trainings.reduce(
+
+
+
+
+   const filteredTrainings = trainings.filter((training) => {
+       const matchesSearch = training.training_name
+          ?.toLowerCase()
+          .includes(searchStaff.toLowerCase().trim());
+
+       const matchesApproval =
+          selectedApproval === "All" ||
+          (selectedApproval === "Approved" && training.approved === "Yes") ||
+          (selectedApproval === "Not Approved" && training.approved === "No");
+
+         
+       return matchesSearch && matchesApproval;
+   });
+
+
+
+
+
+
+
+
+
+
+
+   const totalCost = filteredTrainings.reduce(
       (total, training) => total + Number(training.total_cost || 0), 0
    );
 
@@ -113,7 +142,7 @@ const TrainingPlansPart = () => {
                {/* Top Part  */}
                <div className="flex items-end justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
-                    <label className="text-lg text-secondary/80 mb-2">Trainings Approved for {selectedYear}</label>
+                    <label className="text-lg text-secondary/80 mb-2">{selectedApproval === "Approved" ? `Trainings Approved for ${selectedYear}` : `Trainings Not Approved for ${selectedYear}`}</label>
                     <label className="text-xs text-secondary/60">Staff: <span className="font-bold">Tjitouua Mapoha</span></label>
                     <label className="text-xs text-secondary/60">Total: <span className="font-bold text-primary">N$ {totalCost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(",", ".")}</span></label>
                  </div>
@@ -141,7 +170,7 @@ const TrainingPlansPart = () => {
                       <div className="flex gap-3 items-end">
                           <div className="flex items-center gap-2">
                             <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
-                                <select className="w-full py-2 text-xs cursor-pointer focus:outline-none">
+                                <select value={selectedApproval} onChange={(e) => setSelectedApproval(e.target.value)} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                                     <option value="Approved">Approved</option>
                                     <option value="Not Approved">Not Approved</option>
                                 </select>
@@ -178,14 +207,14 @@ const TrainingPlansPart = () => {
                                     <p>Loading trainings...</p>
                                 </td>
                             </tr>
-                         ) : trainings.length === 0 ? (
+                         ) : filteredTrainings.length === 0 ? (
                             <tr>
                                 <td colSpan={7} className="text-center py-15">
                                     <p>No trainings available...</p>
                                 </td>
                             </tr>
                          ) : (
-                          trainings.map((training) => (
+                          filteredTrainings.map((training) => (
                           <tr key={training.id} className="border-t border-secondary/20 bg-white/60">
                              <td className="px-3 py-2">{training.training_name}</td>
                              <td className="px-3 py-2">{training.reason}</td>
