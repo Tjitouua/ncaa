@@ -44,6 +44,27 @@ const ChangePassword = () => {
 
 
 
+    useEffect(() => {
+       fetch("http://localhost/ncaa/admin/get_admin.php", {
+          credentials: "include"
+       })
+       .then((response) => response.json())
+       .then((data) => {
+           if (data.success) {
+              setEmail(data.admin.email);
+           } else {
+              alert(data.message);
+           }
+       })
+       .catch ((error) => {
+           console.error("Error fetching admin details: ", error);
+       });
+    }, []);
+
+
+
+
+
 
 
 
