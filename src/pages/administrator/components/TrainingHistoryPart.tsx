@@ -115,9 +115,9 @@ const TrainingHistoryPart = () => {
 
 
    const getStatusColor = (status: string) => {
-      if (status === "Pending") return "bg-orange-200";
-      if (status === "Completed") return "bg-green-200";
-      if (status === "Not Approved") return "bg-red-200";
+      if (status === "Pending") return "bg-orange-100";
+      if (status === "Completed") return "bg-green-100";
+      if (status === "Not Approved") return "bg-red-100";
       return "bg-grey-200";
    }
 
@@ -620,7 +620,7 @@ const TrainingHistoryPart = () => {
                              <th className="text-left p-3">Development gap</th>
                              <th className="text-left p-3">Training type</th>
                              <th className="text-left p-3">Duration</th>
-                             <th className="text-left p-3">Date</th>
+                             <th className="text-left p-3">Year</th>
                              <th className="text-left p-3">Total cost (N$)</th>
                              <th className="text-left p-3">Status</th>
                              {/* <th className="text-right p-3">Action</th> */}
@@ -642,13 +642,13 @@ const TrainingHistoryPart = () => {
                           </tr>
                        ) : (     
                         filteredTraining.map((assign, index) => (
-                          <tr key = {index} onClick={() => navigate(`/admin/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
+                          <tr key = {index} onClick={() => navigate(`/admin-hr/training_details/${assign.id}`)} className="border-t border-secondary/20 cursor-pointer bg-white/60 hover:bg-white/30">
                              <td className="px-3 py-3">{assign.first_name} {assign.last_name}</td>
                              <td className="px-3 py-3">{assign.training_name}</td>
                              <td className="px-3 py-3">{assign.reason}</td>
                              <td className="px-3 py-3">{assign.training_type}</td>
                              <td className="px-3 py-3">{assign.duration}</td>
-                             <td className="px-3 py-3">{assign.start_date}</td>
+                             <td className="px-3 py-3">{assign.year}</td>
                              <td className="px-3 py-3">{Number(assign.total_cost).toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                              <td className="px-3 py-3">
                                   <div className={`p-1 ${getStatusColor(assign.status)} rounded-xs font-bold flex items-center justify-center w-25`}>

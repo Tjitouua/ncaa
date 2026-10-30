@@ -26,6 +26,7 @@ const TrainingPlansPart = () => {
    const [, setShowFilters] = useState(false);
 
    const [trainings, setTrainings] = useState<any[]>([]);
+   const [staffName, setStaffName] = useState("");
 
 
    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
@@ -42,11 +43,16 @@ const TrainingPlansPart = () => {
 
 
    useEffect(() => {
+      setLoading(true);
+
       fetch(`http://localhost/ncaa/program/get_program_by_staff_id.php?id=${id}&year=${selectedYear}`)
       .then((res) => res.json())
       .then((data) => {
          if (data.success) {
             console.log(data.data);
+            setStaffName(
+               `${data.staff.first_name} ${data.staff.last_name}`
+            );
             setTrainings(data.data);
          } else {
             setTrainings([]);
@@ -143,7 +149,7 @@ const TrainingPlansPart = () => {
                <div className="flex items-end justify-between border-b border-secondary/30 pb-5">
                  <div className="flex flex-col">
                     <label className="text-lg text-secondary/80 mb-2">{selectedApproval === "Approved" ? `Trainings Approved for ${selectedYear}` : `Trainings Not Approved for ${selectedYear}`}</label>
-                    <label className="text-xs text-secondary/60">Staff: <span className="font-bold">Tjitouua Mapoha</span></label>
+                    <label className="text-xs text-secondary/60">Staff: <span className="font-bold">{staffName || "Loading..."}</span></label>
                     <label className="text-xs text-secondary/60">Total: <span className="font-bold text-primary">N$ {totalCost.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(",", ".")}</span></label>
                  </div>
                  <div className="flex items-center gap-3">
@@ -151,7 +157,7 @@ const TrainingPlansPart = () => {
                           <LuDownload />
                           Export
                       </SecondaryButt>
-                    <PrimaryButt onClick={() => navigate(`/admin/training_programs/program_add/${id}`)}>
+                    <PrimaryButt onClick={() => navigate(`/admin-hr/training_programs/program_add/${id}`)}>
                        <RiAddLargeLine /> Add Training
                     </PrimaryButt>
                  </div>
@@ -229,7 +235,7 @@ const TrainingPlansPart = () => {
                              <td className="px-3 py-2 text-center">
                                  <div className="flex items-center justify-center">
                                     <button 
-                                    onClick={() => navigate(`/admin/training_programs/program_details/${training.id}`)}
+                                    onClick={() => navigate(`/admin-hr/training_programs/program_details/${training.id}`)}
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /></button>
                                      <button 

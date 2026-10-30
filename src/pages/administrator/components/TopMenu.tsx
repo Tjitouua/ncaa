@@ -20,12 +20,25 @@ interface Notification {
 
 
 
+interface Dash {
+    id: number;
+    first_name: string;
+    last_name: string;
+    role: string;
+    email: string;
+    department: string;
+    division: string;
+    position: string;
+}
+
+
+
 
 
 const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
 
     const navigate = useNavigate();
-    const [, setUser] = useState(null);
+    const [user, setUser] = useState<Dash | null>(null);
 
     const [all, setAll] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
@@ -49,6 +62,13 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
 
         checkSession();
     }, []);
+
+
+    const displayRole = user?.role === "admin"
+          ? "Administrator"
+          : user?.role === "hr"
+          ? "Human Resources"
+          : user?.role;
 
 
     // Logout 
@@ -128,6 +148,10 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
 
 
 
+
+
+
+
     return (
         <div ref={popupRef} className="sticky top-0 z-80 w-full py-3 bg-white shadow-xs shadow-secondary/20 border-l border-l-secondaryy flex px-2 md:px-6 justify-between items-center">
             {/* Name  */}
@@ -155,8 +179,8 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
                        <label className="text-md font-bold">AD</label>
                     </div>
                     <div className="text-xs flex flex-col">
-                        <label className="font-bold">Administrator</label>
-                        <label className="-mt-[2px]">Admin</label>
+                        <label className="font-bold">{displayRole}</label>
+                        <label className="-mt-[2px]">{user?.role}</label>
                     </div>
                 </div>
             </div>
@@ -198,8 +222,8 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
                {showPopup && (
                <div className="flex flex-col min-w-50 bg-white shadow-sm shadow-black/30 rounded-lg">
                   <div className="flex py-3 px-3 flex-col border-b border-secondaryy">
-                    <label className="font-bold text-sm">Administrator</label>
-                    <label className="text-xs">admin • Admin</label>
+                    <label className="font-bold text-sm">{displayRole}</label>
+                    <label className="text-xs">{user?.role} • {user?.role}</label>
                   </div>
                   <div className="flex px-2 py-1 gap-3">
                      <button onClick={async () => {

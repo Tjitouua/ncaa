@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 
 interface ProtectedRouteProps {
-    allowedRole: "admin" | "staff";
+    allowedRole: ("admin" | "hr" | "staff")[];
 }
 
 
@@ -53,8 +53,16 @@ const ProtectedRoute = ({allowedRole}: ProtectedRouteProps) => {
         return <Navigate to="/login" replace />;
     }
 
-    if (role !== allowedRole) {
-        return <Navigate to={`/${role}/dahsboard`} replace />;
+    if (!allowedRole.includes(role as "admin" | "hr" | "staff")) {
+        if (role === "staff") {
+           return <Navigate to="/staff/dashboard" replace />;
+        }
+
+        if (role === "admin" || role === "hr") {
+           return <Navigate to="/admin-hr/dashboard" replace />;
+        }
+
+        return <Navigate to="/login" replace />;
     }
 
     return <Outlet />

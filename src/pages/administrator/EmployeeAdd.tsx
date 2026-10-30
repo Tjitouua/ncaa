@@ -114,7 +114,7 @@ const EmployeeAdd = () => {
 
          if (data.success) {
             alert("Staff added successfully");
-            navigate("/admin/employees")
+            navigate("/admin-hr/employees")
             // console.log(data);
          } else {
             alert(data.message);
@@ -139,7 +139,7 @@ const EmployeeAdd = () => {
           <div className="w-full xl:w-[82%] min-h-screen text-secondary/80 bg-secondaryy">
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
              <div className="w-full min-h-screen flex flex-col gap-6 px-2 py-9 md:px-6">
-                <label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
+                <label onClick={() => navigate("/admin-hr/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label>
 
 
 

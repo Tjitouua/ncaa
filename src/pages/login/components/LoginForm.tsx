@@ -14,6 +14,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loginIn, setLoginIn] = useState(false);
+    const [role, setRole] = useState("staff");
 
     const login = async () => {
        if (!email || !password) {
@@ -33,6 +34,7 @@ const LoginForm = () => {
              body: JSON.stringify({
                email,
                password,
+               role
              }),
          });
 
@@ -40,8 +42,8 @@ const LoginForm = () => {
 
          if (data.success) {
 
-            if (data.user.role === "admin") {
-              navigate("/admin/dashboard");
+            if (data.user.role === "admin" || data.user.role === "hr") {
+              navigate("/admin-hr/dashboard");
             } else if (data.user.role === "staff") {
               navigate("/staff/dashboard");
             } else {
@@ -88,6 +90,22 @@ const LoginForm = () => {
                      <FaRegEye onClick={() => setShowPassword(!showPassword)} className="text-secondary/50 cursor-pointer" />
                   </div>
                 <label className="text-xs text-red-600 hidden">Please enter password</label>
+            </div>
+
+            {/* Role  */}
+            <div className="w-full py-2 px-1 flex justify-between items-center">
+               <div className="flex items-center gap-1 text-xs">
+                  <input type="radio" name="role" value="staff" checked={role === "staff"} onChange={(e) => setRole(e.target.value)} />
+                  <label>Staff</label>
+               </div>
+               <div className="flex items-center gap-1 text-xs">
+                  <input type="radio" name="role" value="admin" checked={role === "admin"} onChange={(e) => setRole(e.target.value)} />
+                  <label>Admin</label>
+               </div>
+               <div className="flex items-center gap-1 text-xs">
+                  <input type="radio" name="role" value="hr" checked={role === "hr"} onChange={(e) => setRole(e.target.value)} />
+                  <label>HR</label>
+               </div>
             </div>
 
             <button 

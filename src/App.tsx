@@ -40,25 +40,29 @@ function App() {
           <Route path="/password" element={<Password />} />
           <Route path="/forgot" element={<Forgot />} />
 
-          {/* Admin pages  */}
-          <Route element={<ProtectedRoute allowedRole='admin' />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/employees" element={<Employees />} />
-          <Route path="/admin/employees/employee_add" element={<EmployeeAdd />} />
-          <Route path="/admin/employees/employee_details/:id" element={<EmployeeDetails />} />
-          <Route path="/admin/training_programs/program_add/:id" element={<ProgramAdd />} />
-          <Route path="/admin/training_programs/program_details/:id" element={<ProgramDetails />} />
-          <Route path="/admin/assign_training" element={<Assign />} />
-          <Route path="/admin/training_details/:id" element={<TrainingDetails />} />
-          <Route path="/admin/training_history" element={<TrainingHistory />} />
-          <Route path="/admin/notifications" element={<Notifications />} />
-          <Route path="/admin/training_plans/:id" element={<TrainingPlans />} />
-          <Route path="/admin/password" element={<AdminPassword />} />
+          {/* Admin & HR pages  */}
+          <Route element={<ProtectedRoute allowedRole={['admin', 'hr']} />}>
+          <Route path="/admin-hr/dashboard" element={<Dashboard />} />
+          <Route path="/admin-hr/employees" element={<Employees />} />
+          <Route path="/admin-hr/employees/employee_add" element={<EmployeeAdd />} />
+          <Route path="/admin-hr/employees/employee_details/:id" element={<EmployeeDetails />} />
+          <Route path="/admin-hr/training_programs/program_add/:id" element={<ProgramAdd />} />
+          <Route path="/admin-hr/training_programs/program_details/:id" element={<ProgramDetails />} />
+          <Route path="/admin-hr/assign_training" element={<Assign />} />
+          <Route path="/admin-hr/training_details/:id" element={<TrainingDetails />} />
+          <Route path="/admin-hr/training_history" element={<TrainingHistory />} />
+          <Route path="/admin-hr/notifications" element={<Notifications />} />
+          <Route path="/admin-hr/training_plans/:id" element={<TrainingPlans />} />
+          </Route>
+
+          {/* Admin  */}
+          <Route element={<ProtectedRoute allowedRole={['admin']} />}>
+              <Route path="/admin-hr/password" element={<AdminPassword />} />
           </Route>
 
 
           {/* Staff pages  */}
-          <Route element={<ProtectedRoute allowedRole='staff' />}>
+          <Route element={<ProtectedRoute allowedRole={['staff']} />}>
           <Route path="/staff/dashboard" element={<Dashboard2 />} />
           <Route path="/staff/my_certifications" element={<MyCertifications />} />
           <Route path="/staff/my_training_history" element={<MyTrainingHistory />} />

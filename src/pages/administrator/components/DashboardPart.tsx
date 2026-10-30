@@ -15,6 +15,20 @@ import CostsGraph from "../ui/CostsGraph";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { CgSandClock } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
+
+
+
+interface Dash {
+    id: number;
+    first_name: string;
+    last_name: string;
+    role: string;
+    email: string;
+    department: string;
+    division: string;
+    position: string;
+}
 
 
 
@@ -22,6 +36,8 @@ import { CgSandClock } from "react-icons/cg";
 const DashboardPart = () => {
 
    const [stats, setStats] = useState<any>(null);
+   const navigate = useNavigate();
+   const [user, setUser] = useState<Dash | null>(null);
    
 
     useEffect(() => {
@@ -33,6 +49,38 @@ const DashboardPart = () => {
             }
         });
     }, []);
+
+
+
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const res = await fetch("http://localhost/ncaa/login/session.php", {
+                method: "POST",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if (!data.success) {
+                navigate("/");
+            } else {
+                setUser(data.user);
+            }
+        };
+
+        checkSession();
+    }, []);
+
+
+    if (!user) return <div>Loading...</div>
+
+
+    const displayRole = user.role === "admin"
+          ? "Administrator"
+          : user.role === "hr"
+          ? "Human Resources"
+          : user.role;
 
 
 
@@ -85,8 +133,8 @@ const DashboardPart = () => {
         <div className="w-full min-h-screen text-secondary/90 px-2 md:px-6">
             {/* Welcome Div  */}
             <div className="flex flex-col mt-9 mb-1">
-               <label className="font-bold text-xl">Welcome back, Administrator</label>
-               <label className="text-secondary/50 text-sm">Overview of CORE staff training & completion</label>
+               <label className="font-bold text-xl">Welcome back, {displayRole}</label>
+               <label className="text-secondary/50 text-sm">Overview of NCAA staff training & completion</label>
             </div>
             {/* Stats Div  */}
             <div className="w-full grid py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">

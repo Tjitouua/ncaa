@@ -442,7 +442,7 @@ const EmployeesPart = () => {
                           <LuDownload />
                           Export
                       </SecondaryButt>
-                    <PrimaryButt onClick={() => navigate("/admin/employees/employee_add")}>
+                    <PrimaryButt onClick={() => navigate("/admin-hr/employees/employee_add")}>
                        <RiAddLargeLine /> Add Employee
                     </PrimaryButt>
                  </div>
@@ -516,7 +516,7 @@ const EmployeesPart = () => {
                              <td className="px-3 py-2 text-center">
                                  <div className="flex items-center justify-center">
                                     <button 
-                                     onClick={() => navigate(`/admin/employees/employee_details/${employee.id}`)}
+                                     onClick={() => navigate(`/admin-hr/employees/employee_details/${employee.id}`)}
                                      className="flex items-center gap-2 font-bold 
                                      rounded-sm py-2 px-3 cursor-pointer hover:text-white hover:bg-primary"><FiEye /></button>
                                      <button 

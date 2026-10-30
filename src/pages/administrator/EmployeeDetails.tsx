@@ -175,7 +175,7 @@ const EmployeeDetails = () => {
              <TopMenu setShowMenu={setShowMenu} title="Employees" />
  
              <div className="w-full min-h-screen items-center flex flex-col gap-3 px-2 md:px-6 py-8">
-                <div className="w-full"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
+                <div className="w-full"><label onClick={() => navigate("/admin-hr/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div>
                 {/* Employee Profile Div  */}
                 <div className="w-4/5 min-h-screen flex flex-col gap-4 py-3">
                 {/* <div className="w-full mb-2"><label onClick={() => navigate("/admin/employees")}><IoArrowBack className="cursor-pointer hover:text-primary" /></label></div> */}
@@ -196,7 +196,7 @@ const EmployeeDetails = () => {
                         <div className="flex items-center justify-between pb-4 border-b border-secondary/40">
                            <label className="font-bold">Personal Information</label>
                            <div className="flex items-center gap-4">
-                             <SecondaryButt onClick={() => navigate(`/admin/training_plans/${id}`)} className="!bg-secondary/20 hover:!bg-white hover:!border !border-secondary/30">Trainings<LuGraduationCap /></SecondaryButt>
+                             <SecondaryButt onClick={() => navigate(`/admin-hr/training_plans/${id}`)} className="!bg-secondary/20 hover:!bg-white hover:!border !border-secondary/30">Trainings<LuGraduationCap /></SecondaryButt>
                              <PrimaryButt onClick={handleUpdate}>Edit <GrEdit /></PrimaryButt>
                            </div>
                         </div>

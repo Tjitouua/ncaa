@@ -6,6 +6,7 @@ import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
 import type React from "react";
 import { MdLockOutline } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 
 
@@ -13,33 +14,33 @@ import { MdLockOutline } from "react-icons/md";
 const menuItems = [
    {
       name: "Dashboard",
-      path: "/admin/dashboard",
+      path: "/admin-hr/dashboard",
       icon: <RxDashboard />
    },
    {
       name: "Employees",
-      path: "/admin/employees",
+      path: "/admin-hr/employees",
       icon: <FiUsers />
    },
 
    {
       name: "Assign Training",
-      path: "/admin/assign_training",
+      path: "/admin-hr/assign_training",
       icon: <FaRegFileAlt />
    },
    {
       name: "Training History",
-      path: "/admin/training_history",
+      path: "/admin-hr/training_history",
       icon: <FaClockRotateLeft />
    },
    {
       name: "Notifications",
-      path: "/admin/notifications",
+      path: "/admin-hr/notifications",
       icon: <IoNotificationsOutline />
    },
    {
       name: "User Management",
-      path: "/admin/password",
+      path: "/admin-hr/password",
       icon: <FiUsers />
    },
    
@@ -55,6 +56,26 @@ interface MenuProps {
 
 
 const Menu = ({ showMenu, setShowMenu }: MenuProps) => {
+
+
+   const [userRole, setUserRole] = useState("");
+
+   useEffect(() => {
+      fetch("http://localhost/ncaa/login/session.php", {
+         method: "POST",
+         credentials: "include"
+      })
+      .then(res => res.json())
+      .then(data => {
+         if (data.success) {
+            setUserRole(data.user.role);
+         }
+      })
+      .catch(error => console.error("Error fetching session", error));
+   });
+
+
+
    return (
     <>
      {showMenu && (
@@ -83,7 +104,7 @@ const Menu = ({ showMenu, setShowMenu }: MenuProps) => {
           {/* Menu Part  */}
           <div className="flex py-7 text-sm flex-col">
              <label className="text-xs text-secondary/60 mb-4 mt-2 ml-2">ADMINISTRATOR</label>
-             {menuItems.map((item, index) => (
+             {menuItems.filter(item => item.name !== "User Management" || userRole === "admin").map((item, index) => (
              <NavLink 
                  key={index} 
                  to={item.path} 

@@ -133,7 +133,7 @@ const ProgramAdd = () => {
 
         if (data.success) {
            alert("Training added successfully");
-           navigate(`/admin/training_plans/${id}`);
+           navigate(`/admin-hr/training_plans/${id}`);
         } else {
            alert(data.message);
         }

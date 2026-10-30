@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa6";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
 import { ImCross } from "react-icons/im";
+
+
+
+
+interface HR {
+  id: number;
+  role: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+}
 
 
 
@@ -19,6 +31,8 @@ const ChangePassword = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [saving, setSaving] = useState(false);
     const [showAddHR, setShowAddHR] = useState(false);
+    const [HR, setHR] = useState<HR[]>([]);
+    const [loading, setLoading] = useState(true);
 
 
     const [hrFirstName, setHrFirstName] = useState("");
@@ -121,6 +135,8 @@ const ChangePassword = () => {
             if (data.success) {
                alert("HR member added successfully");
 
+               window.location.reload();
+
                setHrFirstName("");
                setHrLastName("");
                setHrEmail("");
@@ -140,6 +156,55 @@ const ChangePassword = () => {
 
 
 
+
+
+
+      // Get HR Members 
+      useEffect(() => {
+         fetch("http://localhost/ncaa/staff/get_hr.php")
+         .then((response) => response.json())
+         .then((data) => {
+            if (data.success) {
+               setHR(data.data);
+            }
+         })
+         .catch((error) => {
+            console.error("Error fetching HR members: ", error);
+         })
+         .finally(() => {
+            setLoading(false);
+         });
+      }, []);
+
+
+
+
+
+
+
+      // Delete HR Member 
+      const handleDelete = (id: number) => {
+         if (!window.confirm("Are you sure you want to delete this HR Member?")) return;
+
+         fetch("http://localhost/ncaa/staff/delete_hr.php", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id }),
+         })
+         .then((res) => res.json())
+         .then((data) => {
+             if (data.success) {
+                setHR((prev) => prev.filter((emp) => emp.id !== id));
+             } else {
+                alert(data.message || "Failed to delete");
+             }
+         })
+         .catch((err) => {
+            console.error("Delete error ", err);
+         })
+      }
 
 
 
@@ -225,7 +290,7 @@ const ChangePassword = () => {
 
 
         {/* HR Members  */}
-        <div className="w-full md:w-[70%] py-12 flex flex-col min-h-[40vh] bg-white px-9 pb-8 shadow-sm shadow-secondary/30">
+        <div className="w-full md:w-[70%] py-12 flex flex-col min-h-[40vh] bg-white px-9 pb-14 shadow-sm shadow-secondary/30">
           <div className="w-full flex items-center justify-between">
              <div className="flex flex-col">
                 <label className="font-bold text-lg">HR Team</label>
@@ -246,13 +311,29 @@ const ChangePassword = () => {
                           </tr>
                        </thead>
                        <tbody>
-                          <tr className="border-t border-secondary/20 bg-white/60">
-                             <td className="px-3 py-3">Tjitouua</td>
-                             <td className="px-3 py-3">Mapoha</td>
-                             <td className="px-3 py-3">mapohaT@ncaa.na</td>
+                         {loading ? (
+                             <tr>
+                                <td colSpan={5} className="text-center py-15 text-secondary/60">
+                                  <label>Loading HR Members...</label>
+                                </td>
+                             </tr>
+                         ) : HR.length === 0 ? (
+                             <tr>
+                                <td colSpan={5} className="text-center py-8 text-secondary/60">
+                                  <label>No HR members available.</label>
+                                </td>
+                             </tr>
+                         ) : (
+                         HR.map((hr, index) => (
+                          <tr key={index} className="border-t border-secondary/20 bg-white/60">
+                             <td className="px-3 py-3">{hr.first_name}</td>
+                             <td className="px-3 py-3">{hr.last_name}</td>
+                             <td className="px-3 py-3">{hr.email}</td>
                              <td className="px-3 py-3">HR Member</td>
-                             <td className="px-3 py-3 "><div className="flex items-center justify-center"><RiDeleteBin6Line className="cursor-pointer hover:text-red-600" /></div></td>
+                             <td className="px-3 py-3 "><div className="flex items-center justify-center"><RiDeleteBin6Line onClick={() => handleDelete(hr.id)} className="cursor-pointer hover:text-red-600" /></div></td>
                           </tr>
+                          ))
+                         )}
                        </tbody>
                     </table>
 
