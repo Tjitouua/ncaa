@@ -50,7 +50,6 @@
     $other_costs = (float)($data["other_costs"] ?: 0);
     $approved = trim($data["approved"]);
     $region = trim($data["region"]);
-    $acceptance = trim($data["acceptance"]);
     $year = trim($data["year"]);
     $quarter = trim($data["quarter"]);
     $start_date = trim($data["start_date"]) !== "" ? trim($data["start_date"]) : NULL;
@@ -85,8 +84,7 @@
               quarter = ?,
               start_date = ?,
               end_date = ?,
-              region = ?,
-              acceptance = ?
+              region = ?
         WHERE id = ?;
     ";
 
@@ -94,7 +92,7 @@
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssssssddddddsiissssi",
+        "sssssssssssssddddddsiisssi",
         $training_name,
         $reason,
         $duration,
@@ -120,7 +118,6 @@
         $start_date,
         $end_date,
         $region,
-        $acceptance,
         $id
     );
 

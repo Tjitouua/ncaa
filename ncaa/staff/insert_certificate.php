@@ -38,7 +38,7 @@
      $training_id = $_POST["training_id"] ?? null;
      $certificate_no = $_POST["certificate_no"] ?? null;
      $issued_date = $_POST["issued_date"] ?? null;
-     $expiry_date = $_POST["expiry_date"] ?? null;
+     $expiry_date = !empty($_POST["expiry_date"]) ? $_POST["expiry_date"] : null;
      $start_date = $_POST["start_date"] ?? null;
      $end_date = $_POST["end_date"] ?? null;
 
@@ -64,7 +64,46 @@
         exit;
      }
 
+     if (!isset($_FILES["report_file"])) {
+        echo json_encode([
+          "success" => false,
+          "message" => "Report file is required"
+        ]);
+        exit;
+     }
+
+     $reportFile = $_FILES["report_file"];
+
+     if ($reportFile["error"] !== UPLOAD_ERR_OK) {
+       echo json_encode([
+         "success" => false,
+         "message" => "Report upload failed"
+       ]);
+       exit;
+     }
+
+     $reportExt = strtolower(pathinfo($reportFile["name"], PATHINFO_EXTENSION));
+
+     if ($reportExt !== "pdf") {
+       echo json_encode([
+         "success" => false,
+         "message" => "Report must be a PDF file"
+       ]);
+       exit;
+     }
+
+     if ($reportFile["size"] > 5 * 1024 * 1024) {
+       echo json_encode([
+         "success" => false,
+         "message" => "Report file too large (max 5MB)"
+       ]);
+       exit;
+     }
+
+
+
      $file = $_FILES["file"];
+     
 
      $uploadDir = "certificates/";
 
@@ -75,13 +114,13 @@
      $fileName = time() . "_" . basename($file["name"]);
      $filePath = $uploadDir . $fileName;
 
-     $allowedTypes = ["pdf", "jpg", "jpeg", "png"];
+     $allowedTypes = ["pdf"];
      $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
      if (!in_array($fileExt, $allowedTypes)) {
         echo json_encode([
             "success" => false,
-            "message" => "Invalid file type"
+            "message" => "Invalid file type. Only PDF files are allowed."
         ]);
         exit;
      }
@@ -101,6 +140,28 @@
         ]);
         exit;
      }
+
+
+     $reportUploadDir = "reports/";
+
+     if (!is_dir($reportUploadDir)) {
+        mkdir($reportUploadDir, 0777, true);
+     }
+
+
+     $reportFileName = time() . "_" . basename($reportFile["name"]);
+     $reportFilePath = $reportUploadDir . $reportFileName;
+
+     if (!move_uploaded_file($reportFile["tmp_name"], $reportFilePath)) {
+       echo json_encode([
+          "success" => false,
+          "message" => "Report file upload failed"
+       ]);
+       exit;
+     }
+
+
+
 
      $sql = "INSERT INTO certificates
             (training_id, staff_email, certificate_no, issued_date, expiry_date, file)
@@ -140,6 +201,39 @@
 
 
      if ($stmt->execute()) {
+
+       $reportSql = "INSERT INTO reports (training_id, staff_email, file)
+                     VALUES (?, ?, ?)
+        ";
+
+       $reportStmt = $conn->prepare($reportSql);
+       $reportStmt->bind_param("iss", $training_id, $staff_email, $reportFilePath);
+
+       if (!$reportStmt->execute()) {
+          echo json_encode([
+            "success" => false,
+            "message" => "Failed to save report details"
+          ]);
+          exit;
+       }
+
+       $reportStmt->close();
+
+
+       $deleteNotifSql = "DELETE
+                          FROM staff_notifications
+                          WHERE staff_email = ?
+                          AND training_id = ?
+                          AND notification_type = ?
+       ";
+
+       $deleteNotifStmt = $conn->prepare($deleteNotifSql);
+       $rejection_type = "Certificate Rejection";
+       $deleteNotifStmt->bind_param("sis", $staff_email, $training_id, $rejection_type);
+
+       $deleteNotifStmt->execute();
+       $deleteNotifStmt->close();
+
 
        $datesStmt->execute();
 

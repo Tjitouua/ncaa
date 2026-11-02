@@ -69,7 +69,7 @@
 
 
 
-     $sql = "SELECT * FROM training_programs WHERE staff_id = ? and year = ? ORDER BY id ASC";
+     $sql = "SELECT * FROM training_programs WHERE staff_id = ? and year = ? AND approved = 'Yes' ORDER BY id ASC";
      $stmt = $conn->prepare($sql);
 
      $stmt->bind_param("ii", $staff_id, $year);

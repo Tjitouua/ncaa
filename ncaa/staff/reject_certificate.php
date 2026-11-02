@@ -93,6 +93,19 @@
 
 
 
+
+    $reportSql = "SELECT file FROM reports WHERE training_id = ?";
+    $reportStmt = $conn->prepare($reportSql);
+    $reportStmt->bind_param("i", $training_id);
+    $reportStmt->execute();
+
+    $reportResult = $reportStmt->get_result();
+    $report = $reportResult->fetch_assoc();
+
+    $reportStmt->close();
+
+
+
     // Delete certificate from database 
     $deleteSql = "DELETE FROM certificates WHERE training_id = ?";
 
@@ -108,9 +121,36 @@
     }
 
 
-    // Delete the physical file 
+
+    // Delete report from database 
+    $deleteReportSql = "DELETE FROM reports WHERE training_id = ?";
+    $deleteReportStmt = $conn->prepare($deleteReportSql);
+    $deleteReportStmt->bind_param("i", $training_id);
+
+    if (!$deleteReportStmt->execute()) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to reject report"
+        ]);
+        $deleteReportStmt->close();
+        exit;
+    }
+
+    $deleteReportStmt->close();
+
+
+    // Delete the physical certificate file 
     if (file_exists($filePath)) {
         unlink($filePath);
+    }
+
+
+    if ($report) {
+        $reportPath = $report["file"];
+
+        if(file_exists($reportPath)) {
+            unlink($reportPath);
+        }
     }
 
 

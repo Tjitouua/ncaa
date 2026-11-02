@@ -19,7 +19,7 @@
         $mail->SMTPAuth = true;
 
         $mail->Username = 'mapohaT@ncaa.na';
-        $mail->Password = 'Veripamwe@2002';
+        $mail->Password = 'Spillo@!#$2002';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
@@ -29,17 +29,17 @@
         $mail->addAddress($toEmail, $name);
 
         $mail->isHTML(true);
-        $mail->Subject = "New Training Assignment (NCAA)";
+        $mail->Subject = "Training Approved (NCAA)";
 
         $mail->Body = "
               <p>Hello $name,</p>
               <br>
-              <p>You have been assigned a new training program.</p>
+              <p>Your submitted training has been <strong>approved</strong></p>
               <p><strong style='margin-right: 5px;'>Training: </strong>$training</p>
               <p><strong style='margin-right: 5px;'>Quarter: </strong>$quarter</p>
               <p><strong style='margin-right: 5px;'>Year: </strong>$year</p>
               <br>
-              <p>Once you have completed the training, please submit your training certificate through the system.</p>
+              <p>Once you have completed the training, please submit your training certificate and report through the system.</p>
               <p>This will allow your training record to be updated and marked as completed.</p>
               <br>
               <p>Please log into the system for more details.</p>
@@ -59,7 +59,7 @@
 
 
     // Reject Email 
-    function sendRejectedEmail($toEmail, $name, $training, $quarter, $year, $rejectReason)
+    function sendRejectedEmail($toEmail, $name, $training, $quarter, $year)
     {
         $mail = new PHPMailer(true);
 
@@ -71,7 +71,7 @@
         $mail->SMTPAuth = true;
 
         $mail->Username = 'mapohaT@ncaa.na';
-        $mail->Password = 'Veripamwe@2002';
+        $mail->Password = 'Spillo@!#$2002';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
@@ -81,19 +81,17 @@
         $mail->addAddress($toEmail, $name);
 
         $mail->isHTML(true);
-        $mail->Subject = "Training Plan Rejected (NCAA)";
+        $mail->Subject = "Training Not Approved(NCAA)";
 
         $mail->Body = "
               <p>Hello $name,</p>
               <br>
-              <p>Unfortunately, your training has been <strong>rejected</strong></p>
+              <p>Unfortunately, your submitted training was <strong>not approved</strong></p>
               <p><strong style='margin-right: 5px;'>Training: </strong>$training</p>
               <p><strong style='margin-right: 5px;'>Quarter: </strong>$quarter</p>
               <p><strong style='margin-right: 5px;'>Year: </strong>$year</p>
               <br>
-              <p><strong>Reason for rejection:</strong></p>
-              <p>$rejectReason</p>
-              <br>
+              <p>If you would like to know the reason for this decision, please contact HR.</p>
               <p>Please log into the system for more details.</p>
               <p>http://localhost:5173/</p>
         ";
@@ -127,7 +125,7 @@
         $mail->SMTPAuth = true;
 
         $mail->Username = 'mapohaT@ncaa.na';
-        $mail->Password = 'Veripamwe@2002';
+        $mail->Password = 'Spillo@!#$2002';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;

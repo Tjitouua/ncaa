@@ -49,7 +49,7 @@
 
 
 
-    $staffSql = "SELECT id FROM users WHERE email = ? AND role != 'admin'";
+    $staffSql = "SELECT id, email FROM users WHERE email = ? AND role != 'admin'";
 
     $staffStmt = $conn->prepare($staffSql);
     $staffStmt->bind_param("s", $email);
@@ -77,7 +77,7 @@
 
 
     // Find admin 
-    $sql = "SELECT id FROM users WHERE role = 'admin' LIMIT 1";
+    $sql = "SELECT id, email FROM users WHERE role = 'admin' LIMIT 1";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();

@@ -78,7 +78,7 @@
 
     foreach ($program_ids as $program_id) {
         // Get training 
-        $programSql = "SELECT training_name, training_type, year, quarter, acceptance, reject_reason FROM training_programs WHERE id = ?";
+        $programSql = "SELECT training_name, training_type, year, quarter, approved FROM training_programs WHERE id = ?";
         $programStmt = $conn->prepare($programSql);
         $programStmt->bind_param("i", $program_id);
         $programStmt->execute();
@@ -96,10 +96,9 @@
         $year = $program["year"];
         $quarter = $program["quarter"];
         $type = $program["training_type"];
-        $acceptance = $program["acceptance"];
-        $rejectReason = $program["reject_reason"];
+        $approved = $program["approved"];
 
-        $assignment_status = ($acceptance === "Accepted") ? "Pending" : "Rejected";
+        $assignment_status = ($approved === "Yes") ? "Pending" : "Not Approved";
         // $assignment_status = "Rejected";
 
 
@@ -109,7 +108,7 @@
                        FROM training_assignments
                        WHERE staff_id = ?
                        AND program_id = ?
-                       AND status IN ('Completed', 'Pending', 'Overdue', 'Rejected')
+                       AND status IN ('Completed', 'Pending', 'Overdue', 'Not Approved')
                        LIMIT 1
         ";
         $checkStmt = $conn->prepare($checkSql);
@@ -141,15 +140,15 @@
 
         $currentYear = date("Y");
 
-        if ($acceptance === "Rejected") {
-           $title = "Training plan rejected";
-           $message = "Your training plan for $trainingName has been rejected. The training was for the $quarter quarter of $year. Reason: $rejectReason.";
+        if ($approved === "No") {
+           $title = "Training Not Approved";
+           $message = "Your training request for $trainingName has not been approved. The training was planned for the $quarter quarter of $year. If you would like to know the reason, please contact HR.";
         } elseif ($year >= $currentYear) {
-           $title = "New training assigned";
-           $message = "You have been assigned $trainingName. The training runs/ran in the $quarter quarter of $year.";
+           $title = "Training Approved";
+           $message = "Your training request for $trainingName has been approved. The training is planned for the $quarter quarter of $year.";
         } else {
            $title = "Training record added";
-           $message = "A training record for $trainingName has been added to your training history. The training was recorded for the $quarter quarter of $year.";
+           $message = "A training record for $trainingName has been added to your training history. The training took place in the $quarter quarter of $year.";
         }
 
         $status = "Unread";
@@ -168,7 +167,7 @@
 
         $notifStmt->execute();
 
-        if ($acceptance === "Accepted") {
+        if ($approved === "Yes") {
             if ($year >= $currentYear) {
               sendAcceptedEmail(
                 $staff["email"],
@@ -186,14 +185,13 @@
                     $year
                 );
             }
-        } elseif ($acceptance === "Rejected") {
+        } elseif ($approved === "No") {
             sendRejectedEmail(
                 $staff["email"],
                 $staff["first_name"],
                 $trainingName,
                 $quarter,
-                $year,
-                $rejectReason
+                $year
             );
         }
 

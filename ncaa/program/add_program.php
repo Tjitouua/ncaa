@@ -39,8 +39,6 @@
     $other_costs = (float)($data["otherCosts"] ?: 0);
     $approved = trim($data["approved"]);
     $region = trim($data["region"]);
-    $acceptance = trim($data["acceptance"]);
-    $reject_reason = trim($data["rejectReason"]);
     $year = trim($data["year"]);
     $quarter = trim($data["quarter"]);
     $start_date = trim($data["start_date"]) !== "" ? trim($data["start_date"]) : NULL;
@@ -77,19 +75,17 @@
             quarter,
             start_date,
             end_date,
-            region,
-            acceptance,
-            reject_reason
+            region
          )
          VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
          );
     ";
 
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-        "isssssssssssssddddddsiisssss",
+        "isssssssssssssddddddsiisss",
         $staff_id,
         $trainingName,
         $reason,
@@ -115,9 +111,7 @@
         $quarter,
         $start_date,
         $end_date,
-        $region,
-        $acceptance,
-        $reject_reason
+        $region
     );
 
 

@@ -19,6 +19,7 @@
 
   $email = $data->email;
   $password = $data->password;
+  $role = $data->role;
 
   $sql = " SELECT
              u.id,
@@ -32,11 +33,11 @@
              s.role AS position
              FROM users u
              LEFT JOIN staff s ON u.email = s.email
-             WHERE u.email = ?
+             WHERE u.email = ? AND u.role = ?
   ";
   $stmt = $conn->prepare($sql);
 
-  $stmt->bind_param("s", $email);
+  $stmt->bind_param("ss", $email, $role);
   $stmt->execute();
 
   $result = $stmt->get_result();
@@ -59,7 +60,7 @@
 
       $_SESSION["last_activity"] = time();
 
-      if ($user["role"] === "admin") {
+      if ($user["role"] === "admin" || $user["role"] === "hr") {
          runCertificateCheck($conn);
       }
 

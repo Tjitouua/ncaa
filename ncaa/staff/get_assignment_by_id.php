@@ -46,8 +46,6 @@
               t.start_date,
               t.end_date,
               t.region,
-              t.acceptance,
-              t.reject_reason,
               s.first_name,
               s.last_name,
               s.department,
@@ -55,11 +53,13 @@
               c.certificate_no,
               c.issued_date,
               c.expiry_date,
-              c.file
+              c.file,
+              r.file AS report_file
               FROM training_assignments a
               LEFT JOIN training_programs t ON t.id = a.program_id
               LEFT JOIN staff s ON s.id = a.staff_id
               LEFT JOIN certificates c ON c.training_id = a.id
+              LEFT JOIN reports r ON r.training_id = a.id
               WHERE a.id = ?;
     ";
     $stmt = $conn->prepare($sql);

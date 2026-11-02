@@ -37,7 +37,9 @@
    $training_id = $_POST["training_id"] ?? null;
    $certificate_no = $_POST["certificate_no"] ?? null;
    $issued_date = $_POST["issued_date"] ?? null;
-   $expiry_date = $_POST["expiry_date"] ?? null;
+   $expiry_date = !empty($_POST["expiry_date"]) ? $_POST["expiry_date"] : null;
+   $start_date = $_POST["start_date"] ?? null;
+   $end_date = $_POST["end_date"] ?? null;
 
 
 
@@ -52,6 +54,7 @@
 
    $sql = "SELECT
            a.id,
+           a.program_id,
            s.email AS staff_email
            FROM training_assignments a
            INNER JOIN staff s ON s.id = a.staff_id
@@ -110,7 +113,7 @@
    }
 
 
-   $allowedTypes = ["pdf", "jpg", "jpeg", "png"];
+   $allowedTypes = ["pdf"];
 
 
 
@@ -129,6 +132,47 @@
    
    $uploadDir = "certificates/";
 
+   if (!isset($_FILES["report_file"])) {
+      echo json_encode([
+         "success" => false,
+         "message" => "Report file is required"
+      ]);
+      exit;
+   }
+
+   $reportFile = $_FILES["report_file"];
+
+   if ($reportFile["error"] !== UPLOAD_ERR_OK) {
+      echo json_encode([
+         "success" => false,
+         "message" => "There was an error uploading the report"
+      ]);
+      exit;
+   }
+
+   if ($reportFile["size"] > 5 * 1024 * 1024) {
+      echo json_encode([
+         "success" => false,
+         "message" => "Report file too large. Maximum size is 5MB"
+      ]);
+      exit;
+   }
+
+   $reportOriginalName = basename($reportFile["name"]);
+   $reportExt = strtolower(pathinfo($reportOriginalName, PATHINFO_EXTENSION));
+
+   if(!in_array($reportExt, $allowedTypes)) {
+      echo json_encode([
+         "success" => false,
+         "message" => "Invalid report file type"
+      ]);
+      exit;
+   }
+
+
+
+
+
    if (!is_dir($uploadDir)) {
      mkdir($uploadDir, 0777, true);
    }
@@ -142,6 +186,28 @@
       echo json_encode([
         "success" => false,
         "message" => "File upload failed"
+      ]);
+      exit;
+   }
+
+
+   $reportUploadDir = "reports/";
+
+   if(!is_dir($reportUploadDir)) {
+      mkdir($reportUploadDir, 0777, true);
+   }
+
+   $reportFileName = time() . "_" . uniqid() . "_" . $reportOriginalName;
+   $reportFilePath = $reportUploadDir . $reportFileName;
+
+   if (!move_uploaded_file($reportFile["tmp_name"], $reportFilePath)) {
+      if (file_exists($filePath)) {
+         unlink($filePath);
+      }
+
+      echo json_encode([
+         "success" => false,
+         "message" => "Report upload failed"
       ]);
       exit;
    }
@@ -181,15 +247,88 @@
           "message" => "Database insert failed"
        ]);
        $stmt->close();
+       $conn->close();
        exit;
    }
 
 
    $stmt->close();
 
+
+
+   $reportSql = "INSERT INTO reports (training_id, staff_email, file)
+                 VALUES (?, ?, ?)
+   ";
+
+   $reportStmt = $conn->prepare($reportSql);
+   $reportStmt->bind_param("iss", $training_id, $assignment["staff_email"], $reportFilePath);
+
+   if (!$reportStmt->execute()) {
+      if(file_exists($filePath)) {
+         unlink($filePath);
+      }
+
+      if(file_exists($reportFilePath)) {
+         unlink($reportFilePath);
+      }
+
+      echo json_encode([
+         "success" => false,
+         "message" => "Report database insert failed"
+      ]);
+
+      $reportStmt->close();
+      $conn->close();
+      exit;
+   }
+
+   $reportStmt->close();
+
+
+   $deleteNotifSql = "DELETE
+                      FROM staff_notifications
+                      WHERE staff_email = ?
+                      AND training_id = ?
+                      AND notification_type = ?
+   ";
+   $deleteNotifStmt = $conn->prepare($deleteNotifSql);
+   $rejectionType = "Certificate Rejection";
+
+   $deleteNotifStmt->bind_param("sis", $assignment["staff_email"], $training_id, $rejectionType);
+   $deleteNotifStmt->execute();
+   $deleteNotifStmt->close();
+
+
+
+
+   $program_id = $assignment["program_id"];
+
+   $dateSql = "UPDATE training_programs
+                 SET start_date = ?, end_date = ?
+                 WHERE id = ?
+   ";
+
+   $dateStmt = $conn->prepare($dateSql);
+   $dateStmt->bind_param("ssi", $start_date, $end_date, $program_id);
+
+   
+   if(!$dateStmt->execute()) {
+      echo json_encode([
+         "success" => false,
+         "message" => "Certificate uploaded, but training dates could not be updated"
+      ]);
+      $dateStmt->close();
+      $conn->close();
+      exit;
+   }
+
+   $dateStmt->close();
+
+
+
    echo json_encode([
      "success" => true,
-     "message" => "Certificate uploaded successfully"
+     "message" => "Certificate and report uploaded successfully"
    ]);
 
    $conn->close();

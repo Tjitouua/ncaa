@@ -40,9 +40,13 @@
             $trainingID = $row["training_id"];
             $training = $row["training_name"];
 
+            if ($expiry == null || $expiry === '' || $expiry === '0000-00-00') {
+               continue;
+            }
+
             $formattedExpiry = date("d F Y", strtotime($expiry));
 
-            if ($expiry !== '0000-00-00' && $expiry > $today && $expiry <= $expiringDate) {
+            if ($expiry > $today && $expiry <= $expiringDate) {
                 $checkSql = "SELECT
                              id
                              FROM admin_notifications
@@ -89,7 +93,7 @@
               }
             }
 
-            if ($expiry !== '0000-00-00' && $expiry < $today) {
+            if ($expiry < $today) {
                 $checkSql = "SELECT
                              id
                              FROM admin_notifications

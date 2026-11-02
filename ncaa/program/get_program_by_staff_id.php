@@ -19,6 +19,22 @@
         exit;
     }
 
+    $query = "SELECT first_name, last_name FROM staff WHERE id = ?";
+    $staffStmt = $conn->prepare($query);
+    $staffStmt->bind_param("i", $staff_id);
+    $staffStmt->execute();
+
+    $staff_result = $staffStmt->get_result();
+    $staff = $staff_result->fetch_assoc();
+
+    if (!$staff) {
+        echo json_encode([
+            "success" => false,
+            "message" => "User not found"
+        ]);
+        exit;
+    }
+
     $sql = "SELECT * FROM training_programs WHERE staff_id = ? AND year = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $staff_id, $year);
@@ -27,19 +43,15 @@
     $result = $stmt->get_result();
     $data = $result->fetch_all(MYSQLI_ASSOC);
 
-    if ($data) {
+    
         echo json_encode([
             "success" => true,
+            "staff" => $staff,
             "data" => $data
         ]);
-    } else {
-        echo json_encode([
-            "success" => false,
-            "message" => "Program (s) not found"
-        ]);
-    }
 
     $stmt->close();
+    $staffStmt->close();
     $conn->close();
 
 

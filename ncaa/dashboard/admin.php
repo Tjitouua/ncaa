@@ -35,10 +35,10 @@
 
 
     // Rejected 
-    $overdueSql = "SELECT COUNT(*) rejected FROM training_assignments WHERE status = 'Rejected';";
+    $overdueSql = "SELECT COUNT(*) not_approved FROM training_assignments WHERE status = 'Not Approved';";
     $overdueResult = mysqli_query($conn, $overdueSql);
 
-    $response["rejected"] = mysqli_fetch_assoc($overdueResult)["rejected"];
+    $response["not_approved"] = mysqli_fetch_assoc($overdueResult)["not_approved"];
 
 
 

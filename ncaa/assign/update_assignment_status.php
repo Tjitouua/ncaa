@@ -8,8 +8,7 @@
     header("Content-Type: application/json");
 
     include "../database.php";
-    require "../mail/training_status_email.php";
-
+    
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (!isset($data["id"]) || !isset($data["status"])) {
@@ -50,14 +49,6 @@
     $result = $stmt2->get_result();
     $staff = $result->fetch_assoc();
 
-    if($staff) {
-        sendTrainingStatusEmail(
-            $staff["email"],
-            $staff["first_name"],
-            $staff["training_name"],
-            $status
-        );
-    }
 
 
         echo json_encode([

@@ -60,6 +60,20 @@
     $stmt->close();
 
 
+    $reportSql = "SELECT id, file
+                  FROM reports WHERE training_id = ? 
+    ";
+
+    $reportStmt = $conn->prepare($reportSql);
+    $reportStmt->bind_param("i", $training_id);
+    $reportStmt->execute();
+
+    $reportResult = $reportStmt->get_result();
+    $report = $reportResult->fetch_assoc();
+
+    $reportStmt->close();
+
+
     if (!$certificate) {
         echo json_encode([
             "success" => false,
@@ -88,6 +102,22 @@
 
 
 
+    $deleteReportSql = "DELETE FROM reports WHERE training_id = ?";
+    $deleteReportStmt = $conn->prepare($deleteReportSql);
+    $deleteReportStmt->bind_param("i", $training_id);
+
+    if (!$deleteReportStmt->execute()) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to delete report"
+        ]);
+        exit;
+    }
+
+    $deleteReportStmt->close();
+
+
+
     // Delete notification 
     $notifSql = "DELETE FROM admin_notifications WHERE training_id = ? AND title = 'New certificate upload'";
     $notifStmt = $conn->prepare($notifSql);
@@ -104,9 +134,17 @@
         unlink($filePath);
     }
 
+    if ($report) {
+        $reportPath = $report["file"];
+
+        if(file_exists($reportPath)) {
+            unlink($reportPath);
+        }
+    }
+
     echo json_encode([
         "success" => true,
-        "message" => "Certificate deleted successfully"
+        "message" => "Certificate and report deleted successfully"
     ]);
 
 

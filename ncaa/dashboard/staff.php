@@ -75,11 +75,11 @@
 
 
     // Rejected
-    $rejectedSql = "SELECT COUNT(*) AS rejected
+    $rejectedSql = "SELECT COUNT(*) AS not_approved
                      FROM training_assignments ta
                      INNER JOIN staff s ON s.id = ta.staff_id
                      WHERE s.email = ?
-                     AND ta.status = 'Rejected'
+                     AND ta.status = 'Not Approved'
     ";
 
     $rejectedStmt = $conn->prepare($rejectedSql);
@@ -87,7 +87,7 @@
     $rejectedStmt->execute();
     $result = $rejectedStmt->get_result();
 
-    $response["rejected"] = mysqli_fetch_assoc($result)["rejected"];
+    $response["not_approved"] = mysqli_fetch_assoc($result)["not_approved"];
 
 
 

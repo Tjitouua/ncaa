@@ -1,0 +1,175 @@
+<?php
+
+
+    session_start();
+
+
+    header("Content-Type: application/json");
+    header("Access-Control-Allow-Origin: http://localhost:5173");
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Allow-Headers: Content-Type");
+
+
+    include "../database.php";
+
+
+    if (!isset($_SESSION["user"])) {
+        echo json_encode([
+            "success" => false,
+            "message" => "User is not logged in"
+        ]);
+        exit;
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        echo json_encode([
+            "success" => false,
+            "message" => "Invalid request method"
+        ]);
+        exit;
+    }
+
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $training_id = $data["training_id"] ?? null;
+
+    if (!$training_id) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Training ID is required"
+        ]);
+        exit;
+    }
+
+
+
+    // Certificate & Staff Information 
+    $sql = "SELECT
+              c.id,
+              c.file,
+              c.staff_email,
+              ta.id AS assignment_id,
+              s.first_name,
+              s.last_name,
+              tp.training_name,
+              tp.quarter,
+              tp.year
+            FROM certificates c
+            INNER JOIN staff s ON s.email = c.staff_email
+            INNER JOIN training_assignments ta ON ta.id = c.training_id
+            INNER JOIN training_programs tp ON tp.id = ta.program_id
+            WHERE c.training_id = ?
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $training_id);
+    $stmt->execute();
+
+
+    $result = $stmt->get_result();
+
+    $certificate = $result->fetch_assoc();
+
+    if (!$certificate) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Certificate not found"
+        ]);
+        exit;
+    }
+
+
+    $filePath = $certificate["file"];
+    $staff_email = $certificate["staff_email"];
+    $staff_name = $certificate["first_name"] . " " . $certificate["last_name"];
+
+    $name = $certificate["first_name"];
+    $training = $certificate["training_name"];
+    $quarter = $certificate["quarter"];
+    $year = $certificate["year"];
+
+
+
+
+    $reportSql = "SELECT file FROM reports WHERE training_id = ?";
+    $reportStmt = $conn->prepare($reportSql);
+    $reportStmt->bind_param("i", $training_id);
+    $reportStmt->execute();
+
+    $reportResult = $reportStmt->get_result();
+    $report = $reportResult->fetch_assoc();
+
+    $reportStmt->close();
+
+
+
+    // Delete certificate from database 
+    $deleteSql = "DELETE FROM certificates WHERE training_id = ?";
+
+    $deleteStmt = $conn->prepare($deleteSql);
+    $deleteStmt->bind_param("i", $training_id);
+
+    if (!$deleteStmt->execute()) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to reject certificate"
+        ]);
+        exit;
+    }
+
+
+
+    // Delete report from database 
+    $deleteReportSql = "DELETE FROM reports WHERE training_id = ?";
+    $deleteReportStmt = $conn->prepare($deleteReportSql);
+    $deleteReportStmt->bind_param("i", $training_id);
+
+    if (!$deleteReportStmt->execute()) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to reject report"
+        ]);
+        $deleteReportStmt->close();
+        exit;
+    }
+
+    $deleteReportStmt->close();
+
+
+    // Delete the physical certificate file 
+    if (file_exists($filePath)) {
+        unlink($filePath);
+    }
+
+
+    if ($report) {
+        $reportPath = $report["file"];
+
+        if(file_exists($reportPath)) {
+            unlink($reportPath);
+        }
+    }
+
+
+    // Update training status back to pending 
+    $updateSql = "UPDATE training_assignments SET status = 'Pending' WHERE id = ?";
+
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bind_param("i", $training_id);
+    $updateStmt->execute();
+
+
+    echo json_encode([
+        "success" => true,
+        "message" => "Certificate rejected successfully"
+    ]);
+
+
+    $conn->close();
+
+
+
+
+?>
