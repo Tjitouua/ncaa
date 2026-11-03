@@ -96,6 +96,15 @@ const NewAssignment = () => {
     const [assigning, setAssigning] = useState(false);
 
 
+    const startYear = 2016;
+    const currentYear = new Date().getFullYear();
+
+    const years = Array.from(
+        { length: currentYear - startYear + 1 },
+        (_, i) => currentYear - i
+    )
+
+
     // Staff 
     useEffect(() => {
         fetch("http://localhost/ncaa/staff/get_assignment_staff.php")
@@ -343,18 +352,9 @@ const NewAssignment = () => {
                       <div className="rounded-md bg-secondaryy/30 border border-secondary/30 px-3">
                        <select value={selectedYear} onChange={(e) => {setSelectedYear(e.target.value); setSelectedProgram([]);}} className="w-full py-2 text-xs cursor-pointer focus:outline-none">
                        <option value="">Choose Year</option>
-                        <option value="2026">2026</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                        <option value="2015">2015</option>
+                         {years.map((year) => (
+                            <option key={year} value={year}>{year}</option>
+                         ))}
                        </select>
                       </div>
                     </div>
