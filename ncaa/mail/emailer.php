@@ -146,6 +146,7 @@
               <p><strong style='margin-right: 5px;'>Year: </strong>$year</p>
               <br>
               <p>This record has been added to the NCAA Training Management System for record-keeping purposes.</p>
+              <p>If your training record does not include a certificate or report, please log into the system and upload the missing documents. This will allow your training assignment to be marked as Completed.</p>
               <br>
               <p>Please log into the system for more details.</p>
               <p>http://localhost:5173/</p>
