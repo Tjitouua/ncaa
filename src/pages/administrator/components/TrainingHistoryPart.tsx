@@ -60,7 +60,7 @@ interface Assignment {
       // approved: string,
       year: string,
       quarter: string,
-      start_date: string,
+      start_date: string | null,
       end_date: string,
       region: string,
       approved: string
@@ -73,21 +73,22 @@ interface Assignment {
 
 
 const initialFilters = {
-      function: "",
-      department: "",
-      division: "",
-      job_category: "",
-      category: "",
-      training_type: "",
-      quarter: "",
-      method: "",
-      status: "",
-      disadvantaged: "",
-      disability: "",
-      gender: "",
-      year: "",
-      region: "",
-      approved: ""
+      function: [] as string[],
+      department: [] as string[],
+      division: [] as string[],
+      job_category: [] as string[],
+      category: [] as string[],
+      training_type: [] as string[],
+      quarter: [] as string[],
+      method: [] as string[],
+      status: [] as string[],
+      disadvantaged: [] as string[],
+      disability: [] as string[],
+      gender: [] as string[],
+      year: [] as string[],
+      months: [] as string[],
+      region: [] as string[],
+      approved: [] as string[]
 };
 
 
@@ -139,6 +140,39 @@ const TrainingHistoryPart = () => {
            setLoading(false);
        });
    }, []);
+
+
+
+
+
+
+   const startYear = 2016;
+   const currentYear = new Date().getFullYear();
+
+   const years = Array.from(
+      { length: currentYear - startYear + 1 },
+      (_, i) => currentYear - i
+   );
+
+
+
+
+
+
+   const months = [
+       { value: "01", label: "January" },
+       { value: "02", label: "February" },
+       { value: "03", label: "March" },
+       { value: "04", label: "April" },
+       { value: "05", label: "May" },
+       { value: "06", label: "June" },
+       { value: "07", label: "July" },
+       { value: "08", label: "August" },
+       { value: "09", label: "September" },
+       { value: "10", label: "October" },
+       { value: "11", label: "November" },
+       { value: "12", label: "December" }
+   ];
 
 
 
@@ -288,24 +322,12 @@ const TrainingHistoryPart = () => {
       {
          name: "year",
          label: "Year",
-         options: [
-            "2017",
-            "2018",
-            "2019",
-            "2020",
-            "2021",
-            "2022",
-            "2023",
-            "2024",
-            "2025",
-            "2026",
-            "2027",
-            "2028",
-            "2029",
-            "2030",
-            "2031",
-            "2032"
-         ]
+         options: years.map(String)
+      },
+      {
+         name: "months",
+         label: "Month",
+         options: months.map(month => month.value)
       },
       {
          name: "region",
@@ -329,10 +351,14 @@ const TrainingHistoryPart = () => {
 
 
 
-   const handleFilterChange = (name: string, value: string) => {
+
+
+   const handleFilterChange = (name: FilterName, value: string) => {
       setFilters((prev) => ({
          ...prev,
-         [name]: value
+         [name]: prev[name].includes(value)
+         ? prev[name].filter((item) => item !== value)
+         : [...prev[name], value]
       }));
    };
 
@@ -357,64 +383,75 @@ const TrainingHistoryPart = () => {
 
 
        const matchesFunction = 
-           !filters.function ||
-           training.function === filters.function;
+           filters.function.length === 0 ||
+           filters.function.includes(training.function);
 
        const matchesDepartment =
-           !filters.department ||
-           training.department === filters.department;
+           filters.department.length === 0 ||
+           filters.department.includes(training.department);
 
        const matchesDivision = 
-           !filters.division ||
-           training.division === filters.division;
+           filters.division.length === 0 ||
+           filters.division.includes(training.division);
 
        const matchesAA =
-           !filters.job_category ||
-           training.job_category === filters.job_category;
+           filters.job_category.length === 0 ||
+           filters.job_category.includes(training.job_category);
 
        const matchesCategory =
-           !filters.category ||
-           training.category === filters.category;
+           filters.category.length === 0 ||
+           filters.category.includes(training.category);
 
        const matchesTrainingType =
-           !filters.training_type ||
-           training.training_type === filters.training_type;
+           filters.training_type.length === 0 ||
+           filters.training_type.includes(training.training_type);
 
        const matchesQuarter =
-           !filters.quarter ||
-           training.quarter === filters.quarter;
+           filters.quarter.length === 0 ||
+           filters.quarter.includes(training.quarter);
 
        const matchesMethod =
-           !filters.method ||
-           training.method === filters.method;
+           filters.method.length === 0 ||
+           filters.method.includes(training.method);
 
        const matchesStatus =
-           !filters.status ||
-           training.status === filters.status;
+           filters.status.length === 0 ||
+           filters.status.includes(training.status);
 
        const matchesDisadvantaged =
-           !filters.disadvantaged ||
-           training.disadvantaged === filters.disadvantaged;
+           filters.disadvantaged.length === 0 ||
+           filters.disadvantaged.includes(training.disadvantaged);
 
        const matchesDisability =
-           !filters.disability ||
-           training.disability === filters.disability;
+           filters.disability.length === 0 ||
+           filters.disability.includes(training.disability);
 
        const matchesGender = 
-           !filters.gender ||
-           training.gender === filters.gender;
+           filters.gender.length === 0 ||
+           filters.gender.includes(training.gender);
 
        const matchesYear =
-           !filters.year ||
-           training.year === filters.year;
+           filters.year.length === 0 ||
+           filters.year.includes(training.year);
+
+       const trainingMonth = training.start_date?.substring(5, 7) || "";
+
+       const matchesMonth =
+           filters.months.length === 0 ||
+           (
+             training.start_date &&
+             training.start_date !== "null" &&
+             training.start_date !== "0000-00-00" &&
+             filters.months.includes(trainingMonth)
+           );
 
        const matchesRegion =
-           !filters.region ||
-           training.region === filters.region;
+           filters.region.length === 0 ||
+           filters.region.includes(training.region);
 
        const matchesApproved =
-           !filters.approved ||
-           training.approved === filters.approved;
+           filters.approved.length === 0 ||
+           filters.approved.includes(training.approved);
 
        return (
           matchesSearch && 
@@ -431,6 +468,7 @@ const TrainingHistoryPart = () => {
           matchesDisability &&
           matchesGender &&
           matchesYear &&
+          matchesMonth &&
           matchesRegion &&
           matchesApproved
        );
@@ -448,64 +486,68 @@ const TrainingHistoryPart = () => {
          params.append("search", searchTraining.trim());
       }
 
-      if (filters.function) {
-         params.append("function", filters.function);
+      if (filters.function.length > 0) {
+         params.append("function", filters.function.join(","));
       }
 
-      if (filters.department) {
-         params.append("department", filters.department);
+      if (filters.department.length > 0) {
+         params.append("department", filters.department.join(","));
       }
 
-      if (filters.division) {
-         params.append("division", filters.division);
+      if (filters.division.length > 0) {
+         params.append("division", filters.division.join(","));
       }
 
-      if (filters.job_category) {
-         params.append("job_category", filters.job_category);
+      if (filters.job_category.length > 0) {
+         params.append("job_category", filters.job_category.join(","));
       }
 
-      if (filters.category) {
-         params.append("category", filters.category);
+      if (filters.category.length > 0) {
+         params.append("category", filters.category.join(","));
       }
 
-      if (filters.training_type) {
-         params.append("training_type", filters.training_type);
+      if (filters.training_type.length > 0) {
+         params.append("training_type", filters.training_type.join(","));
       }
 
-      if (filters.quarter) {
-         params.append("quarter", filters.quarter);
+      if (filters.quarter.length > 0) {
+         params.append("quarter", filters.quarter.join(","));
       }
 
-      if (filters.method) {
-         params.append("method", filters.method);
+      if (filters.method.length > 0) {
+         params.append("method", filters.method.join(","));
       }
 
-      if (filters.status) {
-         params.append("status", filters.status);
+      if (filters.status.length > 0) {
+         params.append("status", filters.status.join(","));
       }
 
-      if (filters.disadvantaged) {
-         params.append("disadvantaged", filters.disadvantaged);
+      if (filters.disadvantaged.length > 0) {
+         params.append("disadvantaged", filters.disadvantaged.join(","));
       }
 
-      if (filters.disability) {
-         params.append("disability", filters.disability);
+      if (filters.disability.length > 0) {
+         params.append("disability", filters.disability.join(","));
       }
 
-      if (filters.gender) {
-         params.append("gender", filters.gender);
+      if (filters.gender.length > 0) {
+         params.append("gender", filters.gender.join(","));
       }
 
-      if (filters.year) {
-         params.append("year", filters.year);
+      if (filters.year.length > 0) {
+         params.append("year", filters.year.join(","));
       }
 
-      if (filters.region) {
-         params.append("region", filters.region);
+      if (filters.months.length > 0) {
+         params.append("months", filters.months.join(","));
       }
 
-      if (filters.approved) {
-         params.append("approved", filters.approved);
+      if (filters.region.length > 0) {
+         params.append("region", filters.region.join(","));
+      }
+
+      if (filters.approved.length > 0) {
+         params.append("approved", filters.approved.join(","));
       }
 
 
@@ -586,7 +628,18 @@ const TrainingHistoryPart = () => {
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {filter.options.map((option) => (
                                       <div key={option} className="flex items-center gap-1">
-                                         <input name={filter.name} value={option} type="radio" checked={filters[filter.name] === option} onClick={() => handleFilterChange(filter.name, filters[filter.name] === option ? "" : option)} readOnly /> <label>{option}</label>
+                                         <input
+                                             name={filter.name}
+                                             value={option}
+                                             type="checkbox"
+                                             checked={filters[filter.name].includes(option)}
+                                             onChange={() => handleFilterChange(filter.name, option)}
+                                          />
+                                          <label>
+                                             {filter.name === "months"
+                                                ? months.find(month => month.value === option)?.label
+                                                : option}
+                                          </label>
                                       </div>
                                     ))}
                                   </div>

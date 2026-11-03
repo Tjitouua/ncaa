@@ -195,7 +195,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
                    <div className="w-full py-3 px-3 flex items-center justify-between border-b border-secondaryy">
                       <label className="font-bold">Notifications</label>
                       <div className="">
-                        <label onClick={() => navigate("/admin/notifications")} className="text-xs hover:underline cursor-pointer">View all</label>
+                        <label onClick={() => navigate("/admin-hr/notifications")} className="text-xs hover:underline cursor-pointer">View all</label>
                       </div>
                    </div>
                    {loading ? (
@@ -210,7 +210,7 @@ const TopMenu = ({ setShowMenu, title = "Dashboard" }: MenuProps) => {
                    all.slice(0,2).map((all) => (
                    <div className="w-full py-2 px-3 flex flex-col items-start border-t border-secondaryy">
                       <label className="font-bold text-sm">{all.title}</label>
-                      <label onClick={() => navigate("/admin/notifications")} className="text-xs hover:underline">{all.message.split(".")[0]}</label>
+                      <label onClick={() => navigate("/admin-hr/notifications")} className="text-xs hover:underline">{all.message.split(".")[0]}</label>
                       <label className="text-[10px]">{all.sent_date}</label>
                    </div>
                    ))

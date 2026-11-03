@@ -13,15 +13,6 @@
 
 
     $search = $_GET["search"] ?? "";
-    $function = $_GET["function"] ?? "";
-    $department = $_GET["department"] ?? "";
-    $division = $_GET["division"] ?? "";
-    $job_category = $_GET["job_category"] ?? "";
-    $role = $_GET["role"] ?? "";
-    $disadvantaged = $_GET["disadvantaged"] ?? "";
-    $disability = $_GET["disability"] ?? "";
-    $gender = $_GET["gender"] ?? "";
-
 
 
 
@@ -29,6 +20,29 @@
 
     $params = [];
     $types = "";
+
+
+
+
+    $addInFilter = function ($column, $filterName) use (&$query, &$params, &$types) {
+        
+      $values = array_filter(
+          array_map("trim", explode(",", $_GET[$filterName] ?? "")),
+          fn($value) => $value !== ""
+      );
+
+      if (!empty($values)) {
+          $placeholders = implode(",", array_fill(0, count($values), "?"));
+
+          $query .= " AND $column IN ($placeholders)";
+
+          foreach ($values as $value) {
+              $params[] = $value;
+              $types .= "s";
+          }
+      }
+  };
+
 
 
     // Search 
@@ -64,74 +78,37 @@
 
 
    //  Function 
-   if ($function !== "") {
-      $query .= " AND function = ?";
-      $params[] = $function;
-      $types .= "s";
-   }
+   $addInFilter("`function`", "function");
 
 
 
 
     // Department 
-    if ($department !== "") {
-       $query .= " AND department = ?";
-       $params[] = $department;
-       $types .= "s";
-    }
+    $addInFilter("department", "department");
 
 
    //  Division 
-   if ($division !== "") {
-      $query .= " AND division = ?";
-      $params[] = $division;
-      $types .= "s";
-   }
+   $addInFilter("division", "division");
 
 
 
    // Job/AA Category 
-   if ($job_category !== "") {
-      $query .= " AND job_category = ?";
-      $params[] = $job_category;
-      $types .= "s";
-   }
-
-
-
-    // Role 
-    if ($role !== "") {
-       $query .= " AND role = ?";
-       $params[] = $role;
-       $types .= "s";
-    }
+   $addInFilter("job_category", "job_category");
 
 
 
     // Disadvantaged 
-    if ($disadvantaged !== "") {
-       $query .= " AND disadvantaged = ?";
-       $params[] = $disadvantaged;
-       $types .= "s";
-    }
+    $addInFilter("disadvantaged", "disadvantaged");
 
 
 
     // Disability 
-    if ($disability !== "") {
-       $query .= " AND disability = ?";
-       $params[] = $disability;
-       $types .= "s";
-    }
+    $addInFilter("disability", "disability");
 
 
 
     // Gender 
-    if ($gender !== "") {
-      $query .= " AND gender = ?";
-      $params[] = $gender;
-      $types .= "s";
-    }
+    $addInFilter("gender", "gender");
 
     $query .= " ORDER BY id ASC";
 

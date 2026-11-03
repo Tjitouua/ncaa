@@ -94,33 +94,55 @@ const EmployeesPart = () => {
 
 
 
-   const [filters, setFilters] = useState({
-      function: "",
-      department: "",
-      division: "",
-      job_category: "",
-      disadvantaged: "",
-      disability: "",
-      gender: ""
-   });
+   // const [filters, setFilters] = useState({
+   //    function: "",
+   //    department: "",
+   //    division: "",
+   //    job_category: "",
+   //    disadvantaged: "",
+   //    disability: "",
+   //    gender: ""
+   // });
 
 
 
-   type filterName =
-      | "function"
-      | "department"
-      | "division"
-      | "job_category"
-      | "disadvantaged"
-      | "disability"
-      | "gender";
+   // type filterName =
+   //    | "function"
+   //    | "department"
+   //    | "division"
+   //    | "job_category"
+   //    | "disadvantaged"
+   //    | "disability"
+   //    | "gender";
+
+
+
+   type FilterName =
+         | "function"
+         | "department"
+         | "division"
+         | "job_category"
+         | "disadvantaged"
+         | "disability"
+         | "gender";
+
+   
+   const [filters, setFilters] = useState<Record<FilterName, string[]>>({
+      function: [],
+      department: [],
+      division: [],
+      job_category: [],
+      disadvantaged: [],
+      disability: [],
+      gender: []
+   })
 
 
 
 
    const filterOptions: {
-      name: filterName;
-      label: String;
+      name: FilterName;
+      label: string;
       options: string[];
    }[] = [
       {
@@ -160,7 +182,7 @@ const EmployeesPart = () => {
             "Human Resources", 
             "Procurement",
             "Legal",
-            "ICTP"
+            "ICT"
          ]
       },
       {
@@ -205,10 +227,12 @@ const EmployeesPart = () => {
 
 
 
-   const handleFilterChange = (name: string, value: string) => {
+   const handleFilterChange = (name: FilterName, value: string) => {
       setFilters((prev) => ({
          ...prev,
-         [name]: value
+         [name]: prev[name].includes(value)
+           ? prev[name].filter((item) => item !== value)
+           : [...prev[name], value]
       }));
    };
 
@@ -273,33 +297,33 @@ const EmployeesPart = () => {
          params.append("search", searchStaff.trim());
       }
 
-      if (filters.function) {
-         params.append("function", filters.function)
+      if (filters.function.length > 0) {
+         params.append("function", filters.function.join(","));
       }
 
-      if (filters.department) {
-         params.append("department", filters.department);
+      if (filters.department.length > 0) {
+         params.append("department", filters.department.join(","));
       }
 
-      if (filters.division) {
-         params.append("division", filters.division)
+      if (filters.division.length > 0) {
+         params.append("division", filters.division.join(","));
       }
 
-      if (filters.job_category) {
-         params.append("job_category", filters.job_category)
+      if (filters.job_category.length > 0) {
+         params.append("job_category", filters.job_category.join(","));
       }
 
 
-      if (filters.disadvantaged) {
-         params.append("disadvantaged", filters.disadvantaged);
+      if (filters.disadvantaged.length > 0) {
+         params.append("disadvantaged", filters.disadvantaged.join(","));
       }
 
-      if (filters.disability) {
-         params.append("disability", filters.disability);
+      if (filters.disability.length > 0) {
+         params.append("disability", filters.disability.join(","));
       }
 
-      if (filters.gender) {
-         params.append("gender", filters.gender);
+      if (filters.gender.length > 0) {
+         params.append("gender", filters.gender.join(","));
       }
 
 
@@ -336,24 +360,24 @@ const EmployeesPart = () => {
 
 
           const matchesFunction =
-             !filters.function ||
-             employee.function === filters.function;
+             filters.function.length === 0 ||
+             filters.function.includes(employee.function);
 
 
           const matchesDepartment = 
-             !filters.department ||
-             employee.department === filters.department;
+             filters.department.length === 0 ||
+             filters.department.includes(employee.department);
 
          
          const matchesDivision =
-             !filters.division ||
-             employee.division === filters.division;
+             filters.division.length === 0 ||
+             filters.division.includes(employee.division);
 
 
 
          const matchesAA =
-            !filters.job_category ||
-            employee.job_category === filters.job_category;
+            filters.job_category.length === 0 ||
+            filters.job_category.includes(employee.job_category);
 
 
          // const matchesRole =
@@ -362,19 +386,19 @@ const EmployeesPart = () => {
 
 
          const matchesDisadvantaged =
-             !filters.disadvantaged || 
-             employee.disadvantaged === filters.disadvantaged;
+             filters.disadvantaged.length === 0 || 
+             filters.disadvantaged.includes(employee.disadvantaged);
 
 
 
          const matchesDisability =
-             !filters.disability ||
-             employee.disability === filters.disability;
+             filters.disability.length === 0 ||
+             filters.disability.includes(employee.disability);
 
 
          const matchesGender =
-            !filters.gender ||
-            employee.gender === filters.gender;
+            filters.gender.length === 0 ||
+            filters.gender.includes(employee.gender);
 
 
         return (
@@ -469,7 +493,14 @@ const EmployeesPart = () => {
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {filter.options.map((option) => (
                                       <div key={option} className="flex items-center gap-1">
-                                         <input name={filter.name} value={option} type="radio" checked={filters[filter.name] === option} onClick={() => handleFilterChange(filter.name, filters[filter.name] === option ? "" : option)} readOnly /> <label>{option}</label>
+                                         <input 
+                                              name={filter.name} 
+                                              value={option} 
+                                              type="checkbox" 
+                                              checked={filters[filter.name].includes(option)} 
+                                              onChange={() => handleFilterChange(filter.name, option)}  
+                                          /> 
+                                          <label>{option}</label>
                                       </div>
                                     ))}
                                   </div>

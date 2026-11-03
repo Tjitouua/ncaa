@@ -12,21 +12,6 @@
 
 
     $search = $_GET["search"] ?? "";
-    $status = $_GET["status"] ?? "";
-    $function = $_GET["function"] ?? "";
-    $department = $_GET["department"] ?? "";
-    $division = $_GET["division"] ?? "";
-    $job_category = $_GET["job_category"] ?? "";
-    $category = $_GET["category"] ?? "";
-    $training_type = $_GET["training_type"] ?? "";
-    $quarter = $_GET["quarter"] ?? "";
-    $method = $_GET["method"] ?? "";
-    $disadvantaged = $_GET["disadvantaged"] ?? "";
-    $disability = $_GET["disability"] ?? "";
-    $gender = $_GET["gender"] ?? "";
-    $year = $_GET["year"] ?? "";
-    $region = $_GET["region"] ?? "";
-    $acceptance = $_GET["acceptance"] ?? "";
 
 
     $query = "SELECT
@@ -53,6 +38,30 @@
 
     $params = [];
     $types = "";
+
+
+
+
+    $addInFilter = function ($column, $filterName) use (&$query, &$params, &$types) {
+        
+        $values = array_filter(
+            array_map("trim", explode(",", $_GET[$filterName] ?? "")),
+            fn($value) => $value !== ""
+        );
+
+        if (!empty($values)) {
+            $placeholders = implode(",", array_fill(0, count($values), "?"));
+
+            $query .= " AND $column IN ($placeholders)";
+
+            foreach ($values as $value) {
+                $params[] = $value;
+                $types .= "s";
+            }
+        }
+    };
+
+
 
 
     // Search 
@@ -94,137 +103,83 @@
 
 
     // Function
-    if ($function !== "") {
-        $query .= " AND s.function = ?";
-        $params[] = $function;
-        $types .= "s";
-    }
+    $addInFilter("s.`function`", "function");
 
 
 
 
     // Department 
-    if ($department !== "") {
-        $query .= " AND s.department = ?";
-        $params[] = $department;
-        $types .= "s";
-    }
+    $addInFilter("s.department", "department");
 
 
 
     // Division
-    if ($division !== "") {
-        $query .= " AND s.division = ?";
-        $params[] = $division;
-        $types .= "s";
-    }
+    $addInFilter("s.division", "division");
 
 
 
     // Job Category
-    if ($job_category !== "") {
-        $query .= " AND s.job_category = ?";
-        $params[] = $job_category;
-        $types .= "s";
-    }
+    $addInFilter("s.job_category", "job_category");
 
 
     // Category 
-    if ($category !== "") {
-        $query .= " AND t.category = ?";
-        $params[] = $category;
-        $types .= "s";
-    }
+    $addInFilter("t.category", "category");
 
 
     // Training Type
-    if ($training_type !== "") {
-        $query .= " AND t.training_type = ?";
-        $params[] = $training_type;
-        $types .= "s";
-    }
+    $addInFilter("t.training_type", "training_type");
 
 
     // Quarter 
-    if ($quarter !== "") {
-        $query .= " AND t.quarter = ?";
-        $params[] = $quarter;
-        $types .= "s";
-    }
+    $addInFilter("t.quarter", "quarter");
 
 
     // Method
-    if ($method !== "") {
-        $query .= " AND t.method = ?";
-        $params[] = $method;
-        $types .= "s";
-    }
+    $addInFilter("t.method", "method");
 
 
 
     // Status 
-    if ($status !== "") {
-        $query .= " AND a.status = ?";
-        $params[] = $status;
-        $types .= "s";
-    }
+    $addInFilter("a.status", "status");
 
 
 
     // Disadvantaged 
-    if ($disadvantaged !== "") {
-        $query .= " AND s.disadvantaged = ?";
-        $params[] = $disadvantaged;
-        $types .= "s";
-    }
+    $addInFilter("s.disadvantaged", "disadvantaged");
 
 
 
     // Disability 
-    if ($disability !== "") {
-        $query .= " AND s.disability = ?";
-        $params[] = $disability;
-        $types .= "s";
-    }
+    $addInFilter("s.disability", "disability");
 
 
 
 
     // Gender 
-    if ($gender !== "") {
-        $query .= " AND s.gender = ?";
-        $params[] = $gender;
-        $types .= "s";
-    }
+    $addInFilter("s.gender", "gender");
 
 
 
 
     // Year 
-    if ($year !== "") {
-        $query .= " AND t.year = ?";
-        $params[] = (int)$year;
-        $types .= "i";
-    }
+    $addInFilter("t.year", "year");
+
+
+
+
+    // Month 
+    $addInFilter("MONTH(t.start_date)", "months");
 
 
 
     // Region 
-    if ($region !== "") {
-        $query .= " AND t.region = ?";
-        $params[] = $region;
-        $types .= "s";
-    }
+    $addInFilter("t.region", "region");
 
 
 
 
     // Acceptance 
-    if ($acceptance !== "") {
-        $query .= " AND t.acceptance = ?";
-        $params[] = $acceptance;
-        $types .= "s";
-    }
+    $addInFilter("t.approved", "approved");
 
 
 
@@ -278,10 +233,10 @@
 
     $totalRow = array_fill(0, count($headers), "");
 
-
-    $totalRow[$totalCostIndex - 1] = "TOTAL COST";
-    $totalRow[$totalCostIndex] = number_format($totalCost, 2, ".", " ");
-
+    if ($totalCostIndex > 0) {
+      $totalRow[$totalCostIndex - 1] = "TOTAL COST";
+      $totalRow[$totalCostIndex] = number_format($totalCost, 2, ".", " ");
+    }
 
 
 
