@@ -369,7 +369,7 @@ const AssigneeInfo = ({ setShowCertificate, setSelectedDocument }: Props) => {
            {/* Rejected Div  */}
            {trainingInfoList2?.approved === "No" && (
            <div className="w-full py-20 px-8 flex flex-col items-center justify-center bg-white shadow-sm shadow-secondary/30">
-               <label className="font-bold text-sm mb-2">Reason for rejection</label>
+               <label className="font-bold text-sm mb-2">Training was not approved</label>
                {/* <label className="text-sm text-secondary/60">{trainingInfoList2?.reject_reason || "No reason provided"}</label> */}
            </div>
            )}

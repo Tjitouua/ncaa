@@ -18,7 +18,7 @@ const Home = () => {
              }
 
              if (data.user.role === "admin") {
-                navigate("/admin/dashboard", { replace: true });
+                navigate("/admin-hr/dashboard", { replace: true });
              } else {
                 navigate("/staff/dashboard", { replace: true });
              }
