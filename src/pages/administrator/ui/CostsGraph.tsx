@@ -26,7 +26,8 @@ const CostsGraph = () => {
 
 
    const [data, setData] = useState<any[]>([]);
-   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+//    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+   const [selectedYear, setSelectedYear] = useState("");
 
    const startYear = 2016;
    const currentYear = new Date().getFullYear();
@@ -448,7 +449,7 @@ const CostsGraph = () => {
                             onChange = {(e) => setSelectedYear(e.target.value)}
                             className="!border-none"
                           >
-                            <option value="">year</option>
+                            <option value="">All Years</option>
                             {years.map((year) => (
                               <option key={year} value={year}>{year}</option>
                             ))}
