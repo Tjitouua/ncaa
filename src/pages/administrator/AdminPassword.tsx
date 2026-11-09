@@ -1,4 +1,3 @@
-import LoginForm from "../login/components/LoginForm";
 import ChangePassword from "./components/ChangePassword";
 import Menu from "./components/Menu";
 import TopMenu from "./components/TopMenu";

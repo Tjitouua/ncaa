@@ -28,7 +28,7 @@ const NotificationsPart = () => {
     const [activeTab, setActiveTab] = useState("New Upload");
 
     const [newUpload, setNewUpload] = useState<Notification[]>([]);
-    const [trainingOverdue, setTrainingOverdue] = useState<Notification[]>([]);
+    const [trainingOverdue] = useState<Notification[]>([]);
     const [certificateExpiring, setCertificateExpiring] = useState<Notification[]>([]);
     const [expiredCertificate, setExpiredCertificate] = useState<Notification[]>([]);
     const [all, setAll] = useState<Notification[]>([]);

@@ -6,7 +6,6 @@ import { PiGraduationCap } from "react-icons/pi";
 import PrimaryButt from "../../../ui/PrimaryButt";
 import SecondaryButt from "../../../ui/SecondaryButt";
 import CertificateUi from "../ui/CertificateUi";
-import { FiEye } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { HiOutlineDocumentText } from "react-icons/hi2";
