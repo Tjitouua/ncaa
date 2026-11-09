@@ -1,17 +1,14 @@
-
-
-CREATE DATABASE IF NOT EXIST ncaa_trainings;
+CREATE DATABASE ncaa_trainings;
 GO
 
 USE ncaa_trainings;
 GO
 
-
--- User table 
-CREATE TABLE users 
+-- User table
+CREATE TABLE users
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    role VARCHAR (250) NOT NULL,
+    role VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
     first_name VARCHAR(250) NOT NULL,
     last_name VARCHAR(250) NOT NULL,
@@ -19,74 +16,69 @@ CREATE TABLE users
 );
 
 
-
-
-
--- Staff table 
-CREATE TABLE staff 
+-- Staff table
+CREATE TABLE staff
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    staff_no CHAR (4) NOT NULL UNIQUE,
-    first_name VARCHAR (250) NOT NULL,
-    last_name VARCHAR (250) NOT NULL,
-    gender VARCHAR (250) NOT NULL,
-    email VARCHAR (250) NOT NULL UNIQUE,
+    staff_no CHAR(4) NOT NULL UNIQUE,
+    first_name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(250) NOT NULL,
+    gender VARCHAR(250) NOT NULL,
+    email VARCHAR(250) NOT NULL UNIQUE,
     dob DATE NOT NULL,
-    national_id VARCHAR (250) NOT NULL UNIQUE,
-    phone_no VARCHAR (250) NOT NULL UNIQUE,
-    city VARCHAR (250) NOT NULL,
-    disadvantaged VARCHAR (250) NOT NULL,
-    disability VARCHAR (250) NOT NULL,
-    [function] VARCHAR (250) NOT NULL,
-    department VARCHAR (50) NOT NULL,
-    division VARCHAR (250) NOT NULL,
-    job_category VARCHAR (250) NOT NULL,
-    job_grade VARCHAR (250) NOT NULL,
-    ethnicity VARCHAR (250) NOT NULL,
-    role VARCHAR (250) NOT NULL,
-    employment_type VARCHAR (250) NOT NULL,
+    national_id VARCHAR(250) NOT NULL UNIQUE,
+    phone_no VARCHAR(250) NOT NULL UNIQUE,
+    city VARCHAR(250) NOT NULL,
+    disadvantaged VARCHAR(250) NOT NULL,
+    disability VARCHAR(250) NOT NULL,
+    [function] VARCHAR(250) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    division VARCHAR(250) NOT NULL,
+    job_category VARCHAR(250) NOT NULL,
+    job_grade VARCHAR(250) NOT NULL,
+    ethnicity VARCHAR(250) NOT NULL,
+    role VARCHAR(250) NOT NULL,
+    employment_type VARCHAR(250) NOT NULL,
     doj DATE,
-    employment_status VARCHAR (250) NOT NULL,
+    employment_status VARCHAR(250) NOT NULL,
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE()
 );
 
 
-
-
--- Training programs table 
+-- Training programs table
 CREATE TABLE training_programs
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     staff_id INT NOT NULL,
-    training_name VARCHAR (250) NOT NULL,
-    reason VARCHAR (50) NOT NULL,
-    duration VARCHAR (250) NOT NULL,
-    category VARCHAR (250) NOT NULL,
-    training_type VARCHAR (250) NOT NULL,
-    method VARCHAR (250) NOT NULL,
-    validity VARCHAR (250) NOT NULL,
-    provider VARCHAR (250) NOT NULL,
-    trainer VARCHAR (250) NULL,
-    trainer_status VARCHAR (250) NOT NULL,
-    location VARCHAR (250) NOT NULL,
-    contact_no VARCHAR (250) NULL,
-    email VARCHAR (250) NULL,
-    approved VARCHAR (250) NOT NULL,
+    training_name VARCHAR(250) NOT NULL,
+    reason VARCHAR(50) NOT NULL,
+    duration VARCHAR(250) NOT NULL,
+    category VARCHAR(250) NOT NULL,
+    training_type VARCHAR(250) NOT NULL,
+    method VARCHAR(250) NOT NULL,
+    validity VARCHAR(250) NOT NULL,
+    provider VARCHAR(250) NOT NULL,
+    trainer VARCHAR(250) NULL,
+    trainer_status VARCHAR(250) NOT NULL,
+    location VARCHAR(250) NOT NULL,
+    contact_no VARCHAR(250) NULL,
+    email VARCHAR(250) NULL,
+    approved VARCHAR(250) NOT NULL,
     year INT NOT NULL,
     quarter INT NOT NULL,
     start_date DATE NULL,
     end_date DATE NULL,
-    region VARCHAR (250) NOT NULL,
-    training_cost DECIMAL (10,2) NULL,
-    accommodation_cost DECIMAL (10,2) NULL,
-    snt_cost DECIMAL (10,2) NULL,
-    flight_cost DECIMAL (10,2) NULL,
-    other_costs DECIMAL (10,2) NULL,
-    total_cost DECIMAL (10,2) NOT NULL,
+    region VARCHAR(250) NOT NULL,
+    training_cost DECIMAL(10,2) NULL,
+    accommodation_cost DECIMAL(10,2) NULL,
+    snt_cost DECIMAL(10,2) NULL,
+    flight_cost DECIMAL(10,2) NULL,
+    other_costs DECIMAL(10,2) NULL,
+    total_cost DECIMAL(10,2) NOT NULL,
 
     CONSTRAINT unique_training_program
-	UNIQUE (
+    UNIQUE (
         staff_id,
         training_name,
         year,
@@ -94,78 +86,67 @@ CREATE TABLE training_programs
     ),
 
     CONSTRAINT chk_contact_or_email
-    CHECK(contact_no IS NOT NULL OR email IS NOT NULL),
-    
-    FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE CASCADE
+    CHECK (contact_no IS NOT NULL OR email IS NOT NULL),
+
+    FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
 
 
-
-
-
--- Assignments table 
+-- Assignments table
 CREATE TABLE training_assignments
-( 
+(
     id INT IDENTITY(1,1) PRIMARY KEY,
     staff_id INT NOT NULL,
     program_id INT NOT NULL,
     assigned_date DATE,
-    status VARCHAR (250) NOT NULL,
-    
-    FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE CASCADE,
-    FOREIGN KEY (program_id) REFERENCES training_programs (id) ON DELETE CASCADE
+    status VARCHAR(250) NOT NULL,
+
+    FOREIGN KEY (staff_id) REFERENCES staff(id),
+    FOREIGN KEY (program_id) REFERENCES training_programs(id) ON DELETE CASCADE
 );
 
 
-
-
-
--- Certficates table 
+-- Certificates table
 CREATE TABLE certificates
-( 
+(
     id INT IDENTITY(1,1) PRIMARY KEY,
     training_id INT NOT NULL,
-    staff_email VARCHAR (250) NOT NULL,
-    certificate_no VARCHAR (250) NOT NULL,
+    staff_email VARCHAR(250) NOT NULL,
+    certificate_no VARCHAR(250) NOT NULL,
     issued_date DATE NOT NULL,
     expiry_date DATE NULL,
     [file] VARCHAR(250) NOT NULL,
-    
-    FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
+
+    FOREIGN KEY (training_id) REFERENCES training_assignments(id) ON DELETE CASCADE
 );
 
 
-
-
-
+-- Reports table
 CREATE TABLE reports
 (
-   id INT IDENTITY(1,1) PRIMARY KEY,
-   training_id INT NOT NULL,
-   staff_email VARCHAR(250) NOT NULL,
-   [file] VARCHAR(250) NOT NULL,
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    training_id INT NOT NULL,
+    staff_email VARCHAR(250) NOT NULL,
+    [file] VARCHAR(250) NOT NULL,
 
-   FOREIGN KEY (training_id) REFERENCES training_assignments (id) ON DELETE CASCADE
+    FOREIGN KEY (training_id) REFERENCES training_assignments(id) ON DELETE CASCADE
 );
 
 
-
-
-
--- Staff Notifications table 
+-- Staff Notifications table
 CREATE TABLE staff_notifications
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    staff_email VARCHAR (250) NOT NULL,
+    staff_email VARCHAR(250) NOT NULL,
     training_id INT NOT NULL,
-    notification_type VARCHAR (250) NULL,
-    title VARCHAR (250) NOT NULL,
-    message VARCHAR (250) NOT NULL,
-    status VARCHAR (250) NOT NULL,
+    notification_type VARCHAR(250) NULL,
+    title VARCHAR(250) NOT NULL,
+    message VARCHAR(250) NOT NULL,
+    status VARCHAR(250) NOT NULL,
     sent_date DATETIME NOT NULL,
-    
-    CONSTRAINT unique_staff_notification 
-	UNIQUE (
+
+    CONSTRAINT unique_staff_notification
+    UNIQUE (
         staff_email,
         training_id,
         notification_type
@@ -175,25 +156,20 @@ CREATE TABLE staff_notifications
 );
 
 
-
-
-
-
-
--- Admin Notifications table 
+-- Admin Notifications table
 CREATE TABLE admin_notifications
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    staff_email VARCHAR (250) NOT NULL,
+    staff_email VARCHAR(250) NOT NULL,
     training_id INT NOT NULL,
-    notification_type VARCHAR (250) NULL,
-    title VARCHAR (25) NOT NULL,
-    message VARCHAR (250) NOT NULL,
-    status VARCHAR (250) NOT NULL,
+    notification_type VARCHAR(250) NULL,
+    title VARCHAR(25) NOT NULL,
+    message VARCHAR(250) NOT NULL,
+    status VARCHAR(250) NOT NULL,
     sent_date DATETIME NOT NULL,
-    
-    CONSTRAINT unique_admin_notification 
-	UNIQUE (
+
+    CONSTRAINT unique_admin_notification
+    UNIQUE (
         staff_email,
         training_id,
         notification_type
@@ -203,12 +179,7 @@ CREATE TABLE admin_notifications
 );
 
 
-
-
-
-
-
-
+-- Insert default administrator
 INSERT INTO users (role, email, first_name, last_name, password)
 VALUES
 (
